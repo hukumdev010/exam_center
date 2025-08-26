@@ -67,7 +67,7 @@ const sampleQuestions = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-slate-50 py-8">
-      <ExamQuiz 
+      <ExamQuiz
         questions={sampleQuestions}
         certificationName="AWS Certified Solutions Architect – Associate"
       />
