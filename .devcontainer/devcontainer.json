@@ -3,6 +3,9 @@
   "dockerFile": "Dockerfile",
   "forwardPorts": [3000],
   "postCreateCommand": "npm install",
+   "mounts": [
+    "source=/home/bhabana_basnet/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
+  ],
   "customizations": {
     "vscode": {
       "settings": {
