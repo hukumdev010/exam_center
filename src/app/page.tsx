@@ -1,103 +1,76 @@
-import Image from "next/image";
+import { ExamQuiz } from "@/components/ExamQuiz";
+
+// Sample data - in a real app, this would come from your API/database
+const sampleQuestions = [
+  {
+    id: 1,
+    text: "Which AWS service is used for object storage?",
+    explanation: "Amazon S3 (Simple Storage Service) is designed for object storage. It provides industry-leading scalability, data availability, security, and performance.",
+    points: 1,
+    answers: [
+      { id: 1, text: "Amazon S3", isCorrect: true },
+      { id: 2, text: "Amazon EBS", isCorrect: false },
+      { id: 3, text: "Amazon EFS", isCorrect: false },
+      { id: 4, text: "Amazon FSx", isCorrect: false },
+    ],
+  },
+  {
+    id: 2,
+    text: "Which service provides serverless compute in AWS?",
+    explanation: "AWS Lambda lets you run code without provisioning or managing servers. You pay only for the compute time you consume.",
+    points: 1,
+    answers: [
+      { id: 5, text: "AWS Lambda", isCorrect: true },
+      { id: 6, text: "Amazon EC2", isCorrect: false },
+      { id: 7, text: "Amazon ECS", isCorrect: false },
+      { id: 8, text: "AWS Batch", isCorrect: false },
+    ],
+  },
+  {
+    id: 3,
+    text: "What is the purpose of Amazon VPC?",
+    explanation: "Amazon VPC (Virtual Private Cloud) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define.",
+    points: 1,
+    answers: [
+      { id: 9, text: "To create an isolated network environment", isCorrect: true },
+      { id: 10, text: "To store files and objects", isCorrect: false },
+      { id: 11, text: "To run containerized applications", isCorrect: false },
+      { id: 12, text: "To manage user permissions", isCorrect: false },
+    ],
+  },
+  {
+    id: 4,
+    text: "Which AWS service is best for hosting a relational database?",
+    explanation: "Amazon RDS (Relational Database Service) makes it easy to set up, operate, and scale a relational database in the cloud with support for MySQL, PostgreSQL, Oracle, SQL Server, and more.",
+    points: 1,
+    answers: [
+      { id: 13, text: "Amazon RDS", isCorrect: true },
+      { id: 14, text: "Amazon S3", isCorrect: false },
+      { id: 15, text: "Amazon DynamoDB", isCorrect: false },
+      { id: 16, text: "Amazon ElastiCache", isCorrect: false },
+    ],
+  },
+  {
+    id: 5,
+    text: "What is the maximum size of an S3 object?",
+    explanation: "The maximum size of an S3 object is 5TB. For objects larger than 100MB, AWS recommends using multipart upload.",
+    points: 1,
+    answers: [
+      { id: 17, text: "5TB", isCorrect: true },
+      { id: 18, text: "1TB", isCorrect: false },
+      { id: 19, text: "100GB", isCorrect: false },
+      { id: 20, text: "10TB", isCorrect: false },
+    ],
+  },
+];
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    <main className="min-h-screen bg-slate-50 py-8">
+      <ExamQuiz 
+        questions={sampleQuestions}
+        certificationName="AWS Certified Solutions Architect – Associate"
+      />
+    </main>
   );
 }
