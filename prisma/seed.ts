@@ -1,89 +1,117 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../src/generated/prisma'
+import { seedJavaScript } from './seeds/javascript'
+import { seedTypeScript } from './seeds/typescript'
+import { seedNodeJS } from './seeds/nodejs'
+import { seedPython } from './seeds/python'
+import { seedAwsCertifications } from './seeds/aws'
+import { seedDevOpsCertifications } from './seeds/devops'
+import { seedSystemsCertifications } from './seeds/systems'
 
 const prisma = new PrismaClient()
 
 async function main() {
-  // Create AWS certification
-  const aws = await prisma.certification.upsert({
-    where: { slug: 'aws-solutions-architect-associate' },
+  console.log('🌱 Starting database seed...')
+
+  // Create Categories
+  console.log('📚 Creating categories...')
+  const awsCategory = await prisma.category.upsert({
+    where: { slug: 'aws' },
     update: {},
     create: {
-      name: 'AWS Certified Solutions Architect – Associate',
-      description: 'Entry-level AWS certification for solutions architects',
-      slug: 'aws-solutions-architect-associate',
-      questions: {
-        create: [
-          {
-            text: 'Which AWS service is used for object storage?',
-            explanation: 'Amazon S3 (Simple Storage Service) is designed for object storage. It provides industry-leading scalability, data availability, security, and performance.',
-            points: 1,
-            answers: {
-              create: [
-                { text: 'Amazon S3', isCorrect: true },
-                { text: 'Amazon EBS', isCorrect: false },
-                { text: 'Amazon EFS', isCorrect: false },
-                { text: 'Amazon FSx', isCorrect: false },
-              ],
-            },
-          },
-          {
-            text: 'Which service provides serverless compute in AWS?',
-            explanation: 'AWS Lambda lets you run code without provisioning or managing servers. You pay only for the compute time you consume.',
-            points: 1,
-            answers: {
-              create: [
-                { text: 'AWS Lambda', isCorrect: true },
-                { text: 'Amazon EC2', isCorrect: false },
-                { text: 'Amazon ECS', isCorrect: false },
-                { text: 'AWS Batch', isCorrect: false },
-              ],
-            },
-          },
-          {
-            text: 'What is the purpose of Amazon VPC?',
-            explanation: 'Amazon VPC (Virtual Private Cloud) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define.',
-            points: 1,
-            answers: {
-              create: [
-                { text: 'To create an isolated network environment', isCorrect: true },
-                { text: 'To store files and objects', isCorrect: false },
-                { text: 'To run containerized applications', isCorrect: false },
-                { text: 'To manage user permissions', isCorrect: false },
-              ],
-            },
-          },
-          {
-            text: 'Which AWS service is best for hosting a relational database?',
-            explanation: 'Amazon RDS (Relational Database Service) makes it easy to set up, operate, and scale a relational database in the cloud with support for MySQL, PostgreSQL, Oracle, SQL Server, and more.',
-            points: 1,
-            answers: {
-              create: [
-                { text: 'Amazon RDS', isCorrect: true },
-                { text: 'Amazon S3', isCorrect: false },
-                { text: 'Amazon DynamoDB', isCorrect: false },
-                { text: 'Amazon ElastiCache', isCorrect: false },
-              ],
-            },
-          },
-          {
-            text: 'What is the maximum size of an S3 object?',
-            explanation: 'The maximum size of an S3 object is 5TB. For objects larger than 100MB, AWS recommends using multipart upload.',
-            points: 1,
-            answers: {
-              create: [
-                { text: '5TB', isCorrect: true },
-                { text: '1TB', isCorrect: false },
-                { text: '100GB', isCorrect: false },
-                { text: '10TB', isCorrect: false },
-              ],
-            },
-          },
-        ],
-      },
+      name: 'Amazon Web Services (AWS)',
+      description: 'Cloud computing certifications from AWS',
+      slug: 'aws',
+      icon: 'aws',
+      color: 'orange'
     },
   })
 
-  console.log(`Created certification: ${aws.name}`)
+  const devCategory = await prisma.category.upsert({
+    where: { slug: 'development' },
+    update: {},
+    create: {
+      name: 'Software Development',
+      description: 'Programming languages and development frameworks',
+      slug: 'development',
+      icon: 'code',
+      color: 'blue'
+    },
+  })
+
+  const devopsCategory = await prisma.category.upsert({
+    where: { slug: 'devops' },
+    update: {},
+    create: {
+      name: 'DevOps & Infrastructure',
+      description: 'DevOps practices, container orchestration, and infrastructure management',
+      slug: 'devops',
+      icon: 'server',
+      color: 'purple'
+    },
+  })
+
+  const systemsCategory = await prisma.category.upsert({
+    where: { slug: 'systems' },
+    update: {},
+    create: {
+      name: 'System Administration',
+      description: 'Operating systems, networking, and system administration',
+      slug: 'systems',
+      icon: 'terminal',
+      color: 'green'
+    },
+  })
+
+  // Seed Development Certifications
+  console.log('💻 Seeding development certifications...')
+  const javascript = await seedJavaScript(prisma, devCategory.id)
+  const typescript = await seedTypeScript(prisma, devCategory.id)
+  const nodejs = await seedNodeJS(prisma, devCategory.id)
+  const python = await seedPython(prisma, devCategory.id)
+
+  // Seed AWS Certifications
+  console.log('☁️ Seeding AWS certifications...')
+  const awsCerts = await seedAwsCertifications(prisma, awsCategory.id)
+
+  // Seed DevOps Certifications
+  console.log('🔧 Seeding DevOps certifications...')
+  const devopsCerts = await seedDevOpsCertifications(prisma, devopsCategory.id)
+
+  // Seed Systems Certifications
+  console.log('🖥️ Seeding systems certifications...')
+  const systemsCerts = await seedSystemsCertifications(prisma, systemsCategory.id)
+
+  console.log('\n✅ Database has been seeded successfully!')
+  console.log('\n📚 Categories created:')
+  console.log(`- ${awsCategory.name}`)
+  console.log(`- ${devCategory.name}`)
+  console.log(`- ${devopsCategory.name}`)
+  console.log(`- ${systemsCategory.name}`)
+  
+  console.log('\n🎯 Certifications created:')
+  console.log('\nDevelopment:')
+  console.log(`- ${javascript.name}`)
+  console.log(`- ${typescript.name}`)
+  console.log(`- ${nodejs.name}`)
+  console.log(`- ${python.name}`)
+  
+  console.log('\nAWS:')
+  console.log(`- ${awsCerts.awsCloudPractitioner.name}`)
+  console.log(`- ${awsCerts.awsSolutionsArchitectAssociate.name}`)
+  console.log(`- ${awsCerts.awsDeveloperAssociate.name}`)
+  console.log(`- ${awsCerts.awsSolutionsArchitectProfessional.name}`)
+  console.log(`- ${awsCerts.awsSecuritySpecialty.name}`)
+  
+  console.log('\nDevOps:')
+  console.log(`- ${devopsCerts.terraformAssociate.name}`)
+  console.log(`- ${devopsCerts.cka.name}`)
+  console.log(`- ${devopsCerts.ckad.name}`)
+  console.log(`- ${devopsCerts.dockerAssociate.name}`)
+  
+  console.log('\nSystems:')
+  console.log(`- ${systemsCerts.linuxFundamentals.name}`)
+  console.log(`- ${systemsCerts.networkingFundamentals.name}`)
+  console.log(`- ${systemsCerts.systemDesign.name}`)
 }
 
 main()

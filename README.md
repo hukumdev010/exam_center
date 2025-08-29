@@ -1,31 +1,111 @@
 # Exam Center
 
-A Next.js application for managing AWS exam questions, using PostgreSQL and Prisma ORM. Includes shadcn/ui for modern UI components and a devcontainer for easy development setup.
+A comprehensive Next.js application for managing exam questions across multiple subjects and certifications, using PostgreSQL and Prisma ORM. Includes shadcn/ui for modern UI components and a devcontainer for easy development setup.
+
+## Available Subjects & Certifications
+
+### Programming Languages & Technologies
+- **JavaScript** - Modern JavaScript programming concepts and best practices
+- **TypeScript** - TypeScript language features and advanced type system
+- **Node.js** - Server-side JavaScript runtime and ecosystem
+
+### System Design & Architecture
+- **System Design** - Comprehensive system design concepts and best practices
+
+### AWS Certifications
+- **AWS Certified Cloud Practitioner** - Entry-level AWS certification covering cloud fundamentals
+- **AWS Certified Solutions Architect – Associate** - Entry-level AWS certification for solutions architects
+- **AWS Certified Solutions Architect – Professional** - Advanced AWS certification for experienced solutions architects
+- **AWS Certified Developer – Associate** - AWS certification for developers building applications on AWS
+- **AWS Certified SysOps Administrator – Associate** - AWS certification for systems administrators
+- **AWS Certified DevOps Engineer – Professional** - Advanced AWS certification for DevOps engineers
+- **AWS Certified Security – Specialty** - Advanced AWS security certification
+- **AWS Certified Advanced Networking – Specialty** - Advanced AWS networking certification
+- **AWS Certified Machine Learning – Specialty** - AWS machine learning and AI services certification
+- **AWS Certified Data Analytics – Specialty** - AWS data analytics and big data services certification
+- **AWS Certified Database – Specialty** - AWS database services and optimization certification
+- **AWS Certified SAP on AWS – Specialty** - AWS certification for SAP workloads on AWS
+
+### DevOps & Infrastructure
+- **HashiCorp Certified: Terraform Associate** - Infrastructure as Code with Terraform
+- **HashiCorp Certified: Terraform Professional** - Advanced Terraform skills and enterprise features
+
+### Kubernetes Certifications
+- **Certified Kubernetes Administrator (CKA)** - Kubernetes cluster administration and management
+- **Certified Kubernetes Application Developer (CKAD)** - Kubernetes application development and deployment
+- **Certified Kubernetes Security Specialist (CKS)** - Kubernetes security best practices and implementation
+
+### Linux
+- **Linux Fundamentals** - Core Linux operating system concepts and administration
+- **Linux Professional Institute Certification (LPIC)** - Advanced Linux system administration and security
 
 ## Features
 - Next.js (TypeScript, Tailwind CSS, ESLint, App Router)
-- PostgreSQL database integration
+- PostgreSQL database with Docker Compose
 - Prisma ORM for schema and migrations
 - shadcn/ui for UI components
-- Devcontainer for VS Code
+- Devcontainer for VS Code with PostgreSQL
 
 ## Getting Started
+
+### Prerequisites
+- Docker and Docker Compose
+- VS Code with Remote-Containers extension
+
+### Setup Instructions
 1. Clone the repository
-2. Open in VS Code and reopen in devcontainer
-3. Set up PostgreSQL and update `DATABASE_URL` in `.env`
-4. Run migrations: `npx prisma migrate dev`
-5. Start the app: `npm run dev`
+2. Open in VS Code
+3. When prompted, choose "Reopen in Container"
+4. The devcontainer will automatically:
+   - Start PostgreSQL database
+   - Install npm dependencies
+   - Generate Prisma client
+   - Push database schema
+   - Seed the database with initial data
+5. Start the development server: `npm run dev`
 
-## Devcontainer
-- Dockerfile and devcontainer.json included
-- PostgreSQL client installed
+### Manual Database Setup (if needed)
+```bash
+# Generate Prisma client
+npx prisma generate
 
-## Database
-- Default connection: `postgresql://postgres:postgres@localhost:5432/exam_center`
-- Update `.env` as needed
+# Push schema to database
+npx prisma db push
 
-## UI
-- Use shadcn/ui CLI to add components: `npx shadcn@latest add <component>`
+# Seed database with initial data
+npm run db:seed
+```
+
+## Development
+
+### Database Operations
+```bash
+# View database in Prisma Studio
+npx prisma studio
+
+# Reset database and reseed
+npx prisma db push --force-reset && npm run db:seed
+
+# Create migration
+npx prisma migrate dev --name migration_name
+```
+
+### Adding UI Components
+```bash
+# Add shadcn/ui components
+npx shadcn@latest add <component>
+```
+
+## Environment Variables
+Copy `.env.example` to `.env` and update as needed:
+```bash
+cp .env.example .env
+```
+
+## Database Schema
+- **Certification**: Represents exam subjects/certifications
+- **Question**: Individual exam questions linked to certifications
+- **Answer**: Multiple choice answers for each question
 
 ## License
 MIT

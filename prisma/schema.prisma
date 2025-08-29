@@ -14,14 +14,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Category {
+  id            Int             @id @default(autoincrement())
+  name          String
+  description   String?
+  slug          String          @unique
+  icon          String?         // Icon name for UI
+  color         String?         // Color theme for UI
+  certifications Certification[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
 model Certification {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String?
-  slug        String    @unique
-  questions   Question[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id            Int       @id @default(autoincrement())
+  name          String
+  description   String?
+  slug          String    @unique
+  level         String?   // Associate, Professional, Specialty, etc.
+  duration      Int?      // Exam duration in minutes
+  questionsCount Int?     // Number of questions in the exam
+  category      Category  @relation(fields: [categoryId], references: [id])
+  categoryId    Int
+  questions     Question[]
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Question {

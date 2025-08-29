@@ -23,6 +23,7 @@ type Question = {
 interface ExamQuizProps {
     questions: Question[];
     certificationName: string;
+    key?: string; // Add key prop to force re-render
 }
 
 export function ExamQuiz({ questions, certificationName }: ExamQuizProps) {
