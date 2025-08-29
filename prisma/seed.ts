@@ -3,9 +3,12 @@ import { seedJavaScript } from './seeds/javascript'
 import { seedTypeScript } from './seeds/typescript'
 import { seedNodeJS } from './seeds/nodejs'
 import { seedPython } from './seeds/python'
+import { seedReact } from './seeds/react'
+import { seedDSA } from './seeds/dsa'
 import { seedAwsCertifications } from './seeds/aws'
 import { seedDevOpsCertifications } from './seeds/devops'
 import { seedSystemsCertifications } from './seeds/systems'
+import { seedWebHacking } from './seeds/webhacking'
 
 const prisma = new PrismaClient()
 
@@ -68,6 +71,8 @@ async function main() {
   const typescript = await seedTypeScript(prisma, devCategory.id)
   const nodejs = await seedNodeJS(prisma, devCategory.id)
   const python = await seedPython(prisma, devCategory.id)
+  const react = await seedReact(prisma, devCategory.id)
+  const dsa = await seedDSA(prisma, devCategory.id)
 
   // Seed AWS Certifications
   console.log('☁️ Seeding AWS certifications...')
@@ -80,6 +85,7 @@ async function main() {
   // Seed Systems Certifications
   console.log('🖥️ Seeding systems certifications...')
   const systemsCerts = await seedSystemsCertifications(prisma, systemsCategory.id)
+  const webHacking = await seedWebHacking(prisma, systemsCategory.id)
 
   console.log('\n✅ Database has been seeded successfully!')
   console.log('\n📚 Categories created:')
@@ -94,6 +100,8 @@ async function main() {
   console.log(`- ${typescript.name}`)
   console.log(`- ${nodejs.name}`)
   console.log(`- ${python.name}`)
+  console.log(`- ${react.name}`)
+  console.log(`- ${dsa.name}`)
   
   console.log('\nAWS:')
   console.log(`- ${awsCerts.awsCloudPractitioner.name}`)
@@ -112,6 +120,7 @@ async function main() {
   console.log(`- ${systemsCerts.linuxFundamentals.name}`)
   console.log(`- ${systemsCerts.networkingFundamentals.name}`)
   console.log(`- ${systemsCerts.systemDesign.name}`)
+  console.log(`- ${webHacking.name}`)
 }
 
 main()
