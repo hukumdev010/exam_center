@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { QuestionCard } from "./QuestionCard";
 import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";
@@ -23,14 +24,47 @@ type Question = {
 interface ExamQuizProps {
     questions: Question[];
     certificationName: string;
-    key?: string; // Add key prop to force re-render
+    certificationSlug?: string;
+    initialQuestion?: number;
 }
 
-export function ExamQuiz({ questions, certificationName }: ExamQuizProps) {
-    const [currentQuestion, setCurrentQuestion] = useState(0);
+export function ExamQuiz({ questions, certificationName, certificationSlug, initialQuestion = 0 }: ExamQuizProps) {
+    const router = useRouter();
+    const [currentQuestion, setCurrentQuestion] = useState(initialQuestion);
     const [score, setScore] = useState(0);
     const [answeredQuestions, setAnsweredQuestions] = useState<Set<number>>(new Set());
     const [isCompleted, setIsCompleted] = useState(false);
+
+    // Initialize state from localStorage if available
+    useEffect(() => {
+        if (certificationSlug) {
+            const savedState = localStorage.getItem(`quiz-${certificationSlug}`);
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                setScore(state.score || 0);
+                setAnsweredQuestions(new Set(state.answeredQuestions || []));
+                setIsCompleted(state.isCompleted || false);
+            }
+        }
+    }, [certificationSlug]);
+
+    // Update URL when question changes
+    const updateURL = (questionIndex: number) => {
+        if (certificationSlug) {
+            router.replace(`/quiz/${certificationSlug}?q=${questionIndex}`, { scroll: false });
+        }
+    };
+
+    // Save state to localStorage
+    const saveState = (newScore: number, newAnsweredQuestions: Set<number>, newIsCompleted: boolean) => {
+        if (certificationSlug) {
+            localStorage.setItem(`quiz-${certificationSlug}`, JSON.stringify({
+                score: newScore,
+                answeredQuestions: Array.from(newAnsweredQuestions),
+                isCompleted: newIsCompleted
+            }));
+        }
+    };
 
     const progress = ((currentQuestion + 1) / questions.length) * 100;
     const correctAnswers = score;
@@ -39,24 +73,33 @@ export function ExamQuiz({ questions, certificationName }: ExamQuizProps) {
     const handleAnswer = (isCorrect: boolean, points: number) => {
         if (answeredQuestions.has(currentQuestion)) return;
 
-        setAnsweredQuestions(prev => new Set(prev).add(currentQuestion));
-
-        if (isCorrect) {
-            setScore(prev => prev + points);
-        }
+        const newAnsweredQuestions = new Set(answeredQuestions).add(currentQuestion);
+        const newScore = isCorrect ? score + points : score;
+        
+        setAnsweredQuestions(newAnsweredQuestions);
+        setScore(newScore);
+        
+        // Save state
+        saveState(newScore, newAnsweredQuestions, isCompleted);
     };
 
     const handleNext = () => {
         if (currentQuestion < questions.length - 1) {
-            setCurrentQuestion(prev => prev + 1);
+            const nextQuestion = currentQuestion + 1;
+            setCurrentQuestion(nextQuestion);
+            updateURL(nextQuestion);
         } else {
-            setIsCompleted(true);
+            const newIsCompleted = true;
+            setIsCompleted(newIsCompleted);
+            saveState(score, answeredQuestions, newIsCompleted);
         }
     };
 
     const handlePrevious = () => {
         if (currentQuestion > 0) {
-            setCurrentQuestion(prev => prev - 1);
+            const prevQuestion = currentQuestion - 1;
+            setCurrentQuestion(prevQuestion);
+            updateURL(prevQuestion);
         }
     };
 
@@ -65,6 +108,14 @@ export function ExamQuiz({ questions, certificationName }: ExamQuizProps) {
         setScore(0);
         setAnsweredQuestions(new Set());
         setIsCompleted(false);
+        
+        // Clear saved state
+        if (certificationSlug) {
+            localStorage.removeItem(`quiz-${certificationSlug}`);
+        }
+        
+        // Update URL to first question
+        updateURL(0);
     };
 
     const getScoreColor = () => {
