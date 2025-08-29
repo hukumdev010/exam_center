@@ -1,6 +1,15 @@
 # Exam Center
 
-A comprehensive Next.js application for managing exam questions across multiple subjects and certifications, using PostgreSQL and Prisma ORM. Includes shadcn/ui for modern UI components and a devcontainer for easy development setup.
+A comprehensive Next.js application for managing exam questions across multiple subjects and certifications, using PostgreSQL and Prisma ORM. Features Google authentication, progress tracking, and modern UI components with shadcn/ui.
+
+## Features
+- 🔐 **Google OAuth Authentication** - Secure sign-in with Google
+- 📊 **Progress Tracking** - Track your quiz progress and scores
+- 🏆 **Profile Dashboard** - View your achievements and statistics
+- 🎯 **Multiple Certifications** - Wide range of technical certifications
+- 💾 **Resume Quizzes** - Continue where you left off
+- 🎨 **Modern UI** - Beautiful interface with shadcn/ui components
+- 🔄 **Real-time Updates** - Progress synced across devices
 
 ## Available Subjects & Certifications
 
@@ -39,18 +48,12 @@ A comprehensive Next.js application for managing exam questions across multiple 
 - **Linux Fundamentals** - Core Linux operating system concepts and administration
 - **Linux Professional Institute Certification (LPIC)** - Advanced Linux system administration and security
 
-## Features
-- Next.js (TypeScript, Tailwind CSS, ESLint, App Router)
-- PostgreSQL database with Docker Compose
-- Prisma ORM for schema and migrations
-- shadcn/ui for UI components
-- Devcontainer for VS Code with PostgreSQL
-
 ## Getting Started
 
 ### Prerequisites
 - Docker and Docker Compose
 - VS Code with Remote-Containers extension
+- Google OAuth credentials (for authentication)
 
 ### Setup Instructions
 1. Clone the repository
@@ -62,19 +65,52 @@ A comprehensive Next.js application for managing exam questions across multiple 
    - Generate Prisma client
    - Push database schema
    - Seed the database with initial data
-5. Start the development server: `npm run dev`
 
-### Manual Database Setup (if needed)
+### Google OAuth Setup
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Google+ API and Google OAuth2 API
+4. Go to "Credentials" and create OAuth 2.0 Client IDs
+5. Add authorized redirect URIs:
+   - `http://localhost:3000/api/auth/callback/google` (for development)
+6. Copy the Client ID and Client Secret to your `.env` file
+
+### Environment Variables
+Update your `.env` file with the following:
 ```bash
-# Generate Prisma client
-npx prisma generate
+# PostgreSQL database connection
+DATABASE_URL="postgresql://postgres:postgres@db:5432/exam_center"
 
-# Push schema to database
-npx prisma db push
+# NextAuth.js configuration
+NEXTAUTH_SECRET="your-secret-key-change-this-in-production"
+NEXTAUTH_URL="http://localhost:3000"
 
-# Seed database with initial data
-npm run db:seed
+# Google OAuth credentials
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
 ```
+
+5. Start the development server: `npm run dev`
+6. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Authentication & User Features
+
+### Google Sign-In
+- Secure authentication with Google OAuth
+- User profile information stored in database
+- Session management with NextAuth.js
+
+### Progress Tracking
+- **Continue Learning**: Resume quizzes where you left off
+- **Real-time Progress**: Sync progress across devices
+- **Score Tracking**: Track correct answers and points
+- **Completion Status**: Mark completed quizzes
+
+### Profile Dashboard
+- **Statistics**: View total points, completed quizzes, and correct answers
+- **In Progress**: See all quizzes currently in progress
+- **Completed**: Review all finished quizzes with scores
+- **Performance Metrics**: Track your learning journey
 
 ## Development
 
@@ -90,58 +126,63 @@ npx prisma db push --force-reset && npm run db:seed
 npx prisma migrate dev --name migration_name
 ```
 
+### Manual Database Setup (if needed)
+```bash
+# Generate Prisma client
+npx prisma generate
+
+# Push schema to database
+npx prisma db push
+
+# Seed database with initial data
+npm run db:seed
+```
+
 ### Adding UI Components
 ```bash
 # Add shadcn/ui components
 npx shadcn@latest add <component>
 ```
 
-## Environment Variables
-Copy `.env.example` to `.env` and update as needed:
-```bash
-cp .env.example .env
-```
-
 ## Database Schema
-- **Certification**: Represents exam subjects/certifications
-- **Question**: Individual exam questions linked to certifications
-- **Answer**: Multiple choice answers for each question
+
+### Core Models
+- **Category**: Exam categories (AWS, DevOps, etc.)
+- **Certification**: Individual certifications within categories
+- **Question**: Quiz questions with explanations and points
+- **Answer**: Multiple choice answers for questions
+
+### Authentication Models (NextAuth.js)
+- **User**: User profiles and account information
+- **Account**: OAuth provider account information
+- **Session**: Active user sessions
+
+### Progress Tracking Models
+- **UserProgress**: Real-time quiz progress for each user
+- **QuizAttempt**: Completed quiz attempts with scores
+
+## API Routes
+
+### Authentication
+- `GET/POST /api/auth/*` - NextAuth.js authentication endpoints
+
+### Progress & Quizzes
+- `GET/POST /api/progress` - User progress tracking
+- `POST /api/quiz-attempts` - Save completed quiz attempts
+
+### Data
+- `GET /api/categories` - Available quiz categories
+- `GET /api/certifications/[slug]` - Certification details and questions
+
+## Tech Stack
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type safety and developer experience
+- **Tailwind CSS** - Utility-first CSS framework
+- **shadcn/ui** - Beautiful React components
+- **NextAuth.js** - Authentication with Google OAuth
+- **Prisma** - Type-safe ORM for PostgreSQL
+- **PostgreSQL** - Relational database
+- **Docker** - Containerized development environment
 
 ## License
 MIT
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

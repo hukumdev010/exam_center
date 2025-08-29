@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, XCircle, Info } from "lucide-react";
 
@@ -28,6 +28,14 @@ export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
     const [showExplanation, setShowExplanation] = useState(false);
     const [hasAnswered, setHasAnswered] = useState(false);
     const [earnedPoints, setEarnedPoints] = useState(0);
+
+    // Reset component state when question changes
+    useEffect(() => {
+        setSelectedAnswer(null);
+        setShowExplanation(false);
+        setHasAnswered(false);
+        setEarnedPoints(0);
+    }, [question.id]);
 
     const handleAnswerSelect = (answer: Answer) => {
         if (hasAnswered) return;

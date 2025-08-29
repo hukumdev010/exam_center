@@ -25,7 +25,7 @@ type Certification = {
 };
 
 interface CategorySelectorProps {
-    onCertificationSelect: (certificationSlug: string, certificationName: string) => void;
+    onCertificationSelect: (certificationSlug: string) => void;
 }
 
 export function CategorySelector({ onCertificationSelect }: CategorySelectorProps) {
@@ -177,7 +177,7 @@ export function CategorySelector({ onCertificationSelect }: CategorySelectorProp
                                         </div>
 
                                         <Button
-                                            onClick={() => onCertificationSelect(cert.slug, cert.name)}
+                                            onClick={() => onCertificationSelect(cert.slug)}
                                             className="w-full inline-flex items-center justify-center gap-2 text-sm"
                                         >
                                             Start Practice Exam
