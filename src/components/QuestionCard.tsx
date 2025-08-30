@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { CheckCircle2, XCircle, Info } from "lucide-react";
+import { CheckCircle2, XCircle, Info, ExternalLink } from "lucide-react";
 import { Button } from "./ui/button";
 
 type Answer = {
@@ -15,6 +15,7 @@ type Question = {
     id: number;
     text: string;
     explanation?: string;
+    reference?: string;
     points: number;
     answers: Answer[];
 };
@@ -203,6 +204,19 @@ export function QuestionCard({ question, onAnswer, onSubmit }: QuestionCardProps
                     <p className="text-sm text-blue-800 leading-relaxed">
                         <strong>Explanation:</strong> {question.explanation}
                     </p>
+                    {question.reference && (
+                        <div className="mt-3 pt-3 border-t border-blue-200">
+                            <a
+                                href={question.reference}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                            >
+                                <ExternalLink className="w-4 h-4" />
+                                Learn more
+                            </a>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

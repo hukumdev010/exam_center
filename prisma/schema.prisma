@@ -48,6 +48,7 @@ model Question {
   id              Int           @id @default(autoincrement())
   text            String
   explanation     String?
+  reference       String?       // URL reference for additional information
   points          Int           @default(1)
   certification   Certification @relation(fields: [certificationId], references: [id])
   certificationId Int
