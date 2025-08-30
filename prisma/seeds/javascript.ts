@@ -1,10 +1,8 @@
 import { PrismaClient } from '../../src/generated/prisma'
 
 export async function seedJavaScript(prisma: PrismaClient, categoryId: number) {
-  const javascript = await prisma.certification.upsert({
-    where: { slug: 'javascript' },
-    update: {},
-    create: {
+  const javascript = await prisma.certification.create({
+    data: {
       name: 'JavaScript Fundamentals',
       description: 'Core JavaScript concepts and modern ES6+ features',
       slug: 'javascript',

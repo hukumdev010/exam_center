@@ -6,7 +6,7 @@ import { seedPython } from './seeds/python'
 import { seedReact } from './seeds/react'
 import { seedDSA } from './seeds/dsa'
 import { seedAwsCertifications } from './seeds/aws'
-import { seedDevOpsCertifications } from './seeds/devops'
+import { seedDevOps } from './seeds/devops'
 import { seedSystemsCertifications } from './seeds/systems'
 import { seedWebHacking } from './seeds/webhacking'
 
@@ -15,12 +15,20 @@ const prisma = new PrismaClient()
 async function main() {
   console.log('🌱 Starting database seed...')
 
+  // Clear existing data for clean seeding
+  console.log('🗑️ Clearing existing data...')
+  await prisma.answer.deleteMany({})
+  await prisma.question.deleteMany({})
+  await prisma.quizAttempt.deleteMany({})
+  await prisma.userProgress.deleteMany({})
+  await prisma.certification.deleteMany({})
+  await prisma.category.deleteMany({})
+  console.log('✅ Database cleared successfully!')
+
   // Create Categories
   console.log('📚 Creating categories...')
-  const awsCategory = await prisma.category.upsert({
-    where: { slug: 'aws' },
-    update: {},
-    create: {
+  const awsCategory = await prisma.category.create({
+    data: {
       name: 'Amazon Web Services (AWS)',
       description: 'Cloud computing certifications from AWS',
       slug: 'aws',
@@ -29,10 +37,8 @@ async function main() {
     },
   })
 
-  const devCategory = await prisma.category.upsert({
-    where: { slug: 'development' },
-    update: {},
-    create: {
+  const devCategory = await prisma.category.create({
+    data: {
       name: 'Software Development',
       description: 'Programming languages and development frameworks',
       slug: 'development',
@@ -41,10 +47,8 @@ async function main() {
     },
   })
 
-  const devopsCategory = await prisma.category.upsert({
-    where: { slug: 'devops' },
-    update: {},
-    create: {
+  const devopsCategory = await prisma.category.create({
+    data: {
       name: 'DevOps & Infrastructure',
       description: 'DevOps practices, container orchestration, and infrastructure management',
       slug: 'devops',
@@ -53,10 +57,8 @@ async function main() {
     },
   })
 
-  const systemsCategory = await prisma.category.upsert({
-    where: { slug: 'systems' },
-    update: {},
-    create: {
+  const systemsCategory = await prisma.category.create({
+    data: {
       name: 'System Administration',
       description: 'Operating systems, networking, and system administration',
       slug: 'systems',
@@ -80,7 +82,7 @@ async function main() {
 
   // Seed DevOps Certifications
   console.log('🔧 Seeding DevOps certifications...')
-  const devopsCerts = await seedDevOpsCertifications(prisma, devopsCategory.id)
+  const devopsCerts = await seedDevOps(prisma)
 
   // Seed Systems Certifications
   console.log('🖥️ Seeding systems certifications...')
@@ -111,10 +113,7 @@ async function main() {
   console.log(`- ${awsCerts.awsSecuritySpecialty.name}`)
   
   console.log('\nDevOps:')
-  console.log(`- ${devopsCerts.terraformAssociate.name}`)
-  console.log(`- ${devopsCerts.cka.name}`)
-  console.log(`- ${devopsCerts.ckad.name}`)
-  console.log(`- ${devopsCerts.dockerAssociate.name}`)
+  devopsCerts.forEach(cert => console.log(`- ${cert.name}`))
   
   console.log('\nSystems:')
   console.log(`- ${systemsCerts.linuxFundamentals.name}`)
