@@ -35,9 +35,11 @@ export function ExamQuiz({ questions, certificationName, certificationSlug, cert
     const { data: session } = useSession();
     const [currentQuestion, setCurrentQuestion] = useState(initialQuestion);
     const [score, setScore] = useState(0);
+    const [sessionScore, setSessionScore] = useState(0); // Live session score
     const [answeredQuestions, setAnsweredQuestions] = useState<Set<number>>(new Set());
     const [isCompleted, setIsCompleted] = useState(false);
     const [totalPoints, setTotalPoints] = useState(0);
+    const [canProceed, setCanProceed] = useState(false);
 
     // Initialize state from localStorage if available, or from user progress if logged in
     useEffect(() => {
@@ -67,6 +69,10 @@ export function ExamQuiz({ questions, certificationName, certificationSlug, cert
             }
         };
 
+        // Reset session score when component mounts
+        setSessionScore(0);
+        setCanProceed(false);
+
         if (session?.user?.id && certificationId) {
             // Fetch user progress from API
             fetchUserProgress();
@@ -82,6 +88,11 @@ export function ExamQuiz({ questions, certificationName, certificationSlug, cert
             }
         }
     }, [certificationSlug, certificationId, session?.user?.id]);
+
+    // Reset state when question changes
+    useEffect(() => {
+        setCanProceed(false);
+    }, [currentQuestion]);
 
     const saveQuizAttempt = async () => {
         if (!session?.user?.id || !certificationId) return;
@@ -158,6 +169,11 @@ export function ExamQuiz({ questions, certificationName, certificationSlug, cert
         const newScore = isCorrect ? score + 1 : score;
         const newTotalPoints = isCorrect ? totalPoints + points : totalPoints;
 
+        // Update session score (live scoring)
+        if (isCorrect) {
+            setSessionScore(prev => prev + 1);
+        }
+
         setAnsweredQuestions(newAnsweredQuestions);
         setScore(newScore);
         setTotalPoints(newTotalPoints);
@@ -167,10 +183,17 @@ export function ExamQuiz({ questions, certificationName, certificationSlug, cert
         saveProgress(currentQuestion, newScore, newTotalPoints, isCompleted);
     };
 
+    const handleSubmit = (isCorrect: boolean, canProceed: boolean) => {
+        setCanProceed(canProceed);
+    };
+
     const handleNext = () => {
+        if (!canProceed) return; // Only proceed if current question is correct
+
         if (currentQuestion < questions.length - 1) {
             const nextQuestion = currentQuestion + 1;
             setCurrentQuestion(nextQuestion);
+            setCanProceed(false); // Reset for next question
             updateURL(nextQuestion);
             saveProgress(nextQuestion, score, totalPoints, false);
         } else {
@@ -194,9 +217,11 @@ export function ExamQuiz({ questions, certificationName, certificationSlug, cert
     const handleRestart = () => {
         setCurrentQuestion(0);
         setScore(0);
+        setSessionScore(0); // Reset session score
         setTotalPoints(0);
         setAnsweredQuestions(new Set());
         setIsCompleted(false);
+        setCanProceed(false);
 
         // Clear saved state
         if (certificationSlug && !session?.user?.id) {
@@ -267,12 +292,24 @@ export function ExamQuiz({ questions, certificationName, certificationSlug, cert
                     </div>
                 </div>
                 <Progress value={progress} className="w-full" />
+
+                {/* Live Session Stats */}
+                <div className="mt-2 text-center">
+                    <span className="text-sm text-green-600 font-medium">
+                        Session Correct: {sessionScore}
+                    </span>
+                    <span className="text-sm text-slate-500 mx-2">|</span>
+                    <span className="text-sm text-slate-600">
+                        Total Points: {totalPoints}
+                    </span>
+                </div>
             </div>
 
             <div className="mb-6">
                 <QuestionCard
                     question={questions[currentQuestion]}
                     onAnswer={handleAnswer}
+                    onSubmit={handleSubmit}
                 />
             </div>
 
@@ -286,16 +323,20 @@ export function ExamQuiz({ questions, certificationName, certificationSlug, cert
                 </Button>
 
                 <div className="text-sm text-slate-600 text-center">
-                    <div>Score: <span className="font-medium">{score}/{answeredQuestions.size}</span></div>
-                    <div>Points: <span className="font-medium">{totalPoints}</span></div>
+                    <span className="font-medium">
+                        {canProceed ? "Ready to proceed!" : "Submit your answer to continue"}
+                    </span>
                 </div>
 
-                <Button
-                    onClick={handleNext}
-                    disabled={!answeredQuestions.has(currentQuestion)}
-                >
-                    {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
-                </Button>
+                {canProceed ? (
+                    <Button onClick={handleNext} className="bg-green-600 hover:bg-green-700">
+                        {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
+                    </Button>
+                ) : (
+                    <Button disabled className="bg-slate-300">
+                        {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
+                    </Button>
+                )}
             </div>
         </div>
     );
