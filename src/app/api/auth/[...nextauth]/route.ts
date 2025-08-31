@@ -1,4 +1,4 @@
-import { createAuthHandler } from "@/lib/auth"
+import createAuthHandler from "@/lib/auth"
 import { NextRequest } from "next/server"
 
 // Create the handler instance
