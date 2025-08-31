@@ -5,6 +5,8 @@ import { PrismaClient } from "@/generated/prisma"
 
 const prisma = new PrismaClient()
 
+console.log("process.env", process.env)
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
