@@ -2,20 +2,20 @@ import NextAuth, { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { PrismaClient } from "@/generated/prisma"
+import { getRequiredEnv } from "./env"
 
 const prisma = new PrismaClient()
 
-console.log("process.env", process.env)
-
+// Create auth options with validated environment configuration
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: getRequiredEnv('GOOGLE_CLIENT_ID'),
+      clientSecret: getRequiredEnv('GOOGLE_CLIENT_SECRET'),
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: getRequiredEnv('NEXTAUTH_SECRET'),
   callbacks: {
     async session({ session, user }) {
       if (session?.user && user?.id) {
@@ -29,5 +29,5 @@ export const authOptions: NextAuthOptions = {
   },
 }
 
-export const handler = NextAuth(authOptions)
-export { handler as GET, handler as POST }
+// Export NextAuth handler
+export default NextAuth(authOptions)
