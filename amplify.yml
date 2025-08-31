@@ -1,0 +1,30 @@
+version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - "echo 'Backend build phase - No backend commands needed'"
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - "echo 'Installing dependencies...'"
+        - "npm ci"
+        - "echo 'Generating Prisma client...'"
+        - "npx prisma generate"
+        - "echo 'Running database migrations...'"
+        - "npx prisma db push"
+        - "echo 'Seeding database...'"
+        - "npm run db:seed"
+    build:
+      commands:
+        - "echo 'Building Next.js application...'"
+        - "npm run build"
+  artifacts:
+    baseDirectory: .next
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - "node_modules/**/*"
+      - ".next/cache/**/*"
