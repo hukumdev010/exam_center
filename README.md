@@ -76,19 +76,26 @@ A comprehensive Next.js application for managing exam questions across multiple 
 6. Copy the Client ID and Client Secret to your `.env` file
 
 ### Environment Variables
-Update your `.env` file with the following:
+
+This application uses AWS Secrets Manager for secure environment variable management in production. For production deployment, see [AWS Secrets Setup Guide](./docs/AWS_SECRETS_SETUP.md).
+
+For local development, update your `.env` file with the following:
 ```bash
 # PostgreSQL database connection
 DATABASE_URL="postgresql://postgres:postgres@db:5432/exam_center"
 
-# NextAuth.js configuration
+# NextAuth.js configuration  
 NEXTAUTH_SECRET="your-secret-key-change-this-in-production"
-NEXTAUTH_URL="http://localhost:3000"
 
 # Google OAuth credentials
 GOOGLE_CLIENT_ID="your-google-client-id"
 GOOGLE_CLIENT_SECRET="your-google-client-secret"
+
+# AWS Configuration (optional for local development)
+AWS_REGION="us-east-1"
 ```
+
+**Production Note**: In production, these variables are automatically loaded from AWS Secrets Manager using the secret name `examCenterCredentials`.
 
 5. Start the development server: `npm run dev`
 6. Open [http://localhost:3000](http://localhost:3000) in your browser

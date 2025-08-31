@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { getSecretJson } from "./secrets"
 
 // Define environment schema with validation
 const envSchema = z.object({
@@ -18,10 +19,23 @@ const envSchema = z.object({
 
 type EnvConfig = z.infer<typeof envSchema>
 
-// Validate environment variables
-function validateEnv(): EnvConfig {
+// Cache for environment configuration
+let envConfigCache: EnvConfig | null = null
+const STATIC_SECRET_NAME = "examCenterCredentials"
+
+// Validate environment variables from AWS Secrets Manager
+async function validateEnv(): Promise<EnvConfig> {
   try {
-    return envSchema.parse(process.env)
+    // Get secrets from AWS Secrets Manager using static secret name
+    const secrets = await getSecretJson(STATIC_SECRET_NAME)
+    
+    // Merge with process.env, giving priority to secrets
+    const envVars = {
+      ...process.env,
+      ...secrets,
+    }
+    
+    return envSchema.parse(envVars)
   } catch (error) {
     if (error instanceof z.ZodError) {
       const errorMessages = error.issues.map(issue => 
@@ -33,17 +47,37 @@ function validateEnv(): EnvConfig {
   }
 }
 
-// Get environment configuration
-export function getEnvConfig(): EnvConfig {
-  return validateEnv()
+// Get environment configuration (async version)
+export async function getEnvConfig(): Promise<EnvConfig> {
+  if (envConfigCache) {
+    return envConfigCache
+  }
+  
+  envConfigCache = await validateEnv()
+  return envConfigCache
 }
 
-// Simple getters for common environment values
-export function getEnv(key: keyof EnvConfig): string | undefined {
+// Simple getters for common environment values (async versions)
+export async function getEnv(key: keyof EnvConfig): Promise<string | undefined> {
+  const config = await getEnvConfig()
+  return config[key] as string | undefined
+}
+
+export async function getRequiredEnv(key: keyof EnvConfig): Promise<string> {
+  const config = await getEnvConfig()
+  const value = config[key] as string
+  if (!value) {
+    throw new Error(`Required environment variable ${String(key)} is not set`)
+  }
+  return value
+}
+
+// Synchronous fallback functions for backward compatibility (use process.env directly)
+export function getEnvSync(key: keyof EnvConfig): string | undefined {
   return process.env[key] as string | undefined
 }
 
-export function getRequiredEnv(key: keyof EnvConfig): string {
+export function getRequiredEnvSync(key: keyof EnvConfig): string {
   const value = process.env[key] as string
   if (!value) {
     throw new Error(`Required environment variable ${String(key)} is not set`)

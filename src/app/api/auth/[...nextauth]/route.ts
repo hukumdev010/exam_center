@@ -1,6 +1,20 @@
+import { getAuthOptions } from "@/lib/auth"
+import { NextRequest } from "next/server"
 import NextAuth from "next-auth"
-import { authOptions } from "@/lib/auth"
 
-const handler = NextAuth(authOptions)
+// Create dynamic handlers that use async auth options
+async function createHandler() {
+  const authOptions = await getAuthOptions()
+  const handler = NextAuth(authOptions)
+  return handler
+}
 
-export { handler as GET, handler as POST }
+export async function GET(req: NextRequest) {
+  const handler = await createHandler()
+  return handler(req)
+}
+
+export async function POST(req: NextRequest) {
+  const handler = await createHandler()
+  return handler(req)
+}
