@@ -1,0 +1,15 @@
+// API configuration for FastAPI backend
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+
+export const API_ENDPOINTS = {
+  categories: `${API_BASE_URL}/api/categories`,
+  certifications: (slug: string) => `${API_BASE_URL}/api/certifications/${slug}`,
+  progress: `${API_BASE_URL}/api/progress`,
+  quizAttempts: `${API_BASE_URL}/api/quiz-attempts`,
+  auth: {
+    google: `${API_BASE_URL}/api/auth/google`,
+    logout: `${API_BASE_URL}/api/auth/logout`,
+  }
+}
+
+export default API_BASE_URL

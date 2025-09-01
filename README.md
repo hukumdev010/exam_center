@@ -1,6 +1,28 @@
-# Exam Center
+# Exam Center - Monorepo
 
-A comprehensive Next.js application for managing exam questions across multiple subjects and certifications, using PostgreSQL and Prisma ORM. Features Google authentication, progress tracking, and modern UI components with shadcn/ui.
+A comprehensive monorepo containing both frontend (Next.js) and backend (FastAPI) applications for managing exam questions across multiple subjects and certifications. Uses PostgreSQL and Prisma ORM with Google authentication, progress tracking, and modern UI components.
+
+## Architecture
+
+This project is structured as a monorepo with separate frontend and backend applications:
+
+```
+exam_center/
+├── frontend/          # Next.js application
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── Dockerfile
+├── backend/           # FastAPI application  
+│   ├── main.py
+│   ├── prisma/
+│   ├── routers/
+│   ├── package.json
+│   └── Dockerfile
+├── package.json       # Root package.json for monorepo management
+├── docker-compose.yml # Multi-service Docker setup
+└── README.md
+```
 
 ## Features
 - 🔐 **Google OAuth Authentication** - Secure sign-in with Google
@@ -10,6 +32,7 @@ A comprehensive Next.js application for managing exam questions across multiple 
 - 💾 **Resume Quizzes** - Continue where you left off
 - 🎨 **Modern UI** - Beautiful interface with shadcn/ui components
 - 🔄 **Real-time Updates** - Progress synced across devices
+- 🏗️ **Monorepo Architecture** - Organized codebase with separate frontend/backend
 
 ## Available Subjects & Certifications
 
@@ -53,46 +76,61 @@ A comprehensive Next.js application for managing exam questions across multiple 
 ### Prerequisites
 - Docker and Docker Compose
 - VS Code with Remote-Containers extension
+- Node.js 20+ (if running without Docker)
+- Python 3.11+ (for backend development)
 - Google OAuth credentials (for authentication)
 
 ### Setup Instructions
+
+#### Option 1: Using DevContainer (Recommended)
 1. Clone the repository
 2. Open in VS Code
 3. When prompted, choose "Reopen in Container"
 4. The devcontainer will automatically:
    - Start PostgreSQL database
-   - Install npm dependencies
+   - Install all dependencies (frontend + backend)
    - Generate Prisma client
    - Push database schema
    - Seed the database with initial data
 
-### Google OAuth Setup
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select an existing one
-3. Enable the Google+ API and Google OAuth2 API
-4. Go to "Credentials" and create OAuth 2.0 Client IDs
-5. Add authorized redirect URIs:
-   - `http://localhost:3000/api/auth/callback/google` (for development)
-6. Copy the Client ID and Client Secret to your `.env` file
+#### Option 2: Manual Setup
+```bash
+# Install root dependencies
+npm install
+
+# Install frontend dependencies
+cd frontend && npm install
+
+# Install backend dependencies  
+cd ../backend && npm install
+pip install -r requirements.txt
+
+# Setup database
+cd .. && npm run db:generate
+npm run db:migrate
+npm run db:seed
+```
 
 ### Environment Variables
 
-This application uses AWS Secrets Manager for secure environment variable management in production. For production deployment, see [AWS Secrets Setup Guide](./docs/AWS_SECRETS_SETUP.md).
+Create `.env` files in both `frontend/` and `backend/` directories based on the `.env.example` files provided.
 
-For local development, update your `.env` file with the following:
+#### Frontend Environment (`frontend/.env`)
 ```bash
-# PostgreSQL database connection
-DATABASE_URL="postgresql://postgres:postgres@db:5432/exam_center"
-
-# NextAuth.js configuration  
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/exam_center"
 NEXTAUTH_SECRET="your-secret-key-change-this-in-production"
-
-# Google OAuth credentials
 GOOGLE_CLIENT_ID="your-google-client-id"
 GOOGLE_CLIENT_SECRET="your-google-client-secret"
+NEXT_PUBLIC_API_URL="http://localhost:8000"
+```
 
-# AWS Configuration (optional for local development)
-AWS_REGION="us-east-1"
+#### Backend Environment (`backend/.env`)
+```bash
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/exam_center"
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+API_BASE_URL="http://localhost:8000"
+FRONTEND_URL="http://localhost:3000"
 ```
 
 **Production Note**: In production, these variables are automatically loaded from AWS Secrets Manager using the secret name `examCenterCredentials`.
@@ -121,34 +159,57 @@ AWS_REGION="us-east-1"
 
 ## Development
 
+### Running the Application
+
+#### Development Mode (Both Services)
+```bash
+# Run both frontend and backend concurrently
+npm run dev
+
+# Or run individually:
+npm run frontend:dev  # Runs on http://localhost:3000
+npm run backend:dev   # Runs on http://localhost:8000
+```
+
+#### Using Docker Compose
+```bash
+# Run all services (frontend, backend, database)
+npm run docker:dev
+
+# Build and run
+npm run docker:build
+```
+
 ### Database Operations
 ```bash
 # View database in Prisma Studio
-npx prisma studio
+cd backend && npm run db:studio
 
-# Reset database and reseed
-npx prisma db push --force-reset && npm run db:seed
+# Reset database and reseed  
+cd backend && npx prisma db push --force-reset && npm run db:seed
 
 # Create migration
-npx prisma migrate dev --name migration_name
+cd backend && npm run db:migrate
+
+# Generate Prisma client
+cd backend && npm run db:generate
 ```
 
-### Manual Database Setup (if needed)
+### Project Structure Commands
 ```bash
-# Generate Prisma client
-npx prisma generate
+# Install dependencies for specific workspace
+npm run install:frontend
+npm run install:backend
 
-# Push schema to database
-npx prisma db push
-
-# Seed database with initial data
-npm run db:seed
+# Build specific workspace
+npm run frontend:build
+npm run backend:build
 ```
 
 ### Adding UI Components
 ```bash
-# Add shadcn/ui components
-npx shadcn@latest add <component>
+# Add shadcn/ui components (run from frontend directory)
+cd frontend && npx shadcn@latest add <component>
 ```
 
 ## Database Schema

@@ -1,22 +1,26 @@
 {
-  "name": "exam_center_devcontainer",
+  "name": "exam_center_monorepo",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspaces/exam_center",
-  "forwardPorts": [3000, 5432],
-  "postCreateCommand": "npm install && npx prisma generate && npx prisma db push && npm run db:seed",
+  "forwardPorts": [3000, 8000, 5432],
+  "postCreateCommand": "npm install && npm run install:all && cd backend && npx prisma generate && npx prisma db push && npm run db:seed",
   "mounts": [
     "source=/home/bhabana_basnet/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
   ],
   "customizations": {
     "vscode": {
       "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash"
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "typescript.preferences.includePackageJsonAutoImports": "auto",
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
       },
       "extensions": [
         "ms-vscode.vscode-typescript-next",
         "bradlc.vscode-tailwindcss",
-        "prisma.prisma"
+        "prisma.prisma",
+        "ms-python.python",
+        "ms-python.flake8"
       ]
     }
   },
