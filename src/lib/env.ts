@@ -17,12 +17,12 @@ export async function getRequiredEnv(key: string): Promise<string> {
 
   try {
     // Try to get from process.env first (for development)
-    // if (process.env[key]) {
-    //   const value = process.env[key]!
-    //   envCache.set(key, value)
-    //   console.log(`Loaded ${key} from process.env`)
-    //   return value
-    // }
+    if (process.env[key]) {
+      const value = process.env[key]!
+      envCache.set(key, value)
+      console.log(`Loaded ${key} from process.env`)
+      return value
+    }
 
     // Fall back to AWS Secrets Manager with static secret name
     console.log(`Falling back to AWS Secrets Manager for ${key}`)
