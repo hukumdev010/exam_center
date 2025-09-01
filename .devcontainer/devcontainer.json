@@ -4,7 +4,8 @@
   "service": "app",
   "workspaceFolder": "/workspaces/exam_center",
   "forwardPorts": [3000, 8000, 5432],
-  "postCreateCommand": "npm install --prefix frontend && python3 -m venv backend/venv && source backend/venv/bin/activate && pip install -r backend/requirements.txt && cd backend && npx prisma generate && npx prisma db push && npm run db:seed",
+  "onCreateCommand": "cp /tmp/troubleshoot.sh /workspaces/exam_center/ && chmod +x /workspaces/exam_center/troubleshoot.sh && chmod +x /workspaces/exam_center/health-check.sh",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
   "mounts": [
     "source=/home/bhabana_basnet/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
   ],

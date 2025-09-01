@@ -17,6 +17,11 @@ RUN ln -sf /usr/bin/pip3 /usr/bin/pip
 # Install global npm packages
 RUN npm install -g prisma tsx concurrently
 
+# Copy and set permissions for devcontainer scripts
+COPY post-create.sh /tmp/post-create.sh
+COPY troubleshoot.sh /tmp/troubleshoot.sh
+RUN chmod +x /tmp/post-create.sh /tmp/troubleshoot.sh
+
 # Set up environment variables
 ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/exam_center"
 ENV PYTHONPATH="/workspaces/exam_center/backend"
