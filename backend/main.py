@@ -8,9 +8,13 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-from .routers import categories, certifications, progress, quiz_attempts, auth
-from .database import get_db_client, disconnect_db
-from .auth import get_current_user
+from routers.auth import router as auth_router
+from routers.categories import router as categories_router
+from routers.certifications import router as certifications_router
+from routers.progress import router as progress_router
+from routers.quiz_attempts import router as quiz_attempts_router
+from database import get_db_client, disconnect_db
+from auth import get_current_user
 
 # Database setup
 @asynccontextmanager
@@ -32,18 +36,18 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],  # Next.js dev server
+    allow_origins=["http://localhost:3000", "http://localhost:3001", "http://127.0.0.1:3000", "http://127.0.0.1:3001"],  # Next.js dev server
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Include routers
-app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
-app.include_router(categories.router, prefix="/api/categories", tags=["categories"])
-app.include_router(certifications.router, prefix="/api/certifications", tags=["certifications"])
-app.include_router(progress.router, prefix="/api/progress", tags=["progress"])
-app.include_router(quiz_attempts.router, prefix="/api/quiz-attempts", tags=["quiz-attempts"])
+app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
+app.include_router(categories_router, prefix="/api/categories", tags=["categories"])
+app.include_router(certifications_router, prefix="/api/certifications", tags=["certifications"])
+app.include_router(progress_router, prefix="/api/progress", tags=["progress"])
+app.include_router(quiz_attempts_router, prefix="/api/quiz-attempts", tags=["quiz-attempts"])
 
 @app.get("/")
 async def root():

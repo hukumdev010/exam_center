@@ -1,4 +1,4 @@
-import { PrismaClient } from '../src/generated/prisma'
+import { PrismaClient } from '../../frontend/src/generated/prisma'
 import { seedJavaScript } from './seeds/javascript'
 import { seedTypeScript } from './seeds/typescript'
 import { seedNodeJS } from './seeds/nodejs'

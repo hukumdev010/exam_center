@@ -6,7 +6,7 @@ from typing import Optional, Dict, Any
 from pydantic import BaseModel
 import os
 import httpx
-from .database import get_db
+from database import get_db
 
 security = HTTPBearer()
 
