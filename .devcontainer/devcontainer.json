@@ -4,7 +4,7 @@
   "service": "app",
   "workspaceFolder": "/workspaces/exam_center",
   "forwardPorts": [3000, 8000, 5432],
-  "onCreateCommand": "cp /tmp/troubleshoot.sh /workspaces/exam_center/ && chmod +x /workspaces/exam_center/troubleshoot.sh && chmod +x /workspaces/exam_center/health-check.sh",
+  "onCreateCommand": "cp /tmp/troubleshoot.sh /workspaces/exam_center/ && chmod +x /workspaces/exam_center/troubleshoot.sh 2>/dev/null || true",
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "mounts": [
     "source=/home/bhabana_basnet/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
@@ -19,7 +19,6 @@
       "extensions": [
         "ms-vscode.vscode-typescript-next",
         "bradlc.vscode-tailwindcss",
-        "prisma.prisma",
         "ms-python.python",
         "ms-python.flake8"
       ]

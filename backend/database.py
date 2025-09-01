@@ -1,22 +1,28 @@
-from prisma import Prisma
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker
+from models import Base
 import os
-import asyncio
+from typing import AsyncGenerator
 
-_db_client = None
+# Database URL from environment
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/exam_center")
 
-def get_db_client() -> Prisma:
-    global _db_client
-    if _db_client is None:
-        _db_client = Prisma()
-    return _db_client
+# Create async engine
+engine = create_async_engine(DATABASE_URL, echo=True)
 
-async def get_db():
-    db = get_db_client()
-    if not db.is_connected():
-        await db.connect()
-    return db
+# Create async session factory
+AsyncSessionLocal = sessionmaker(
+    engine, class_=AsyncSession, expire_on_commit=False
+)
 
-async def disconnect_db():
-    db = get_db_client()
-    if db.is_connected():
-        await db.disconnect()
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
+    async with AsyncSessionLocal() as session:
+        try:
+            yield session
+        finally:
+            await session.close()
+
+async def init_db():
+    """Initialize database tables"""
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)

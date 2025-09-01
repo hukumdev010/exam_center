@@ -13,18 +13,16 @@ from routers.categories import router as categories_router
 from routers.certifications import router as certifications_router
 from routers.progress import router as progress_router
 from routers.quiz_attempts import router as quiz_attempts_router
-from database import get_db_client, disconnect_db
+from database import init_db
 from auth import get_current_user
 
 # Database setup
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
-    db = get_db_client()
-    await db.connect()
+    await init_db()
     yield
-    # Shutdown
-    await disconnect_db()
+    # Shutdown - SQLAlchemy handles cleanup automatically
 
 app = FastAPI(
     title="Exam Center API",

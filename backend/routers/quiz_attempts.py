@@ -3,25 +3,30 @@ from pydantic import BaseModel
 from datetime import datetime
 from database import get_db
 from auth import get_current_user, UserSession
+from models import QuizAttempt as QuizAttemptModel
+from uuid import uuid4
 
 router = APIRouter()
 
 class QuizAttemptCreate(BaseModel):
-    certificationId: int
-    score: float
-    totalQuestions: int
-    correctAnswers: int
+    certification_id: int
+    score: int
+    total_questions: int
+    correct_answers: int
     points: int
 
 class QuizAttempt(BaseModel):
-    id: int
-    userId: str
-    certificationId: int
-    score: float
-    totalQuestions: int
-    correctAnswers: int
+    id: str
+    user_id: str
+    certification_id: int
+    score: int
+    total_questions: int
+    correct_answers: int
     points: int
-    attemptedAt: datetime
+    completed_at: datetime
+
+    class Config:
+        from_attributes = True
 
 @router.post("/", response_model=QuizAttempt)
 async def create_quiz_attempt(
@@ -31,16 +36,20 @@ async def create_quiz_attempt(
 ):
     """Save a completed quiz attempt"""
     try:
-        quiz_attempt = await db.quizattempt.create(
-            data={
-                "userId": current_user.user.id,
-                "certificationId": attempt_data.certificationId,
-                "score": attempt_data.score,
-                "totalQuestions": attempt_data.totalQuestions,
-                "correctAnswers": attempt_data.correctAnswers,
-                "points": attempt_data.points
-            }
+        quiz_attempt = QuizAttemptModel(
+            id=str(uuid4()),
+            user_id=current_user.user.id,
+            certification_id=attempt_data.certification_id,
+            score=attempt_data.score,
+            total_questions=attempt_data.total_questions,
+            correct_answers=attempt_data.correct_answers,
+            points=attempt_data.points,
+            completed_at=datetime.now()
         )
+        
+        db.add(quiz_attempt)
+        await db.commit()
+        await db.refresh(quiz_attempt)
         
         return quiz_attempt
     except Exception as e:

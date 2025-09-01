@@ -1,12 +1,13 @@
 from fastapi import HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from google.auth.transport import requests
-from google.oauth2 import id_token
+from sqlalchemy import select
 from typing import Optional, Dict, Any
 from pydantic import BaseModel
 import os
 import httpx
 from database import get_db
+from models import User as UserModel
+from uuid import uuid4
 
 security = HTTPBearer()
 
@@ -16,28 +17,11 @@ class User(BaseModel):
     name: Optional[str] = None
     image: Optional[str] = None
 
+    class Config:
+        from_attributes = True
+
 class UserSession(BaseModel):
     user: User
-
-async def verify_google_token(token: str) -> Dict[str, Any]:
-    """Verify Google ID token and return user info"""
-    try:
-        # Verify the token with Google
-        idinfo = id_token.verify_oauth2_token(
-            token, 
-            requests.Request(), 
-            os.getenv("GOOGLE_CLIENT_ID")
-        )
-        
-        if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
-            raise ValueError('Wrong issuer.')
-            
-        return idinfo
-    except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"Invalid token: {str(e)}"
-        )
 
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
@@ -49,38 +33,41 @@ async def get_current_user(
         # In production, implement proper JWT verification
         token = credentials.credentials
         
-        # Verify with Google (in production)
-        # For now, let's implement a simple mock verification
-        if token.startswith("google_"):
-            # Mock Google token verification
-            user_info = await verify_google_token(token.replace("google_", ""))
-            user_id = user_info["sub"]
-            email = user_info["email"]
-            name = user_info.get("name")
-            picture = user_info.get("picture")
+        # For development - simple mock authentication
+        # This is NOT secure and should be replaced with proper auth
+        if token == "dev-user":
+            # Mock user for development
+            user_id = "dev-user-123"
+            email = "dev@example.com"
+            name = "Development User"
+            picture = None
         else:
-            # For development - extract user info from token
-            # This is NOT secure and should be replaced with proper auth
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid token format"
             )
         
         # Get or create user in database
-        user = await db.user.upsert(
-            where={"email": email},
-            data={
-                "update": {
-                    "name": name,
-                    "image": picture,
-                },
-                "create": {
-                    "email": email,
-                    "name": name,
-                    "image": picture,
-                }
-            }
-        )
+        stmt = select(UserModel).where(UserModel.email == email)
+        result = await db.execute(stmt)
+        user = result.scalar_one_or_none()
+        
+        if user:
+            # Update user info
+            user.name = name
+            user.image = picture
+        else:
+            # Create new user
+            user = UserModel(
+                id=user_id,
+                email=email,
+                name=name,
+                image=picture
+            )
+            db.add(user)
+        
+        await db.commit()
+        await db.refresh(user)
         
         return UserSession(
             user=User(

@@ -55,46 +55,38 @@ else
     print_error "Failed to install Python dependencies"
 fi
 
-# Install backend npm dependencies (needed for prisma and tsx)
-echo "📦 Installing backend npm dependencies..."
-if npm install; then
-    print_status "Backend npm dependencies installed"
+# Run Alembic migration to create tables
+echo "🗄️ Running database migrations..."
+if source venv/bin/activate && alembic upgrade head; then
+    print_status "Database migrations completed"
 else
-    print_error "Failed to install backend npm dependencies"
-fi
-
-# Generate Prisma client
-echo "🔧 Generating Prisma client..."
-if source venv/bin/activate && npx prisma generate --schema=prisma/schema.prisma; then
-    print_status "Prisma client generated"
-else
-    print_error "Failed to generate Prisma client"
-fi
-
-# Push database schema
-echo "🗄️ Pushing database schema..."
-if source venv/bin/activate && npx prisma db push --schema=prisma/schema.prisma; then
-    print_status "Database schema pushed"
-else
-    print_error "Failed to push database schema"
+    echo "⚠️ Database migrations failed, creating tables manually..."
+    # If Alembic fails, we'll let the seed script create tables
 fi
 
 # Seed database
 echo "🌱 Seeding database..."
-if source venv/bin/activate && npm run db:seed; then
+if source venv/bin/activate && python scripts/seed.py; then
     print_status "Database seeded successfully"
 else
     echo "⚠️ Database seeding failed, but continuing..."
-    echo "ℹ️ You can manually seed the database later with: cd backend && source venv/bin/activate && npm run db:seed"
+    echo "ℹ️ You can manually seed the database later with: cd backend && source venv/bin/activate && python scripts/seed.py"
 fi
 
 # Return to workspace root
 cd /workspaces/exam_center
 
+# Make troubleshoot script executable (with error handling for mounted filesystem permissions)
+chmod +x troubleshoot.sh 2>/dev/null || echo "⚠️ Could not make troubleshoot.sh executable, use: bash troubleshoot.sh"
+
 print_status "Devcontainer setup completed successfully!"
 echo ""
 echo "🎉 Setup complete! You can now start development:"
 echo "   📱 Frontend: npm run dev --prefix frontend"
-echo "   🔧 Backend: cd backend && source venv/bin/activate && npm run dev"
-echo "   🗄️  Database Studio: cd backend && source venv/bin/activate && npm run db:studio"
+echo "   🔧 Backend: cd backend && source venv/bin/activate && python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000"
+echo "   🗄️  Create Migration: cd backend && source venv/bin/activate && alembic revision --autogenerate -m 'description'"
+echo "   🔄 Run Migrations: cd backend && source venv/bin/activate && alembic upgrade head"
+echo "   🌱 Seed Database: cd backend && source venv/bin/activate && python scripts/seed.py"
+echo "   🔍 Troubleshoot: ./troubleshoot.sh or bash troubleshoot.sh"
+echo "   🏥 Health Check: bash /tmp/health-check.sh"
 echo ""
