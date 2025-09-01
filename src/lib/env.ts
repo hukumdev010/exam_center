@@ -1,94 +1,61 @@
-import { z } from "zod"
-import { getSecretJson } from "./secrets"
+import { getSecretJson } from './secrets'
 
-// Define environment schema with validation
-const envSchema = z.object({
-  // Google OAuth
-  GOOGLE_CLIENT_ID: z.string().min(1, "GOOGLE_CLIENT_ID is required"),
-  GOOGLE_CLIENT_SECRET: z.string().min(1, "GOOGLE_CLIENT_SECRET is required"),
-  
-  // NextAuth
-  NEXTAUTH_SECRET: z.string().min(32, "NEXTAUTH_SECRET must be at least 32 characters"),
-  
-  // Database
-  DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
-  
-  // Environment
-  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-})
+// Cache for environment variables
+const envCache = new Map<string, string>()
 
-type EnvConfig = z.infer<typeof envSchema>
+// Static secret name as defined in documentation
+const SECRET_NAME = 'examCenterCredentials'
 
-// Cache for environment configuration
-let envConfigCache: EnvConfig | null = null
-const STATIC_SECRET_NAME = "examCenterCredentials"
+/**
+ * Get required environment variable from AWS Secrets Manager with caching
+ */
+export async function getRequiredEnv(key: string): Promise<string> {
+  // Check cache first
+  if (envCache.has(key)) {
+    return envCache.get(key)!
+  }
 
-// Validate environment variables from AWS Secrets Manager
-async function validateEnv(): Promise<EnvConfig> {
   try {
-    // Get secrets from AWS Secrets Manager using static secret name
-    const secrets = await getSecretJson(STATIC_SECRET_NAME)
-    
-    // Merge with process.env, giving priority to secrets
-    const envVars = {
-      ...process.env,
-      ...secrets,
+    // Try to get from process.env first (for development)
+    if (process.env[key]) {
+      const value = process.env[key]!
+      envCache.set(key, value)
+      console.log(`Loaded ${key} from process.env`)
+      return value
     }
+
+    // Fall back to AWS Secrets Manager with static secret name
+    console.log(`Falling back to AWS Secrets Manager for ${key}`)
+    const secrets = await getSecretJson(SECRET_NAME)
+    console.log("Printing the secrets", secrets)
     
-    return envSchema.parse(envVars)
+    if (key in secrets && typeof secrets[key] === 'string') {
+      const value = secrets[key] as string
+      envCache.set(key, value)
+      return value
+    }
+
+    throw new Error(`Required environment variable ${key} not found in secrets`)
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      const errorMessages = error.issues.map(issue => 
-        `${issue.path.join('.')}: ${issue.message}`
-      ).join('\n')
-      throw new Error(`Environment validation failed:\n${errorMessages}`)
-    }
+    console.error(`Error getting required env variable ${key}:`, error)
     throw error
   }
 }
 
-// Get environment configuration (async version)
-export async function getEnvConfig(): Promise<EnvConfig> {
-  if (envConfigCache) {
-    return envConfigCache
+/**
+ * Get optional environment variable with default value
+ */
+export async function getOptionalEnv(key: string, defaultValue: string): Promise<string> {
+  try {
+    return await getRequiredEnv(key)
+  } catch {
+    return defaultValue
   }
-  
-  envConfigCache = await validateEnv()
-  return envConfigCache
 }
 
-// Simple getters for common environment values (async versions)
-export async function getEnv(key: keyof EnvConfig): Promise<string | undefined> {
-  const config = await getEnvConfig()
-  return config[key] as string | undefined
-}
-
-export async function getRequiredEnv(key: keyof EnvConfig): Promise<string> {
-  const config = await getEnvConfig()
-  const value = config[key] as string
-  if (!value) {
-    throw new Error(`Required environment variable ${String(key)} is not set`)
-  }
-  return value
-}
-
-// Synchronous fallback functions for backward compatibility (use process.env directly)
-export function getEnvSync(key: keyof EnvConfig): string | undefined {
-  return process.env[key] as string | undefined
-}
-
-export function getRequiredEnvSync(key: keyof EnvConfig): string {
-  const value = process.env[key] as string
-  if (!value) {
-    throw new Error(`Required environment variable ${String(key)} is not set`)
-  }
-  return value
-}
-
-export function isDevelopment(): boolean {
-  return process.env.NODE_ENV === 'development'
-}
-
-export function isProduction(): boolean {
-  return process.env.NODE_ENV === 'production'
+/**
+ * Clear the environment cache (useful for testing or refreshing secrets)
+ */
+export function clearEnvCache(): void {
+  envCache.clear()
 }

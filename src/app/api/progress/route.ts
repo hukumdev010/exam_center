@@ -31,6 +31,8 @@ export async function GET() {
       { error: "Failed to fetch progress" },
       { status: 500 }
     )
+  } finally {
+    await prisma.$disconnect()
   }
 }
 
@@ -87,5 +89,7 @@ export async function POST(request: NextRequest) {
       { error: "Failed to update progress" },
       { status: 500 }
     )
+  } finally {
+    await prisma.$disconnect()
   }
 }

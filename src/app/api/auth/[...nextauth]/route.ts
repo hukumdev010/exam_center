@@ -1,11 +1,6 @@
-import { getAuthOptions } from "@/lib/auth"
-import NextAuth from "next-auth"
+import { createAuthHandler } from "@/lib/auth"
 
-// Create the handler with async auth options
-const handler = async (req: Request, context: { params: { nextauth: string[] } }) => {
-  const authOptions = await getAuthOptions()
-  const authHandler = NextAuth(authOptions)
-  return authHandler(req, context)
-}
+// Get the auth handler
+const handler = await createAuthHandler()
 
 export { handler as GET, handler as POST }

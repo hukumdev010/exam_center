@@ -33,5 +33,7 @@ export async function POST(request: NextRequest) {
       { error: "Failed to save quiz attempt" },
       { status: 500 }
     )
+  } finally {
+    await prisma.$disconnect()
   }
 }
