@@ -8,7 +8,7 @@ from typing import AsyncGenerator
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/exam_center")
 
 # Create async engine
-engine = create_async_engine(DATABASE_URL, echo=True)
+engine = create_async_engine(DATABASE_URL, echo=False)
 
 # Create async session factory
 AsyncSessionLocal = sessionmaker(
