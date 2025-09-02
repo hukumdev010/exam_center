@@ -28,7 +28,7 @@ type Certification = {
     slug: string;
     level: string;
     duration: number;
-    questionsCount: number;
+    questions_count: number;
     questions: Question[];
 };
 

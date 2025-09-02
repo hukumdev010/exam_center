@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession } from "@/lib/useAuth";
 import { QuestionCard } from "./QuestionCard";
 import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";

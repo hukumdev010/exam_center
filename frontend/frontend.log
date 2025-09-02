@@ -1,0 +1,78 @@
+nohup: ignoring input
+
+> exam_center_frontend@0.1.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use by an unknown process, using available port 3001 instead.
+   ▲ Next.js 15.5.0
+   - Local:        http://localhost:3001
+   - Network:      http://172.19.0.2:3001
+
+ ✓ Starting...
+ ✓ Ready in 27.4s
+ ○ Compiling / ...
+ ✓ Compiled / in 23s (801 modules)
+ GET / 200 in 27014ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 5.1s (788 modules)
+ GET /api/categories 404 in 6353ms
+ GET / 200 in 463ms
+ GET /?id=5df215ea-3b55-4d0c-ba71-48a93dbf3733&vscodeBrowserReqId=1756809843283 200 in 224ms
+ GET /api/auth/session 404 in 170ms
+ POST /api/auth/_log 404 in 320ms
+ GET / 200 in 442ms
+ ○ Compiling /quiz/[certification] ...
+ ✓ Compiled /quiz/[certification] in 4.7s (800 modules)
+ GET /quiz/aws-solutions-architect-associate 200 in 24914ms
+ GET / 200 in 478ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.8s (805 modules)
+ GET /favicon.ico 200 in 3770ms
+ GET /api/auth/session 404 in 3421ms
+ POST /api/auth/_log 404 in 285ms
+ ○ Compiling /quiz/[certification] ...
+ ✓ Compiled /quiz/[certification] in 1275ms (498 modules)
+ GET /quiz/aws-solutions-architect-associate 200 in 2312ms
+ GET / 200 in 601ms
+ GET /api/auth/session 404 in 371ms
+ POST /api/auth/_log 404 in 268ms
+ GET /api/auth/providers 404 in 208ms
+ POST /api/auth/_log 404 in 407ms
+ GET /api/auth/error 404 in 459ms
+ GET /api/auth/session 404 in 363ms
+ POST /api/auth/_log 404 in 322ms
+ GET / 200 in 315ms
+ GET /api/auth/session 404 in 235ms
+ POST /api/auth/_log 404 in 212ms
+ GET /?id=5df215ea-3b55-4d0c-ba71-48a93dbf3733&vscodeBrowserReqId=1756811818391 200 in 234ms
+ GET /api/auth/session 404 in 600ms
+ POST /api/auth/_log 404 in 457ms
+ GET / 200 in 238ms
+ GET /favicon.ico 200 in 348ms
+ GET /api/auth/session 404 in 329ms
+ POST /api/auth/_log 404 in 378ms
+ ⨯ ./node_modules/next-auth/react/index.js
+Error: ENOENT: no such file or directory, open '/workspaces/exam_center/frontend/node_modules/next-auth/react/index.js'
+
+Import trace for requested module:
+./node_modules/next-auth/react/index.js
+./src/components/Providers.tsx
+ ○ Compiling /_error ...
+ ⨯ ./node_modules/next-auth/react/index.js
+Error: ENOENT: no such file or directory, open '/workspaces/exam_center/frontend/node_modules/next-auth/react/index.js'
+
+Import trace for requested module:
+./node_modules/next-auth/react/index.js
+./src/components/Providers.tsx
+ GET / 500 in 36330ms
+ GET / 500 in 15368ms
+ GET /?id=5df215ea-3b55-4d0c-ba71-48a93dbf3733&vscodeBrowserReqId=1756811818391 500 in 13221ms
+ GET /?id=5df215ea-3b55-4d0c-ba71-48a93dbf3733&vscodeBrowserReqId=1756811818391 500 in 1557ms
+ GET /?id=5df215ea-3b55-4d0c-ba71-48a93dbf3733&vscodeBrowserReqId=1756811818391 500 in 795ms
+ ⨯ ./node_modules/next-auth/react/index.js
+Error: ENOENT: no such file or directory, open '/workspaces/exam_center/frontend/node_modules/next-auth/react/index.js'
+
+Import trace for requested module:
+./node_modules/next-auth/react/index.js
+./src/components/Providers.tsx
+ GET /favicon.ico 500 in 1884ms

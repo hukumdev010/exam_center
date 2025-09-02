@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession } from "@/lib/useAuth";
 import { CategorySelector } from "@/components/CategorySelector";
 import { ProgressDashboard } from "@/components/ProgressDashboard";
 import { AuthButton } from "@/components/AuthButton";

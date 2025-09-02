@@ -28,7 +28,7 @@ class Question(BaseModel):
     class Config:
         from_attributes = True
 
-class Certification(BaseModel):
+class SimpleCertification(BaseModel):
     id: int
     name: str
     slug: str
@@ -38,7 +38,6 @@ class Certification(BaseModel):
     questions_count: int | None
     is_active: bool
     category_id: int
-    questions: List[Question] = []
 
     class Config:
         from_attributes = True
@@ -50,7 +49,7 @@ class Category(BaseModel):
     slug: str
     icon: str | None
     color: str | None
-    certifications: List[Certification] = []
+    certifications: List[SimpleCertification] = []
 
     class Config:
         from_attributes = True
@@ -60,11 +59,17 @@ async def get_categories(db = Depends(get_db)):
     """Get all categories with their active certifications"""
     try:
         stmt = select(CategoryModel).options(
-            selectinload(CategoryModel.certifications).where(CertificationModel.is_active == True)
+            selectinload(CategoryModel.certifications)
         ).order_by(CategoryModel.name)
         
         result = await db.execute(stmt)
         categories = result.scalars().all()
+        
+        # Filter active certifications after loading
+        for category in categories:
+            category.certifications = [cert for cert in category.certifications if cert.is_active]
+        
         return categories
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Failed to fetch categories")
+        print(f"Categories API Error: {e}")  # Add logging
+        raise HTTPException(status_code=500, detail=f"Failed to fetch categories: {str(e)}")

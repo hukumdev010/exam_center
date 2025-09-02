@@ -22,7 +22,7 @@ type Certification = {
     slug: string;
     level: string;
     duration: number;
-    questionsCount: number;
+    questions_count: number;
 };
 
 interface CategorySelectorProps {
@@ -173,7 +173,7 @@ export function CategorySelector({ onCertificationSelect }: CategorySelectorProp
                                         </p>
 
                                         <div className="flex items-center justify-between text-xs text-slate-500 mb-4">
-                                            <span>{cert.questionsCount} Questions</span>
+                                            <span>{cert.questions_count} Questions</span>
                                             <span>{cert.duration} Minutes</span>
                                         </div>
 

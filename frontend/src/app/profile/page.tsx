@@ -1,12 +1,13 @@
 "use client"
 
-import { useSession } from "next-auth/react"
+import { useSession } from "@/lib/useAuth"
 import { useEffect, useState } from "react"
 import { AuthButton } from "@/components/AuthButton"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { Trophy, Target, Clock, BookOpen, Award, TrendingUp } from "lucide-react"
 import Link from "next/link"
+import { API_ENDPOINTS } from "@/lib/api-config"
 
 interface UserProgress {
     id: string
@@ -40,7 +41,7 @@ export default function ProfilePage() {
 
     const fetchData = async () => {
         try {
-            const progressRes = await fetch('/api/progress')
+            const progressRes = await fetch(API_ENDPOINTS.progress)
 
             if (progressRes.ok) {
                 const progressData = await progressRes.json()
