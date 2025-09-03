@@ -10,18 +10,15 @@ export function useAuth() {
   }))
 
   useEffect(() => {
-    // Only run on client side
-    if (typeof window !== 'undefined') {
-      // Get current state from service
-      setAuthState(authService.getState())
-      
-      // Ensure auth service is initialized
-      authService.ensureInitialized()
-      
-      // Subscribe to state changes
-      const unsubscribe = authService.subscribe(setAuthState)
-      return unsubscribe
-    }
+    // Get current state from service
+    setAuthState(authService.getState())
+    
+    // Ensure auth service is initialized
+    authService.ensureInitialized()
+    
+    // Subscribe to state changes
+    const unsubscribe = authService.subscribe(setAuthState)
+    return unsubscribe
   }, [])
 
   return {

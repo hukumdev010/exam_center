@@ -4,8 +4,10 @@ export class AuthService {
   private token: string | null = null;
 
   private constructor() {
-    if (typeof window !== 'undefined') {
+    try {
       this.token = localStorage.getItem('auth_token');
+    } catch {
+      this.token = null;
     }
   }
 
@@ -18,8 +20,10 @@ export class AuthService {
 
   setToken(token: string) {
     this.token = token;
-    if (typeof window !== 'undefined') {
+    try {
       localStorage.setItem('auth_token', token);
+    } catch {
+      // Ignore localStorage errors
     }
   }
 
@@ -29,8 +33,10 @@ export class AuthService {
 
   removeToken() {
     this.token = null;
-    if (typeof window !== 'undefined') {
+    try {
       localStorage.removeItem('auth_token');
+    } catch {
+      // Ignore localStorage errors
     }
   }
 

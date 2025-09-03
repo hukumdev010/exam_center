@@ -2,60 +2,12 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import selectinload
 from sqlalchemy import select
 from typing import List
-from pydantic import BaseModel
 from database import get_db
 from models import Certification as CertificationModel, Question as QuestionModel, Answer as AnswerModel, Category as CategoryModel
 
 router = APIRouter()
 
-class Answer(BaseModel):
-    id: int
-    text: str
-    is_correct: bool
-    question_id: int
-
-    class Config:
-        from_attributes = True
-
-class Question(BaseModel):
-    id: int
-    text: str
-    explanation: str | None
-    reference: str | None
-    certification_id: int
-    answers: List[Answer]
-
-    class Config:
-        from_attributes = True
-
-class Category(BaseModel):
-    id: int
-    name: str
-    description: str | None
-    slug: str
-    icon: str | None
-    color: str | None
-
-    class Config:
-        from_attributes = True
-
-class Certification(BaseModel):
-    id: int
-    name: str
-    slug: str
-    description: str | None
-    level: str | None
-    duration: int | None
-    questions_count: int | None
-    is_active: bool
-    category_id: int
-    questions: List[Question] = []
-    category: Category | None = None
-
-    class Config:
-        from_attributes = True
-
-@router.get("/{slug}", response_model=Certification)
+@router.get("/{slug}")
 async def get_certification(slug: str, db = Depends(get_db)):
     """Get certification by slug with questions and answers"""
     try:
@@ -72,8 +24,54 @@ async def get_certification(slug: str, db = Depends(get_db)):
         
         if not certification:
             raise HTTPException(status_code=404, detail="Certification not found")
+        
+        # Manually transform the data to use camelCase for the frontend
+        questions_data = []
+        for question in certification.questions:
+            answers_data = []
+            for answer in question.answers:
+                answers_data.append({
+                    "id": answer.id,
+                    "text": answer.text,
+                    "isCorrect": answer.is_correct,
+                    "question_id": answer.question_id
+                })
             
-        return certification
+            questions_data.append({
+                "id": question.id,
+                "text": question.text,
+                "explanation": question.explanation,
+                "reference": question.reference,
+                "points": question.points,
+                "certification_id": question.certification_id,
+                "answers": answers_data
+            })
+        
+        category_data = None
+        if certification.category:
+            category_data = {
+                "id": certification.category.id,
+                "name": certification.category.name,
+                "description": certification.category.description,
+                "slug": certification.category.slug,
+                "icon": certification.category.icon,
+                "color": certification.category.color
+            }
+        
+        return {
+            "id": certification.id,
+            "name": certification.name,
+            "slug": certification.slug,
+            "description": certification.description,
+            "level": certification.level,
+            "duration": certification.duration,
+            "questions_count": certification.questions_count,
+            "is_active": certification.is_active,
+            "category_id": certification.category_id,
+            "questions": questions_data,
+            "category": category_data
+        }
+        
     except HTTPException:
         raise
     except Exception as e:

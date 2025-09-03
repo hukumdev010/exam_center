@@ -26,42 +26,45 @@ class AuthService {
 
   // Helper method to safely access localStorage
   private getStorageItem(key: string): string | null {
-    if (typeof window !== 'undefined') {
+    try {
       return localStorage.getItem(key)
+    } catch {
+      return null
     }
-    return null
   }
 
   private setStorageItem(key: string, value: string): void {
-    if (typeof window !== 'undefined') {
+    try {
       localStorage.setItem(key, value)
+    } catch {
+      // Ignore localStorage errors
     }
   }
 
   private removeStorageItem(key: string): void {
-    if (typeof window !== 'undefined') {
+    try {
       localStorage.removeItem(key)
+    } catch {
+      // Ignore localStorage errors
     }
   }
 
   constructor() {
     // Initialize with loading state for SSR compatibility
-    if (typeof window !== 'undefined') {
-      // On client side, try to get initial state from localStorage
-      const token = localStorage.getItem('auth_token')
-      const userData = localStorage.getItem('user_data')
-      
-      if (token && userData) {
-        try {
-          const user = JSON.parse(userData)
-          this.state = {
-            user,
-            isAuthenticated: true,
-            isLoading: true // Still loading to verify token
-          }
-        } catch (error) {
-          console.error('Failed to parse user data:', error)
+    // On client side, try to get initial state from localStorage
+    const token = this.getStorageItem('auth_token')
+    const userData = this.getStorageItem('user_data')
+    
+    if (token && userData) {
+      try {
+        const user = JSON.parse(userData)
+        this.state = {
+          user,
+          isAuthenticated: true,
+          isLoading: true // Still loading to verify token
         }
+      } catch (error) {
+        console.error('Failed to parse user data:', error)
       }
     }
   }
@@ -108,7 +111,7 @@ class AuthService {
 
   // Public method to ensure initialization on client side
   ensureInitialized() {
-    if (typeof window !== 'undefined' && !this.initialized) {
+    if (!this.initialized) {
       this.initialized = true
       // Don't change loading state here since it's already true
       this.initializeAuth()

@@ -4,7 +4,7 @@ import { useSession } from "@/lib/useAuth"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-import { Trophy, Clock, Target, BookOpen } from "lucide-react"
+import { Trophy, Clock, Target } from "lucide-react"
 import { authService } from "@/lib/auth-service"
 import { API_ENDPOINTS } from "@/lib/api-config"
 
@@ -29,22 +29,23 @@ interface UserProgress {
 
 interface ProgressDashboardProps {
     onContinueQuiz: (slug: string) => void
-    onStartNewQuiz: () => void
 }
 
-export function ProgressDashboard({ onContinueQuiz, onStartNewQuiz }: ProgressDashboardProps) {
+export function ProgressDashboard({ onContinueQuiz }: ProgressDashboardProps) {
     const { data: session } = useSession()
     const [progress, setProgress] = useState<UserProgress[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         if (session?.user?.id) {
+            // TODO: Uncomment when progress endpoint is ready
             // fetchProgress()
         } else {
             setLoading(false)
         }
-    }, [])
+    }, [session?.user?.id])
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchProgress = async () => {
         console.log('ProgressDashboard: fetchProgress called');
         try {
@@ -175,26 +176,7 @@ export function ProgressDashboard({ onContinueQuiz, onStartNewQuiz }: ProgressDa
                 </div>
             )}
 
-            {/* Start New Quiz */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="bg-blue-600 rounded-full p-2">
-                            <BookOpen className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-gray-900">Start a New Quiz</h3>
-                            <p className="text-sm text-gray-600">Choose from our collection of certification exams</p>
-                        </div>
-                    </div>
-                    <Button
-                        onClick={onStartNewQuiz}
-                        className="bg-blue-600 hover:bg-blue-700"
-                    >
-                        Browse Quizzes
-                    </Button>
-                </div>
-            </div>
+            {/* Start New Quiz - Removed since certificates are shown directly on home page */}
         </div>
     )
 }
