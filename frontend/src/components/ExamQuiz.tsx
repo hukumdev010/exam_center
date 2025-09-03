@@ -6,8 +6,10 @@ import { useSession } from "@/lib/useAuth";
 import { QuestionCard } from "./QuestionCard";
 import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";
-import { RotateCcw, Trophy } from "lucide-react";
+import { RotateCcw, Trophy, GraduationCap, Maximize2, X } from "lucide-react";
 import { API_ENDPOINTS } from "@/lib/api-config";
+import { AIAssistantProvider } from "./AIAssistantContext";
+import { AIAssistantPanel } from "./AIAssistantPanel";
 
 type Answer = {
     id: number;
@@ -32,6 +34,20 @@ interface ExamQuizProps {
 }
 
 export function ExamQuiz({ questions, certificationName, certificationSlug, certificationId, initialQuestion = 0 }: ExamQuizProps) {
+    return (
+        <AIAssistantProvider>
+            <ExamQuizContent
+                questions={questions}
+                certificationName={certificationName}
+                certificationSlug={certificationSlug}
+                certificationId={certificationId}
+                initialQuestion={initialQuestion}
+            />
+        </AIAssistantProvider>
+    );
+}
+
+function ExamQuizContent({ questions, certificationName, certificationSlug, certificationId, initialQuestion = 0 }: ExamQuizProps) {
     const router = useRouter();
     const { data: session } = useSession();
     const [currentQuestion, setCurrentQuestion] = useState(initialQuestion);
@@ -41,49 +57,15 @@ export function ExamQuiz({ questions, certificationName, certificationSlug, cert
     const [isCompleted, setIsCompleted] = useState(false);
     const [totalPoints, setTotalPoints] = useState(0);
     const [canProceed, setCanProceed] = useState(false);
+    const [showFullScreenAI, setShowFullScreenAI] = useState(false);
 
     // Initialize state from localStorage if available, or from user progress if logged in
     useEffect(() => {
-        const fetchUserProgress = async () => {
-            try {
-                // For now, we'll use a mock token. In production, implement proper JWT handling
-                const token = localStorage.getItem('auth_token') || 'mock_token';
-                const response = await fetch(API_ENDPOINTS.progress, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                if (response.ok) {
-                    const progressData = await response.json();
-                    const currentProgress = progressData.find((p: { certificationId: number }) => p.certificationId === certificationId);
-
-                    if (currentProgress) {
-                        setCurrentQuestion(currentProgress.currentQuestion);
-                        setScore(currentProgress.correctAnswers);
-                        setTotalPoints(currentProgress.points);
-                        setIsCompleted(currentProgress.isCompleted);
-
-                        // Reconstruct answered questions based on current question
-                        const answered = new Set<number>();
-                        for (let i = 0; i < currentProgress.currentQuestion; i++) {
-                            answered.add(i);
-                        }
-                        setAnsweredQuestions(answered);
-                    }
-                }
-            } catch (error) {
-                console.error('Failed to fetch user progress:', error);
-            }
-        };
-
         // Reset session score when component mounts
         setSessionScore(0);
         setCanProceed(false);
 
-        if (session?.user?.id && certificationId) {
-            // Fetch user progress from API
-            // fetchUserProgress();
-        } else if (certificationSlug) {
+        if (certificationSlug) {
             // Fallback to localStorage for non-authenticated users
             const savedState = localStorage.getItem(`quiz-${certificationSlug}`);
             if (savedState) {
@@ -259,96 +241,226 @@ export function ExamQuiz({ questions, certificationName, certificationSlug, cert
 
     if (isCompleted) {
         return (
-            <div className="max-w-2xl mx-auto p-6">
-                <div className="bg-white rounded-lg border border-slate-200 p-8 shadow-sm text-center">
-                    <Trophy className="w-16 h-16 mx-auto mb-4 text-yellow-500" />
-                    <h2 className="text-2xl font-bold text-slate-900 mb-2">Quiz Completed!</h2>
-                    <p className="text-slate-600 mb-6">{certificationName}</p>
+            <AIAssistantProvider>
+                <div className="flex flex-col lg:flex-row min-h-screen gap-6">
+                    {/* Left side - Completion screen */}
+                    <div className="flex-1">
+                        <div className="max-w-4xl mx-auto">
+                            <div className="bg-white rounded-lg border border-slate-200 p-6 lg:p-8 shadow-sm text-center">
+                                <Trophy className="w-12 h-12 lg:w-16 lg:h-16 mx-auto mb-4 text-yellow-500" />
+                                <h2 className="text-xl lg:text-2xl font-bold text-slate-900 mb-2">Quiz Completed!</h2>
+                                <p className="text-slate-600 mb-6">{certificationName}</p>
 
-                    <div className="bg-slate-50 rounded-lg p-6 mb-6">
-                        <div className="text-3xl font-bold mb-2">
-                            <span className={getScoreColor()}>
-                                {correctAnswers}/{totalQuestions}
-                            </span>
+                                <div className="bg-slate-50 rounded-lg p-4 lg:p-6 mb-6">
+                                    <div className="text-2xl lg:text-3xl font-bold mb-2">
+                                        <span className={getScoreColor()}>
+                                            {correctAnswers}/{totalQuestions}
+                                        </span>
+                                    </div>
+                                    <p className="text-slate-600 mb-2">
+                                        You scored {Math.round((correctAnswers / totalQuestions) * 100)}%
+                                    </p>
+                                    <p className="text-sm text-slate-500">
+                                        Total Points: {totalPoints}
+                                    </p>
+                                </div>
+
+                                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                    <Button onClick={handleRestart} variant="outline" className="inline-flex items-center gap-2">
+                                        <RotateCcw className="w-4 h-4" />
+                                        Restart Quiz
+                                    </Button>
+                                    <Button onClick={handleBackHome} className="bg-blue-600 hover:bg-blue-700">
+                                        Back to Home
+                                    </Button>
+                                </div>
+                            </div>
                         </div>
-                        <p className="text-slate-600 mb-2">
-                            You scored {Math.round((correctAnswers / totalQuestions) * 100)}%
-                        </p>
-                        <p className="text-sm text-slate-500">
-                            Total Points: {totalPoints}
-                        </p>
                     </div>
 
-                    <div className="flex gap-4 justify-center">
-                        <Button onClick={handleRestart} variant="outline" className="inline-flex items-center gap-2">
-                            <RotateCcw className="w-4 h-4" />
-                            Restart Quiz
-                        </Button>
-                        <Button onClick={handleBackHome} className="bg-blue-600 hover:bg-blue-700">
-                            Back to Home
-                        </Button>
+                    {/* Right side - AI Assistant */}
+                    <div className="w-full lg:w-[480px] border-t lg:border-t-0 lg:border-l border-slate-200 bg-slate-50 flex-shrink-0">
+                        <div className="sticky top-0 h-96 lg:h-screen flex flex-col">
+                            <div className="p-4 border-b border-slate-200 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <GraduationCap className="w-5 h-5" />
+                                        <h3 className="font-semibold">AI Study Assistant</h3>
+                                    </div>
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => setShowFullScreenAI(true)}
+                                        className="text-white hover:bg-white/20 h-8 w-8 p-0"
+                                        title="Expand to full screen"
+                                    >
+                                        <Maximize2 className="w-4 h-4" />
+                                    </Button>
+                                </div>
+                                <p className="text-sm text-purple-100 mt-1">
+                                    Quiz completed! Use AI assistance to review concepts.
+                                </p>
+                            </div>
+
+                            <div className="flex-1 p-6 overflow-y-auto">
+                                <AIAssistantPanel />
+                            </div>
+                        </div>
                     </div>
+                </div>
+            </AIAssistantProvider>
+        );
+    }
+
+    // Guard against empty questions array or invalid current question index
+    if (!questions || questions.length === 0 || currentQuestion >= questions.length) {
+        return (
+            <div className="max-w-4xl mx-auto">
+                <div className="bg-white rounded-lg border border-slate-200 p-6 lg:p-8 shadow-sm text-center">
+                    <div className="text-slate-600 mb-4">
+                        {!questions || questions.length === 0
+                            ? "No questions available for this quiz."
+                            : "Question not found."}
+                    </div>
+                    <Button onClick={handleBackHome} className="bg-blue-600 hover:bg-blue-700">
+                        Back to Home
+                    </Button>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="max-w-2xl mx-auto p-6">
-            <div className="mb-6">
-                <div className="flex items-center justify-between mb-2">
-                    <h1 className="text-2xl font-bold text-slate-900">{certificationName}</h1>
-                    <div className="text-sm text-slate-600">
-                        Question {currentQuestion + 1} of {questions.length}
+        <>
+            <div className="flex flex-col lg:flex-row min-h-screen gap-6">
+                {/* Left side - Quiz */}
+                <div className="flex-1">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="mb-6">
+                            <div className="flex items-center justify-between mb-2">
+                                <h1 className="text-xl lg:text-2xl font-bold text-slate-900">{certificationName}</h1>
+                                <div className="text-sm text-slate-600">
+                                    Question {currentQuestion + 1} of {questions.length}
+                                </div>
+                            </div>
+                            <Progress value={progress} className="w-full" />
+
+                            {/* Live Session Stats */}
+                            <div className="mt-2 text-center">
+                                <span className="text-sm text-green-600 font-medium">
+                                    Session Correct: {sessionScore}
+                                </span>
+                                <span className="text-sm text-slate-500 mx-2">|</span>
+                                <span className="text-sm text-slate-600">
+                                    Total Points: {totalPoints}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="mb-6">
+                            <QuestionCard
+                                question={questions[currentQuestion]}
+                                onAnswer={handleAnswer}
+                                onSubmit={handleSubmit}
+                            />
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                            <Button
+                                variant="outline"
+                                onClick={handlePrevious}
+                                disabled={currentQuestion === 0}
+                            >
+                                Previous
+                            </Button>
+
+                            <div className="text-sm text-slate-600 text-center flex-1 mx-4">
+                                <span className="font-medium">
+                                    {canProceed ? "Ready to proceed!" : "Submit your answer to continue"}
+                                </span>
+                            </div>
+
+                            {canProceed ? (
+                                <Button onClick={handleNext} className="bg-green-600 hover:bg-green-700">
+                                    {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
+                                </Button>
+                            ) : (
+                                <Button disabled className="bg-slate-300">
+                                    {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
+                                </Button>
+                            )}
+                        </div>
                     </div>
                 </div>
-                <Progress value={progress} className="w-full" />
 
-                {/* Live Session Stats */}
-                <div className="mt-2 text-center">
-                    <span className="text-sm text-green-600 font-medium">
-                        Session Correct: {sessionScore}
-                    </span>
-                    <span className="text-sm text-slate-500 mx-2">|</span>
-                    <span className="text-sm text-slate-600">
-                        Total Points: {totalPoints}
-                    </span>
+                {/* Right side - AI Assistant */}
+                <div className="w-full lg:w-[480px] border-t lg:border-t-0 lg:border-l border-slate-200 bg-slate-50 flex-shrink-0">
+                    <div className="sticky top-0 h-96 lg:h-screen flex flex-col">
+                        <div className="p-4 border-b border-slate-200 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                    <GraduationCap className="w-5 h-5" />
+                                    <h3 className="font-semibold">AI Study Assistant</h3>
+                                </div>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => setShowFullScreenAI(true)}
+                                    className="text-white hover:bg-white/20 h-8 w-8 p-0"
+                                    title="Expand to full screen"
+                                >
+                                    <Maximize2 className="w-4 h-4" />
+                                </Button>
+                            </div>
+                            <p className="text-sm text-purple-100 mt-1">
+                                Click &quot;Ask AI Assistant&quot; on any question for help
+                            </p>
+                        </div>
+
+                        <div className="flex-1 p-6 overflow-y-auto">
+                            <AIAssistantPanel />
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div className="mb-6">
-                <QuestionCard
-                    question={questions[currentQuestion]}
-                    onAnswer={handleAnswer}
-                    onSubmit={handleSubmit}
-                />
-            </div>
+            {/* Full Screen AI Assistant Modal */}
+            {showFullScreenAI && (
+                <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm">
+                    <div className="h-full w-full bg-white flex flex-col">
+                        {/* Full Screen Header */}
+                        <div className="p-6 border-b border-slate-200 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <GraduationCap className="w-6 h-6" />
+                                    <div>
+                                        <h2 className="text-xl font-semibold">AI Study Assistant</h2>
+                                        <p className="text-sm text-purple-100 mt-1">
+                                            Full screen mode - Get comprehensive study help
+                                        </p>
+                                    </div>
+                                </div>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => setShowFullScreenAI(false)}
+                                    className="text-white hover:bg-white/20 h-10 w-10 p-0"
+                                    title="Close full screen"
+                                >
+                                    <X className="w-5 h-5" />
+                                </Button>
+                            </div>
+                        </div>
 
-            <div className="flex items-center justify-between">
-                <Button
-                    variant="outline"
-                    onClick={handlePrevious}
-                    disabled={currentQuestion === 0}
-                >
-                    Previous
-                </Button>
-
-                <div className="text-sm text-slate-600 text-center">
-                    <span className="font-medium">
-                        {canProceed ? "Ready to proceed!" : "Submit your answer to continue"}
-                    </span>
+                        {/* Full Screen Content */}
+                        <div className="flex-1 p-6 overflow-y-auto bg-slate-50">
+                            <div className="max-w-4xl mx-auto">
+                                <AIAssistantPanel />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                {canProceed ? (
-                    <Button onClick={handleNext} className="bg-green-600 hover:bg-green-700">
-                        {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
-                    </Button>
-                ) : (
-                    <Button disabled className="bg-slate-300">
-                        {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
-                    </Button>
-                )}
-            </div>
-        </div>
+            )}
+        </>
     );
 }

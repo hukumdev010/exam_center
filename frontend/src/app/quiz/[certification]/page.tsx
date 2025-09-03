@@ -75,7 +75,7 @@ export default function QuizPage() {
     if (loading) {
         return (
             <main className="min-h-screen bg-slate-50 py-8">
-                <div className="max-w-2xl mx-auto p-6">
+                <div className="max-w-4xl mx-auto p-6">
                     <div className="text-center">
                         <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                         <p className="mt-2 text-slate-600">Loading certification...</p>
@@ -88,7 +88,7 @@ export default function QuizPage() {
     if (error) {
         return (
             <main className="min-h-screen bg-slate-50 py-8">
-                <div className="max-w-2xl mx-auto p-6">
+                <div className="max-w-4xl mx-auto p-6">
                     <div className="mb-6">
                         <Button
                             variant="outline"
@@ -113,7 +113,7 @@ export default function QuizPage() {
     if (!certificationData) {
         return (
             <main className="min-h-screen bg-slate-50 py-8">
-                <div className="max-w-2xl mx-auto p-6">
+                <div className="max-w-4xl mx-auto p-6">
                     <div className="mb-6">
                         <Button
                             variant="outline"
@@ -133,8 +133,8 @@ export default function QuizPage() {
     }
 
     return (
-        <main className="min-h-screen bg-slate-50 py-8">
-            <div className="max-w-2xl mx-auto p-6">
+        <main className="min-h-screen bg-slate-50">
+            <div className="max-w-[1600px] mx-auto p-6">
                 <div className="mb-6">
                     <Button
                         variant="outline"

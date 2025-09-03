@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, XCircle, Info, ExternalLink, MessageSquare } from "lucide-react";
 import { Button } from "./ui/button";
+import { API_ENDPOINTS } from "@/lib/api-config";
+import { useAIAssistant } from "./AIAssistantContext";
 
 type Answer = {
     id: number;
@@ -21,7 +23,7 @@ type Question = {
 };
 
 interface QuestionCardProps {
-    question: Question;
+    question?: Question;
     onAnswer: (isCorrect: boolean, points: number) => void;
     onSubmit: (isCorrect: boolean, canProceed: boolean) => void;
 }
@@ -35,15 +37,37 @@ export function QuestionCard({ question, onAnswer, onSubmit }: QuestionCardProps
     const [attempts, setAttempts] = useState(0);
     const [maxAttempts] = useState(3); // Allow up to 3 attempts
 
+    // AI Assistant context
+    const { showLoading, showResponse } = useAIAssistant();
+
     // Reset component state when question changes
     useEffect(() => {
+        if (!question) return;
         setSelectedAnswer(null);
         setShowExplanation(false);
         setHasSubmitted(false);
         setEarnedPoints(0);
         setIsAnswerCorrect(false);
         setAttempts(0);
-    }, [question.id]);
+    }, [question]);
+
+    // Return loading state if question is not available
+    if (!question) {
+        return (
+            <div className="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+                <div className="animate-pulse">
+                    <div className="h-4 bg-slate-200 rounded w-3/4 mb-4"></div>
+                    <div className="h-4 bg-slate-200 rounded w-1/2 mb-6"></div>
+                    <div className="space-y-3 mb-6">
+                        {[1, 2, 3, 4].map((i) => (
+                            <div key={i} className="h-12 bg-slate-200 rounded"></div>
+                        ))}
+                    </div>
+                    <div className="h-10 bg-slate-200 rounded"></div>
+                </div>
+            </div>
+        );
+    }
 
     const handleAnswerSelect = (answerId: number) => {
         if (hasSubmitted && isAnswerCorrect) return; // Don't allow changes if correct answer was submitted
@@ -81,10 +105,41 @@ export function QuestionCard({ question, onAnswer, onSubmit }: QuestionCardProps
         setShowExplanation(false);
     };
 
-    const handleAskChatGPT = () => {
-        const questionText = encodeURIComponent(question.text);
-        const chatGPTUrl = `https://chatgpt.com/?q=${questionText}`;
-        window.open(chatGPTUrl, '_blank', 'noopener,noreferrer');
+    const handleAskChatGPT = async () => {
+        if (!question) return;
+
+        showLoading(question.text);
+
+        try {
+            const token = localStorage.getItem('auth_token') || 'mock_token';
+
+            const requestBody = {
+                message: `Help me understand this question without giving the direct answer: ${question.text}`,
+                context: `Question about certification exam`,
+                current_question: question.text,
+                conversation_history: []
+            };
+
+            const response = await fetch(API_ENDPOINTS.ai.chat, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            showResponse(question.text, data.response || "I'm sorry, I couldn't generate a response.");
+
+        } catch (error) {
+            console.error('Error calling AI API:', error);
+            showResponse(question.text, "I'm sorry, I'm having trouble connecting to the AI service right now. Please try again later.");
+        }
     };
 
     const getAnswerStyle = (answer: Answer) => {
@@ -228,7 +283,7 @@ export function QuestionCard({ question, onAnswer, onSubmit }: QuestionCardProps
                                 className="inline-flex items-center gap-2 text-sm text-green-600 hover:text-green-800 hover:underline transition-colors"
                             >
                                 <MessageSquare className="w-4 h-4" />
-                                Ask ChatGPT
+                                Ask AI Assistant
                             </button>
                         </div>
                     </div>
