@@ -3,6 +3,8 @@ import sys
 import os
 from datetime import datetime
 from uuid import uuid4
+import importlib
+import glob
 
 # Add parent directory to path to import our modules
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -10,9 +12,99 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from database import engine, AsyncSessionLocal
 from models import Base, Category, Certification, Question, Answer
 
+# Import seed data
+from seed_data.categories import CATEGORIES
+
+def load_all_certifications():
+    """Dynamically load all certifications from the organized folder structure"""
+    certifications_root = os.path.join(os.path.dirname(__file__), 'seed_data', 'certifications')
+    all_certifications = []
+    all_questions = {}
+    
+    # Get all category folders
+    category_folders = [f for f in os.listdir(certifications_root) 
+                       if os.path.isdir(os.path.join(certifications_root, f)) and not f.startswith('__')]
+    
+    for category_folder in category_folders:
+        try:
+            # Try to import the category module (organized structure)
+            module_path = f'seed_data.certifications.{category_folder}'
+            category_module = importlib.import_module(module_path)
+            
+            if hasattr(category_module, 'CERTIFICATIONS'):
+                all_certifications.extend(category_module.CERTIFICATIONS)
+                print(f"  📋 {category_folder}: {len(category_module.CERTIFICATIONS)} certifications loaded")
+                
+                if hasattr(category_module, 'ALL_QUESTIONS'):
+                    all_questions.update(category_module.ALL_QUESTIONS)
+                    
+        except ImportError as e:
+            print(f"  ⚠️  {category_folder}: No organized module found, trying individual files")
+            
+            # Fallback: try to load individual certification files
+            category_path = os.path.join(certifications_root, category_folder)
+            cert_files = glob.glob(os.path.join(category_path, '*.py'))
+            
+            category_certs = []
+            category_questions = {}
+            
+            for cert_file in cert_files:
+                if os.path.basename(cert_file).startswith('__'):
+                    continue
+                    
+                try:
+                    cert_module_name = os.path.splitext(os.path.basename(cert_file))[0]
+                    cert_module_path = f'seed_data.certifications.{category_folder}.{cert_module_name}'
+                    cert_module = importlib.import_module(cert_module_path)
+                    
+                    if hasattr(cert_module, 'CERTIFICATION'):
+                        category_certs.append(cert_module.CERTIFICATION)
+                        
+                        if hasattr(cert_module, 'QUESTIONS') and cert_module.QUESTIONS:
+                            category_questions[cert_module.CERTIFICATION['slug']] = cert_module.QUESTIONS
+                            
+                except ImportError as cert_e:
+                    print(f"    ❌ Failed to load {cert_module_name}: {cert_e}")
+            
+            if category_certs:
+                all_certifications.extend(category_certs)
+                all_questions.update(category_questions)
+                print(f"  📋 {category_folder}: {len(category_certs)} certifications loaded (individual files)")
+    
+    # Load legacy flat files only for categories that don't have organized structure
+    try:
+        # Only load legacy modules that don't have organized counterparts
+        legacy_modules = []
+        for module_name in ['azure', 'google_cloud', 'devops', 'programming', 'data_analytics', 'project_management', 'networking', 'database']:
+            if module_name not in category_folders:
+                try:
+                    module = importlib.import_module(f'seed_data.certifications.{module_name}')
+                    legacy_modules.append((module_name, module))
+                except ImportError:
+                    continue
+        
+        for module_name, module in legacy_modules:
+            if hasattr(module, 'CERTIFICATIONS'):
+                all_certifications.extend(module.CERTIFICATIONS)
+                print(f"  📋 {module_name} (legacy): {len(module.CERTIFICATIONS)} certifications")
+                
+                if hasattr(module, 'QUESTIONS'):
+                    all_questions.update(module.QUESTIONS)
+                    
+    except ImportError as e:
+        print(f"  ℹ️  No legacy certification modules found: {e}")
+    
+    return all_certifications, all_questions
+
 async def seed_database():
-    """Seed the database with sample data"""
-    print("🌱 Starting database seeding...")
+    """Seed the database with comprehensive certification data"""
+    print("🌱 Starting comprehensive database seeding with organized structure...")
+    
+    # Load all certifications dynamically
+    print("� Loading certifications from organized folder structure...")
+    all_certifications, all_questions = load_all_certifications()
+    
+    print(f"📊 Found {len(CATEGORIES)} categories and {len(all_certifications)} certifications")
     
     # Create all tables
     async with engine.begin() as conn:
@@ -23,186 +115,100 @@ async def seed_database():
     async with AsyncSessionLocal() as session:
         try:
             # Create categories
-            aws_category = Category(
-                name="AWS",
-                description="Amazon Web Services Certifications",
-                slug="aws",
-                icon="aws",
-                color="orange"
-            )
+            print("📁 Creating categories...")
+            category_map = {}
+            for category_data in CATEGORIES:
+                category = Category(
+                    name=category_data["name"],
+                    description=category_data["description"],
+                    slug=category_data["slug"],
+                    icon=category_data["icon"],
+                    color=category_data["color"]
+                )
+                session.add(category)
+                category_map[category_data["slug"]] = category
             
-            devops_category = Category(
-                name="DevOps",
-                description="DevOps and Infrastructure Certifications",
-                slug="devops",
-                icon="devops",
-                color="blue"
-            )
-            
-            programming_category = Category(
-                name="Programming",
-                description="Programming Languages and Frameworks",
-                slug="programming",
-                icon="code",
-                color="green"
-            )
-            
-            session.add_all([aws_category, devops_category, programming_category])
-            await session.flush()  # To get IDs
+            await session.flush()  # To get category IDs
+            print(f"✅ Created {len(CATEGORIES)} categories")
             
             # Create certifications
-            aws_saa = Certification(
-                name="AWS Solutions Architect Associate",
-                description="Design distributed systems on AWS",
-                slug="aws-solutions-architect-associate",
-                level="Associate",
-                duration=130,
-                questions_count=10,  # Sample size
-                category_id=aws_category.id,
-                is_active=True
-            )
+            print("📜 Creating certifications...")
+            certification_map = {}
             
-            docker_cert = Certification(
-                name="Docker Certified Associate",
-                description="Docker containerization certification",
-                slug="docker-certified-associate",
-                level="Associate",
-                duration=90,
-                questions_count=5,  # Sample size
-                category_id=devops_category.id,
-                is_active=True
-            )
+            for cert_data in all_certifications:
+                category_slug = cert_data["category_slug"]
+                if category_slug in category_map:
+                    category = category_map[category_slug]
+                    
+                    certification = Certification(
+                        name=cert_data["name"],
+                        description=cert_data["description"],
+                        slug=cert_data["slug"],
+                        level=cert_data["level"],
+                        duration=cert_data["duration"],
+                        questions_count=cert_data["questions_count"],
+                        category_id=category.id,
+                        is_active=cert_data["is_active"]
+                    )
+                    session.add(certification)
+                    certification_map[cert_data["slug"]] = certification
+                else:
+                    print(f"  ⚠️  Skipping certification {cert_data['name']} - category '{category_slug}' not found")
             
-            python_cert = Certification(
-                name="Python Programming",
-                description="Python programming fundamentals",
-                slug="python-programming",
-                level="Beginner",
-                duration=60,
-                questions_count=8,  # Sample size
-                category_id=programming_category.id,
-                is_active=True
-            )
-            
-            session.add_all([aws_saa, docker_cert, python_cert])
-            await session.flush()  # To get IDs
-            
-            # Add sample questions for AWS SAA
-            aws_questions = [
-                {
-                    "text": "Which AWS service provides a fully managed NoSQL database?",
-                    "explanation": "Amazon DynamoDB is AWS's fully managed NoSQL database service.",
-                    "reference": "https://docs.aws.amazon.com/dynamodb/",
-                    "answers": [
-                        {"text": "Amazon RDS", "is_correct": False},
-                        {"text": "Amazon DynamoDB", "is_correct": True},
-                        {"text": "Amazon Redshift", "is_correct": False},
-                        {"text": "Amazon Aurora", "is_correct": False}
-                    ]
-                },
-                {
-                    "text": "What is the maximum size of an S3 object?",
-                    "explanation": "The maximum size of a single S3 object is 5 TB.",
-                    "reference": "https://docs.aws.amazon.com/s3/",
-                    "answers": [
-                        {"text": "5 GB", "is_correct": False},
-                        {"text": "5 TB", "is_correct": True},
-                        {"text": "1 TB", "is_correct": False},
-                        {"text": "100 GB", "is_correct": False}
-                    ]
-                }
-            ]
-            
-            # Add sample questions for Docker
-            docker_questions = [
-                {
-                    "text": "What command is used to build a Docker image?",
-                    "explanation": "The 'docker build' command creates a Docker image from a Dockerfile.",
-                    "reference": "https://docs.docker.com/engine/reference/commandline/build/",
-                    "answers": [
-                        {"text": "docker create", "is_correct": False},
-                        {"text": "docker build", "is_correct": True},
-                        {"text": "docker make", "is_correct": False},
-                        {"text": "docker compile", "is_correct": False}
-                    ]
-                }
-            ]
-            
-            # Add sample questions for Python
-            python_questions = [
-                {
-                    "text": "Which of the following is a mutable data type in Python?",
-                    "explanation": "Lists are mutable in Python, meaning their contents can be changed.",
-                    "reference": "https://docs.python.org/3/tutorial/datastructures.html",
-                    "answers": [
-                        {"text": "tuple", "is_correct": False},
-                        {"text": "string", "is_correct": False},
-                        {"text": "list", "is_correct": True},
-                        {"text": "frozenset", "is_correct": False}
-                    ]
-                }
-            ]
+            await session.flush()  # To get certification IDs
+            print(f"✅ Created {len(certification_map)} certifications")
             
             # Create questions and answers
-            for question_data in aws_questions:
-                question = Question(
-                    text=question_data["text"],
-                    explanation=question_data["explanation"],
-                    reference=question_data["reference"],
-                    points=1,
-                    certification_id=aws_saa.id
-                )
-                session.add(question)
-                await session.flush()  # To get question ID
-                
-                for answer_data in question_data["answers"]:
-                    answer = Answer(
-                        text=answer_data["text"],
-                        is_correct=answer_data["is_correct"],
-                        question_id=question.id
-                    )
-                    session.add(answer)
+            print("❓ Creating questions and answers...")
+            total_questions = 0
+            total_answers = 0
             
-            for question_data in docker_questions:
-                question = Question(
-                    text=question_data["text"],
-                    explanation=question_data["explanation"],
-                    reference=question_data["reference"],
-                    points=1,
-                    certification_id=docker_cert.id
-                )
-                session.add(question)
-                await session.flush()
-                
-                for answer_data in question_data["answers"]:
-                    answer = Answer(
-                        text=answer_data["text"],
-                        is_correct=answer_data["is_correct"],
-                        question_id=question.id
-                    )
-                    session.add(answer)
+            for cert_slug, questions_data in all_questions.items():
+                if cert_slug in certification_map:
+                    certification = certification_map[cert_slug]
+                    
+                    for question_data in questions_data:
+                        question = Question(
+                            text=question_data["text"],
+                            explanation=question_data["explanation"],
+                            reference=question_data.get("reference", ""),
+                            points=question_data.get("points", 1),
+                            certification_id=certification.id
+                        )
+                        session.add(question)
+                        await session.flush()  # To get question ID
+                        total_questions += 1
+                        
+                        for answer_data in question_data["answers"]:
+                            answer = Answer(
+                                text=answer_data["text"],
+                                is_correct=answer_data["is_correct"],
+                                question_id=question.id
+                            )
+                            session.add(answer)
+                            total_answers += 1
             
-            for question_data in python_questions:
-                question = Question(
-                    text=question_data["text"],
-                    explanation=question_data["explanation"],
-                    reference=question_data["reference"],
-                    points=1,
-                    certification_id=python_cert.id
-                )
-                session.add(question)
-                await session.flush()
-                
-                for answer_data in question_data["answers"]:
-                    answer = Answer(
-                        text=answer_data["text"],
-                        is_correct=answer_data["is_correct"],
-                        question_id=question.id
-                    )
-                    session.add(answer)
+            print(f"✅ Created {total_questions} questions with {total_answers} answer options")
             
+            # Commit all changes
             await session.commit()
-            print("✅ Database seeded successfully!")
+            
+            # Print summary
+            print("\n🎉 Database seeding completed successfully!")
+            print("=" * 60)
+            print("SEEDING SUMMARY:")
+            print(f"📁 Categories: {len(CATEGORIES)}")
+            print(f"📜 Certifications: {len(certification_map)}")
+            print(f"❓ Questions: {total_questions}")
+            print(f"✅ Answer Options: {total_answers}")
+            print("=" * 60)
+            
+            # Print breakdown by category
+            print("\nCERTIFICATIONS BY CATEGORY:")
+            for category_data in CATEGORIES:
+                cert_count = sum(1 for cert in all_certifications 
+                               if cert["category_slug"] == category_data["slug"])
+                print(f"  {category_data['name']}: {cert_count} certifications")
             
         except Exception as e:
             print(f"❌ Error seeding database: {e}")

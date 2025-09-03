@@ -1,0 +1,39 @@
+"""System Design Interview Preparation"""
+
+CERTIFICATION = {
+    "name": "System Design Interview - Fundamentals",
+    "description": "Fundamental concepts for system design interviews",
+    "slug": "system-design-fundamentals",
+    "level": "Intermediate",
+    "duration": 120,
+    "questions_count": 50,
+    "category_slug": "system-design",
+    "is_active": True
+}
+
+QUESTIONS = [
+    {
+        "text": "What is horizontal scaling?",
+        "explanation": "Horizontal scaling involves adding more servers to a system to handle increased load, rather than upgrading existing hardware.",
+        "reference": "https://en.wikipedia.org/wiki/Scalability#Horizontal_(scale_out)_and_vertical_scaling_(scale_up)",
+        "points": 1,
+        "answers": [
+            {"text": "Adding more powerful hardware to existing servers", "is_correct": False},
+            {"text": "Adding more servers to the system", "is_correct": True},
+            {"text": "Optimizing database queries", "is_correct": False},
+            {"text": "Implementing caching mechanisms", "is_correct": False}
+        ]
+    },
+    {
+        "text": "What is the CAP theorem?",
+        "explanation": "The CAP theorem states that in a distributed system, you can only guarantee two of three properties: Consistency, Availability, and Partition tolerance.",
+        "reference": "https://en.wikipedia.org/wiki/CAP_theorem",
+        "points": 1,
+        "answers": [
+            {"text": "Consistency, Availability, Performance", "is_correct": False},
+            {"text": "Consistency, Availability, Partition tolerance", "is_correct": True},
+            {"text": "Caching, API design, Performance", "is_correct": False},
+            {"text": "Concurrency, Algorithms, Protocols", "is_correct": False}
+        ]
+    }
+]
