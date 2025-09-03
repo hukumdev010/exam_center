@@ -13,6 +13,7 @@ from routers.categories import router as categories_router
 from routers.certifications import router as certifications_router
 from routers.progress import router as progress_router
 from routers.quiz_attempts import router as quiz_attempts_router
+from routers.ai_assistant import router as ai_assistant_router
 from database import init_db
 from auth import get_current_user
 
@@ -46,6 +47,7 @@ app.include_router(categories_router, prefix="/api/categories", tags=["categorie
 app.include_router(certifications_router, prefix="/api/certifications", tags=["certifications"])
 app.include_router(progress_router, prefix="/api/progress", tags=["progress"])
 app.include_router(quiz_attempts_router, prefix="/api/quiz-attempts", tags=["quiz-attempts"])
+app.include_router(ai_assistant_router, prefix="/api/ai", tags=["ai-assistant"])
 
 @app.get("/")
 async def root():
