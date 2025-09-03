@@ -2,12 +2,13 @@
 
 import { useSession } from "@/lib/useAuth"
 import { useEffect, useState } from "react"
-import { AuthButton } from "@/components/AuthButton"
+import { AuthButton } from "@/components/AuthButtonWrapper"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { Trophy, Target, Clock, BookOpen, Award, TrendingUp } from "lucide-react"
 import Link from "next/link"
 import { API_ENDPOINTS } from "@/lib/api-config"
+import { authService } from "@/lib/auth-service"
 
 interface UserProgress {
     id: string
@@ -35,17 +36,21 @@ export default function ProfilePage() {
 
     useEffect(() => {
         if (session?.user?.id) {
-            fetchData()
+            // fetchData()
+        } else {
+            setLoading(false)
         }
-    }, [session])
+    }, []) // eslint-disable-line
 
     const fetchData = async () => {
         try {
-            const progressRes = await fetch(API_ENDPOINTS.progress)
+            const progressRes = await authService.apiCall(API_ENDPOINTS.progress)
 
             if (progressRes.ok) {
                 const progressData = await progressRes.json()
                 setProgress(progressData)
+            } else {
+                console.error('Failed to fetch progress:', progressRes.status, progressRes.statusText)
             }
         } catch (error) {
             console.error('Failed to fetch data:', error)

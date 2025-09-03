@@ -18,18 +18,57 @@ class AuthService {
   private state: AuthState = {
     user: null,
     isAuthenticated: false,
-    isLoading: true
+    isLoading: true // Start with true to avoid hydration mismatch
   }
 
   private listeners: ((state: AuthState) => void)[] = []
+  private initialized = false
+
+  // Helper method to safely access localStorage
+  private getStorageItem(key: string): string | null {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem(key)
+    }
+    return null
+  }
+
+  private setStorageItem(key: string, value: string): void {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(key, value)
+    }
+  }
+
+  private removeStorageItem(key: string): void {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(key)
+    }
+  }
 
   constructor() {
-    this.initializeAuth()
+    // Initialize with loading state for SSR compatibility
+    if (typeof window !== 'undefined') {
+      // On client side, try to get initial state from localStorage
+      const token = localStorage.getItem('auth_token')
+      const userData = localStorage.getItem('user_data')
+      
+      if (token && userData) {
+        try {
+          const user = JSON.parse(userData)
+          this.state = {
+            user,
+            isAuthenticated: true,
+            isLoading: true // Still loading to verify token
+          }
+        } catch (error) {
+          console.error('Failed to parse user data:', error)
+        }
+      }
+    }
   }
 
   private async initializeAuth() {
-    // Check for existing token
-    const token = localStorage.getItem('auth_token')
+    // Check for existing token (only available on client side)
+    const token = this.getStorageItem('auth_token')
     if (token) {
       try {
         // Validate token with backend using /me endpoint
@@ -42,16 +81,38 @@ class AuthService {
             isAuthenticated: true,
             isLoading: false
           }
+          // Store updated user data
+          this.setStorageItem('user_data', JSON.stringify(userData))
           this.notifyListeners()
           return
+        } else {
+          // Token is invalid, clear storage
+          this.removeStorageItem('auth_token')
+          this.removeStorageItem('user_data')
         }
       } catch (error) {
         console.error('Token validation failed:', error)
+        // Clear storage on error
+        this.removeStorageItem('auth_token')
+        this.removeStorageItem('user_data')
       }
     }
 
-    this.state.isLoading = false
+    this.state = {
+      user: null,
+      isAuthenticated: false,
+      isLoading: false
+    }
     this.notifyListeners()
+  }
+
+  // Public method to ensure initialization on client side
+  ensureInitialized() {
+    if (typeof window !== 'undefined' && !this.initialized) {
+      this.initialized = true
+      // Don't change loading state here since it's already true
+      this.initializeAuth()
+    }
   }
 
   subscribe(listener: (state: AuthState) => void) {
@@ -78,9 +139,11 @@ class AuthService {
     }
     this.notifyListeners()
     
-    if (!authenticated) {
-      localStorage.removeItem('auth_token')
-      localStorage.removeItem('user_data')
+    if (authenticated && user) {
+      this.setStorageItem('user_data', JSON.stringify(user))
+    } else {
+      this.removeStorageItem('auth_token')
+      this.removeStorageItem('user_data')
     }
   }
 
@@ -103,11 +166,11 @@ class AuthService {
   async signOut() {
     try {
       // Get token for logout endpoint
-      const token = localStorage.getItem('auth_token')
+      const token = this.getStorageItem('auth_token')
       
       // Clear local storage
-      localStorage.removeItem('auth_token')
-      localStorage.removeItem('user_data')
+      this.removeStorageItem('auth_token')
+      this.removeStorageItem('user_data')
       
       // Update state
       this.state = {

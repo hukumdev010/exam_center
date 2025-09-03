@@ -2,11 +2,26 @@ import { useState, useEffect } from 'react'
 import { authService, AuthState } from './auth'
 
 export function useAuth() {
-  const [authState, setAuthState] = useState<AuthState>(authService.getState())
+  // Initialize with loading state to avoid hydration mismatch
+  const [authState, setAuthState] = useState<AuthState>(() => ({
+    user: null,
+    isAuthenticated: false,
+    isLoading: true
+  }))
 
   useEffect(() => {
-    const unsubscribe = authService.subscribe(setAuthState)
-    return unsubscribe
+    // Only run on client side
+    if (typeof window !== 'undefined') {
+      // Get current state from service
+      setAuthState(authService.getState())
+      
+      // Ensure auth service is initialized
+      authService.ensureInitialized()
+      
+      // Subscribe to state changes
+      const unsubscribe = authService.subscribe(setAuthState)
+      return unsubscribe
+    }
   }, [])
 
   return {
@@ -14,8 +29,7 @@ export function useAuth() {
     isAuthenticated: authState.isAuthenticated,
     isLoading: authState.isLoading,
     signIn: () => authService.signInWithGoogle(),
-    signOut: () => authService.signOut(),
-    handleAuthCallback: (code: string) => authService.handleAuthCallback(code)
+    signOut: () => authService.signOut()
   }
 }
 

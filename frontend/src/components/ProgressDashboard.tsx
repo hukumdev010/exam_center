@@ -39,16 +39,23 @@ export function ProgressDashboard({ onContinueQuiz, onStartNewQuiz }: ProgressDa
 
     useEffect(() => {
         if (session?.user?.id) {
-            fetchProgress()
+            // fetchProgress()
+        } else {
+            setLoading(false)
         }
-    }, [session])
+    }, [])
 
     const fetchProgress = async () => {
+        console.log('ProgressDashboard: fetchProgress called');
         try {
             const response = await authService.apiCall(API_ENDPOINTS.progress)
+            console.log('ProgressDashboard: API response status:', response.status);
             if (response.ok) {
                 const data = await response.json()
+                console.log('ProgressDashboard: API response data:', data);
                 setProgress(data)
+            } else {
+                console.error('Failed to fetch progress:', response.status, response.statusText)
             }
         } catch (error) {
             console.error('Failed to fetch progress:', error)

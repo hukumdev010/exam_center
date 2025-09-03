@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/useAuth";
 import { CategorySelector } from "@/components/CategorySelector";
 import { ProgressDashboard } from "@/components/ProgressDashboard";
-import { AuthButton } from "@/components/AuthButton";
+import { AuthButton } from "@/components/AuthButtonWrapper";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
 import Link from "next/link";

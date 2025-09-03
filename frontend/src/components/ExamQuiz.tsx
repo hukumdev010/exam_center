@@ -82,7 +82,7 @@ export function ExamQuiz({ questions, certificationName, certificationSlug, cert
 
         if (session?.user?.id && certificationId) {
             // Fetch user progress from API
-            fetchUserProgress();
+            // fetchUserProgress();
         } else if (certificationSlug) {
             // Fallback to localStorage for non-authenticated users
             const savedState = localStorage.getItem(`quiz-${certificationSlug}`);

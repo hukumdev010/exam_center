@@ -4,11 +4,17 @@ import { Button } from "@/components/ui/button"
 import { LogOut } from "lucide-react"
 import { useAuth } from "@/lib/useAuth"
 
-export function AuthButton() {
+export function AuthButtonCore() {
     const { user, isAuthenticated, isLoading, signIn, signOut } = useAuth()
 
     if (isLoading) {
-        return <div className="h-10 w-20 bg-gray-200 animate-pulse rounded"></div>
+        return (
+            <div className="flex items-center gap-2">
+                <div className="h-10 w-24 bg-gray-200 animate-pulse rounded-md flex items-center justify-center">
+                    <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                </div>
+            </div>
+        )
     }
 
     if (isAuthenticated) {

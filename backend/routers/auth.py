@@ -5,6 +5,7 @@ import httpx
 import os
 import uuid
 from urllib.parse import urlencode
+from sessions import get_user_session, set_user_session, remove_user_session
 
 router = APIRouter()
 
@@ -21,23 +22,19 @@ class UserInfo(BaseModel):
     name: str
     image: str
 
-# In-memory session storage (use Redis or database in production)
-user_sessions = {}
-
 @router.get("/me")
 async def get_current_user(token: str = Query(...)):
     """Get current user info from session"""
-    if token not in user_sessions:
+    user_data = get_user_session(token)
+    if not user_data:
         raise HTTPException(status_code=401, detail="Invalid session token")
     
-    return user_sessions[token]
+    return user_data
 
 @router.post("/logout")
 async def logout(token: str = Query(...)):
     """Logout user by removing session"""
-    if token in user_sessions:
-        del user_sessions[token]
-    
+    remove_user_session(token)
     return {"message": "Logged out successfully"}
 
 @router.get("/google", response_model=GoogleAuthURL)
@@ -45,7 +42,7 @@ async def get_google_auth_url():
     """Get Google OAuth2 authorization URL"""
     params = {
         "client_id": os.getenv("GOOGLE_CLIENT_ID"),
-        "redirect_uri": f"{os.getenv('API_BASE_URL', 'http://localhost:8000')}/api/auth/google/callback",
+        "redirect_uri": f"{os.getenv('API_BASE_URL', 'http://localhost:8000')}/api/auth/callback/google",
         "response_type": "code",
         "scope": "openid email profile",
         "access_type": "offline",
@@ -55,7 +52,7 @@ async def get_google_auth_url():
     auth_url = f"https://accounts.google.com/o/oauth2/v2/auth?{urlencode(params)}"
     return GoogleAuthURL(auth_url=auth_url)
 
-@router.get("/google/callback")
+@router.get("/callback/google")
 async def google_callback(code: str = None, error: str = None):
     """Handle Google OAuth2 callback"""
     if error:
@@ -72,7 +69,7 @@ async def google_callback(code: str = None, error: str = None):
             "client_secret": os.getenv("GOOGLE_CLIENT_SECRET"),
             "code": code,
             "grant_type": "authorization_code",
-            "redirect_uri": f"{os.getenv('API_BASE_URL', 'http://localhost:8000')}/api/auth/google/callback"
+            "redirect_uri": f"{os.getenv('API_BASE_URL', 'http://127.0.0.1:8000')}/api/auth/callback/google"
         }
         
         async with httpx.AsyncClient() as client:
@@ -115,7 +112,7 @@ async def google_callback(code: str = None, error: str = None):
         }
         
         # Store in session
-        user_sessions[session_token] = user_data
+        set_user_session(session_token, user_data)
         
         # Redirect to frontend with success
         frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3001")

@@ -7,6 +7,7 @@ import os
 import httpx
 from database import get_db
 from models import User as UserModel
+from sessions import get_user_session
 from uuid import uuid4
 
 security = HTTPBearer()
@@ -29,13 +30,16 @@ async def get_current_user(
 ) -> UserSession:
     """Get current authenticated user"""
     try:
-        # For development, we'll accept a simple bearer token
-        # In production, implement proper JWT verification
         token = credentials.credentials
         
-        # For development - simple mock authentication
-        # This is NOT secure and should be replaced with proper auth
-        if token == "dev-user":
+        # First check if it's a session token from Google OAuth
+        user_data = get_user_session(token)
+        if user_data:
+            user_id = user_data.get("id")
+            email = user_data.get("email")
+            name = user_data.get("name")
+            picture = user_data.get("image")
+        elif token == "dev-user":
             # Mock user for development
             user_id = "dev-user-123"
             email = "dev@example.com"
@@ -44,7 +48,7 @@ async def get_current_user(
         else:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid token format"
+                detail="Invalid authentication token"
             )
         
         # Get or create user in database
