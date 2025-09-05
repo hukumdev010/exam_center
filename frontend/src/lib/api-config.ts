@@ -5,6 +5,7 @@ export const API_ENDPOINTS = {
   base: API_BASE_URL,
   categories: `${API_BASE_URL}/api/categories/`,
   certifications: (slug: string) => `${API_BASE_URL}/api/certifications/${slug}`,
+  searchCertifications: `${API_BASE_URL}/api/certifications/search`,
   progress: `${API_BASE_URL}/api/progress/`,
   quizAttempts: `${API_BASE_URL}/api/quiz-attempts/`,
   auth: {

@@ -6,8 +6,11 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/useAuth";
 import { ProgressDashboard } from "@/components/ProgressDashboard";
 import { AuthButton } from "@/components/AuthButtonWrapper";
+import { SearchBar } from "@/components/SearchBar";
+import { CategoryScroller } from "@/components/CategoryScroller";
+import { SearchResults } from "@/components/SearchResults";
 import { Button } from "@/components/ui/button";
-import { User, BookOpen, ArrowRight, Award, Code, Server, Terminal, Cloud } from "lucide-react";
+import { User, Award } from "lucide-react";
 import Link from "next/link";
 import { API_ENDPOINTS } from "@/lib/api-config";
 
@@ -31,11 +34,37 @@ type Certification = {
   questions_count: number;
 };
 
+type SearchResult = {
+  id: number;
+  name: string;
+  description: string;
+  slug: string;
+  level: string;
+  duration: number;
+  questions_count: number;
+  category: {
+    id: number;
+    name: string;
+    description: string;
+    slug: string;
+    icon: string;
+    color: string;
+  } | null;
+};
+
+type SearchResponse = {
+  results: SearchResult[];
+  total: number;
+  query: string;
+};
+
 export default function Home() {
   const router = useRouter();
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [searchResults, setSearchResults] = useState<SearchResponse | null>(null);
+  const [searchLoading, setSearchLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -57,56 +86,29 @@ export default function Home() {
     }
   };
 
+  const handleSearch = async (query: string) => {
+    setSearchLoading(true);
+    try {
+      const response = await fetch(`${API_ENDPOINTS.searchCertifications}?q=${encodeURIComponent(query)}`);
+      if (!response.ok) {
+        throw new Error('Failed to search certifications');
+      }
+      const data: SearchResponse = await response.json();
+      setSearchResults(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Search failed');
+    } finally {
+      setSearchLoading(false);
+    }
+  };
+
+  const handleClearSearch = () => {
+    setSearchResults(null);
+    setError(null);
+  };
+
   const handleCertificationSelect = async (slug: string) => {
     router.push(`/quiz/${slug}`);
-  };
-
-  const getIconComponent = (iconName: string) => {
-    switch (iconName) {
-      case 'aws':
-        return <Cloud className="w-6 h-6 text-slate-600 mr-2" />;
-      case 'code':
-        return <Code className="w-6 h-6 text-slate-600 mr-2" />;
-      case 'server':
-        return <Server className="w-6 h-6 text-slate-600 mr-2" />;
-      case 'terminal':
-        return <Terminal className="w-6 h-6 text-slate-600 mr-2" />;
-      default:
-        return <BookOpen className="w-6 h-6 text-slate-600 mr-2" />;
-    }
-  };
-
-  const getCategoryColor = (color: string) => {
-    switch (color) {
-      case 'orange':
-        return 'border-orange-200 bg-orange-50 hover:bg-orange-100';
-      case 'blue':
-        return 'border-blue-200 bg-blue-50 hover:bg-blue-100';
-      case 'purple':
-        return 'border-purple-200 bg-purple-50 hover:bg-purple-100';
-      case 'green':
-        return 'border-green-200 bg-green-50 hover:bg-green-100';
-      default:
-        return 'border-slate-200 bg-white hover:bg-slate-50';
-    }
-  };
-
-  const getLevelColor = (level: string) => {
-    switch (level.toLowerCase()) {
-      case 'foundational':
-      case 'fundamentals':
-        return "bg-green-100 text-green-800";
-      case 'associate':
-      case 'intermediate':
-        return "bg-blue-100 text-blue-800";
-      case 'professional':
-      case 'advanced':
-        return "bg-purple-100 text-purple-800";
-      case 'specialty':
-        return "bg-orange-100 text-orange-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
   };
 
   if (loading) {
@@ -140,7 +142,7 @@ export default function Home() {
     );
   }
 
-  if (error) {
+  if (error && !categories.length) {
     return (
       <main className="min-h-screen bg-slate-50">
         <div className="bg-white border-b border-gray-200">
@@ -185,7 +187,7 @@ export default function Home() {
                   {session ? `Welcome back, ${session.user?.name?.split(' ')[0]}!` : 'Certification Center'}
                 </h1>
                 {session && (
-                  <p className="text-sm text-slate-600">Choose your certification path and start practicing</p>
+                  <p className="text-sm text-slate-600">Search for certifications or browse by category</p>
                 )}
               </div>
             </div>
@@ -205,7 +207,7 @@ export default function Home() {
       </div>
 
       <div className="max-w-6xl mx-auto p-6">
-        {/* Show progress section only for authenticated users with ongoing progress */}
+        {/* Show progress section only for authenticated users */}
         {session && (
           <div className="mb-8">
             <ProgressDashboard
@@ -214,70 +216,59 @@ export default function Home() {
           </div>
         )}
 
-        {/* Always show all certificates */}
-        <div className="space-y-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">Available Certifications</h2>
+        {/* Search Section */}
+        <div className="mb-8">
+          <div className="text-center mb-6">
+            <h2 className="text-3xl font-bold text-slate-900 mb-2">Find Your Certification</h2>
             <p className="text-lg text-slate-600">
-              Choose from our comprehensive collection of practice exams
+              Search for specific certifications or browse by category
             </p>
           </div>
 
-          {categories.map((category) => (
-            <div key={category.id} className={`rounded-lg border-2 p-6 transition-all ${getCategoryColor(category.color)}`}>
-              <div className="flex items-center mb-4">
-                {getIconComponent(category.icon)}
-                <h3 className="text-2xl font-bold text-slate-900">{category.name}</h3>
-              </div>
+          <div className="flex justify-center mb-6">
+            <SearchBar
+              onSearch={handleSearch}
+              onClear={handleClearSearch}
+              placeholder="Search certifications (e.g., AWS, Python, Security)..."
+            />
+          </div>
 
-              <p className="text-slate-600 mb-6">{category.description}</p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {category.certifications.map((cert) => (
-                  <div
-                    key={cert.id}
-                    className="bg-white rounded-lg border border-slate-200 p-4 shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    <div className="flex items-start justify-between mb-3">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getLevelColor(cert.level)}`}>
-                        {cert.level}
-                      </span>
-                    </div>
-
-                    <h4 className="text-lg font-semibold text-slate-900 mb-2 leading-tight">
-                      {cert.name}
-                    </h4>
-
-                    <p className="text-slate-600 mb-4 text-sm leading-relaxed">
-                      {cert.description}
-                    </p>
-
-                    <div className="flex items-center justify-between text-xs text-slate-500 mb-4">
-                      <span>{cert.questions_count} Questions</span>
-                      <span>{cert.duration} Minutes</span>
-                    </div>
-
-                    <Button
-                      onClick={() => handleCertificationSelect(cert.slug)}
-                      className="w-full inline-flex items-center justify-center gap-2 text-sm"
-                    >
-                      Start Practice Exam
-                      <ArrowRight className="w-4 h-4" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-
-              {category.certifications.length === 0 && (
-                <div className="text-center py-8 text-slate-500">
-                  <p>No certifications available in this category yet.</p>
-                </div>
-              )}
+          {searchLoading && (
+            <div className="text-center py-8">
+              <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+              <p className="mt-2 text-slate-600">Searching...</p>
             </div>
-          ))}
+          )}
+
+          {error && searchResults && (
+            <div className="text-center py-4">
+              <p className="text-red-600">{error}</p>
+            </div>
+          )}
         </div>
 
-        <div className="mt-8 text-center">
+        {/* Search Results or Category Browser */}
+        {searchResults ? (
+          <SearchResults
+            results={searchResults.results}
+            total={searchResults.total}
+            query={searchResults.query}
+            onCertificationSelect={handleCertificationSelect}
+          />
+        ) : (
+          <div className="space-y-8">
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Browse by Category</h3>
+              <p className="text-slate-600 mb-8">
+                Explore our comprehensive collection of certification practice exams
+              </p>
+            </div>
+
+            <CategoryScroller categories={categories} />
+          </div>
+        )}
+
+        <div className="mt-12 text-center">
           <p className="text-slate-500 text-sm">
             Practice exams are designed to help you prepare for real certifications.
             Questions are based on actual exam topics and scenarios.
