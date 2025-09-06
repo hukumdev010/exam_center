@@ -4,6 +4,8 @@ applications:
     env:
       variables:
         AMPLIFY_MONOREPO_APP_ROOT: frontend
+        NODE_ENV: production
+        AMPLIFY_DIFF_DEPLOY: false
         _LIVE_UPDATES: '[{"pkg":"@aws-amplify/cli","type":"npm","version":"latest"}]'
     backend:
       phases:
@@ -14,17 +16,43 @@ applications:
       phases:
         preBuild:
           commands:
+            - "echo 'Starting preBuild phase...'"
+            - "echo 'Current working directory:'"
+            - "pwd"
+            - "echo 'Contents of current directory:'"
+            - "ls -la"
+            - "echo 'Checking if frontend directory exists:'"
+            - "ls -la frontend/ || echo 'Frontend directory not found'"
+            - "echo 'Changing to frontend directory...'"
+            - "cd frontend"
+            - "echo 'Current directory after cd:'"
+            - "pwd"
+            - "echo 'Contents of frontend directory:'"
+            - "ls -la"
+            - "echo 'Checking package.json:'"
+            - "cat package.json | head -10"
             - "echo 'Installing dependencies...'"
-            - "npm ci"
+            - "npm ci --production=false"
+            - "echo 'Dependencies installed successfully'"
         build:
           commands:
-            - "echo 'Building Next.js application...'"
+            - "echo 'Starting build phase...'"
+            - "cd frontend"
+            - "echo 'Current directory for build:'"
+            - "pwd"
+            - "echo 'Running Next.js build...'"
             - "npm run build"
+            - "echo 'Build completed'"
+        postBuild:
+          commands:
+            - "echo 'Build artifacts created successfully'"
+            - "cd frontend"
+            - "ls -la .next/"
       artifacts:
-        baseDirectory: .next
+        baseDirectory: frontend/.next
         files:
           - "**/*"
       cache:
         paths:
-          - "node_modules/**/*"
-          - ".next/cache/**/*"
+          - "frontend/node_modules/**/*"
+          - "frontend/.next/cache/**/*"
