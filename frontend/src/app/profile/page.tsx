@@ -42,23 +42,6 @@ export default function ProfilePage() {
         }
     }, []) // eslint-disable-line
 
-    const fetchData = async () => {
-        try {
-            const progressRes = await authService.apiCall(API_ENDPOINTS.progress)
-
-            if (progressRes.ok) {
-                const progressData = await progressRes.json()
-                setProgress(progressData)
-            } else {
-                console.error('Failed to fetch progress:', progressRes.status, progressRes.statusText)
-            }
-        } catch (error) {
-            console.error('Failed to fetch data:', error)
-        } finally {
-            setLoading(false)
-        }
-    }
-
     if (status === "loading" || loading) {
         return (
             <div className="min-h-screen bg-gray-50 py-8">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { ExamQuiz } from "@/components/ExamQuiz";
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,7 @@ type Certification = {
     questions: Question[];
 };
 
-export default function QuizPage() {
+function QuizPageContent() {
     const params = useParams();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -154,5 +154,20 @@ export default function QuizPage() {
                 />
             </div>
         </main>
+    );
+}
+
+export default function QuizPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600 mx-auto"></div>
+                    <p className="mt-4 text-gray-600">Loading quiz...</p>
+                </div>
+            </div>
+        }>
+            <QuizPageContent />
+        </Suspense>
     );
 }

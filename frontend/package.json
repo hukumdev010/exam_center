@@ -10,10 +10,8 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@auth/prisma-adapter": "^2.10.0",
     "@aws-sdk/client-secrets-manager": "^3.879.0",
     "@google/generative-ai": "^0.24.1",
-    "@prisma/client": "^6.14.0",
     "@radix-ui/react-progress": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",

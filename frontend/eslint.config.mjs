@@ -19,7 +19,6 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
       "src/generated/**",
-      "prisma/generated/**",
       "transform-javascript-seed.js",
     ],
   },
