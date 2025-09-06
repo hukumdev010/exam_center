@@ -235,7 +235,7 @@ Resources:
     Type: AWS::EC2::Instance
     DependsOn: Database
     Properties:
-      ImageId: ami-0c02fb55956c7d316 # Amazon Linux 2 AMI (update for your region)
+      ImageId: ami-0866a3c8686eaeeba # Ubuntu 24.04 LTS AMI (update for your region)
       InstanceType: t2.micro # Free tier eligible
       KeyName: !Ref KeyPairName
       SecurityGroupIds:
@@ -245,51 +245,87 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          yum update -y
-          yum install -y python3 python3-pip git postgresql-devel gcc python3-devel
-
+          apt-get update -y
+          apt-get install -y software-properties-common curl wget git build-essential
+          
+          # Install Python 3.10
+          apt-get install -y python3.10 python3.10-pip python3.10-venv python3.10-dev
+          
+          # Make Python 3.10 the default python3
+          update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
+          update-alternatives --install /usr/bin/pip3 pip3 /usr/bin/pip3.10 1
+          
+          # Install PostgreSQL client libraries
+          apt-get install -y libpq-dev
+          
           # Install Docker
-          yum install -y docker
+          apt-get install -y docker.io
           systemctl start docker
           systemctl enable docker
-          usermod -a -G docker ec2-user
-
+          usermod -a -G docker ubuntu
+          
           # Create application directory
           mkdir -p /opt/exam-center
-          cd /opt/exam-center
-
-          # Clone repository (you'll need to update this with your repo URL)
-          # For now, we'll create the files manually
-
-          # Create requirements.txt
-          cat > requirements.txt << 'EOF'
-          fastapi==0.104.1
-          uvicorn[standard]==0.24.0
-          python-multipart==0.0.6
-          python-dotenv==1.0.0
-          httpx==0.25.2
-          sqlalchemy[asyncio]==2.0.23
-          alembic==1.12.1
-          asyncpg==0.29.0
-          psycopg2-binary==2.9.9
-          pydantic==2.5.0
-          pydantic-settings==2.1.0
-          starlette==0.27.0
-          anyio>=3.7.1,<4.0.0
-          google-generativeai==0.8.3
-          EOF
-
-          # Install Python dependencies
-          pip3 install -r requirements.txt
-
-          # Create environment file
-          cat > .env << 'EOF'
+          chown ubuntu:ubuntu /opt/exam-center
+          
+          # Create environment file with database connection
+          cat > /opt/exam-center/.env << 'EOF'
           DATABASE_URL=postgresql+asyncpg://${DBUsername}:${DBPassword}@${Database.Endpoint.Address}:5432/examcenter
-          SECRET_KEY=your-secret-key-here-change-this-in-production
+          SECRET_KEY=your-secret-key-here-change-this-in-production-$(openssl rand -hex 32)
           ALGORITHM=HS256
           ACCESS_TOKEN_EXPIRE_MINUTES=30
+          DEBUG=false
+          ENVIRONMENT=production
           EOF
-
+          
+          # Create deployment script
+          cat > /opt/exam-center/deploy-from-git.sh << 'EOF'
+          #!/bin/bash
+          set -e
+          
+          echo "Starting code deployment from Git..."
+          
+          # Change to application directory
+          cd /opt/exam-center
+          
+          # If repository exists, pull latest changes, otherwise clone
+          if [ -d "exam_center" ]; then
+              echo "Repository exists, pulling latest changes..."
+              cd exam_center
+              git pull origin main
+              cd ..
+          else
+              echo "Cloning repository..."
+              git clone https://github.com/hukumdev010/exam_center.git
+          fi
+          
+          # Copy backend files to main directory
+          cp -r exam_center/backend/* .
+          
+          # Copy frontend build if exists (optional)
+          if [ -d "exam_center/frontend/out" ]; then
+              cp -r exam_center/frontend/out ./static
+          fi
+          
+          # Install Python dependencies
+          echo "Installing Python dependencies..."
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
+          
+          # Run database migrations
+          echo "Running database migrations..."
+          python3 -m alembic upgrade head
+          
+          # Restart the service
+          echo "Restarting application service..."
+          sudo systemctl restart exam-center
+          sudo systemctl enable exam-center
+          
+          echo "Deployment completed successfully!"
+          EOF
+          
+          chmod +x /opt/exam-center/deploy-from-git.sh
+          
           # Create systemd service
           cat > /etc/systemd/system/exam-center.service << 'EOF'
           [Unit]
@@ -298,22 +334,41 @@ Resources:
 
           [Service]
           Type=simple
-          User=ec2-user
+          User=ubuntu
           WorkingDirectory=/opt/exam-center
-          Environment=PATH=/usr/local/bin
-          ExecStart=/usr/local/bin/uvicorn main:app --host 0.0.0.0 --port 8000
+          Environment=PATH=/usr/local/bin:/usr/bin:/bin
+          Environment=PYTHONPATH=/opt/exam-center
+          ExecStart=/usr/bin/python3 -m uvicorn main:app --host 0.0.0.0 --port 8000 --workers 1
           Restart=always
+          RestartSec=10
 
           [Install]
           WantedBy=multi-user.target
           EOF
-
+          
           # Set permissions
-          chown -R ec2-user:ec2-user /opt/exam-center
-
-          # Enable and start service (will fail until code is deployed)
+          chown -R ubuntu:ubuntu /opt/exam-center
+          
+          # Enable service (don't start yet, code needs to be deployed first)
           systemctl daemon-reload
           systemctl enable exam-center
+          
+          # Create welcome script for SSH users
+          cat > /home/ubuntu/deploy-app.sh << 'EOF'
+          #!/bin/bash
+          echo "Welcome to the Exam Center EC2 instance!"
+          echo "To deploy your application code, run:"
+          echo "sudo /opt/exam-center/deploy-from-git.sh"
+          echo ""
+          echo "To check application status:"
+          echo "sudo systemctl status exam-center"
+          echo ""
+          echo "To view application logs:"
+          echo "sudo journalctl -u exam-center -f"
+          EOF
+          
+          chmod +x /home/ubuntu/deploy-app.sh
+          chown ubuntu:ubuntu /home/ubuntu/deploy-app.sh
       Tags:
         - Key: Name
           Value: exam-center-web-server
@@ -355,4 +410,4 @@ Outputs:
 
   SSHCommand:
     Description: SSH command to connect to the instance
-    Value: !Sub "ssh -i your-key.pem ec2-user@${ElasticIP}"
+    Value: !Sub "ssh -i your-key.pem ubuntu@${ElasticIP}"

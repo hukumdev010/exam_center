@@ -1,53 +1,203 @@
-# AWS EC2 Deployment Guide - Free Tier
+# AWS Deployment Guide for Exam Center
 
-This guide will help you deploy your FastAPI backend to AWS EC2 using the free tier resources.
+This directory contains the AWS CloudFormation template and deployment scripts for deploying the Exam Center FastAPI backend to AWS using free tier resources.
 
 ## Prerequisites
 
-1. **AWS Account**: Create a free AWS account if you don't have one
+1. **AWS Account**: You need an AWS account with appropriate permissions
 2. **AWS CLI**: Install and configure AWS CLI
-3. **EC2 Key Pair**: Create an EC2 key pair in your target AWS region
+3. **SSH Key Pair**: Create an EC2 Key Pair in your AWS region
+4. **Git Repository**: Your code should be pushed to GitHub (public repo or configure SSH keys)
 
-## Free Tier Resources Used
+## Architecture
 
+The deployment creates:
+- **VPC** with public and private subnets
+- **EC2 instance** (t2.micro) running Ubuntu 24.04 with Python 3.10
+- **RDS PostgreSQL** database (db.t3.micro)
+- **Security Groups** for web server and database
+- **Elastic IP** for consistent public IP address
+
+## Deployment Steps
+
+### Step 1: Infrastructure Deployment
+
+1. **Open PowerShell** and navigate to the aws-deployment directory:
+   ```powershell
+   cd "C:\Users\bhabana basnet\Documents\personal\exam_center\aws-deployment"
+   ```
+
+2. **Deploy the CloudFormation stack**:
+   ```powershell
+   .\deploy.ps1 -KeyPairName "your-key-pair-name"
+   ```
+   
+   You'll be prompted for:
+   - Database password (minimum 8 characters)
+   
+   Optional parameters:
+   ```powershell
+   .\deploy.ps1 -StackName "exam-center-backend" -Region "us-east-1" -KeyPairName "your-key-pair" -DBUsername "examcenter" -DBPassword "yourpassword"
+   ```
+
+3. **Wait for deployment** (typically 10-15 minutes). The script will:
+   - Create all AWS resources
+   - Install Python 3.10 on the EC2 instance
+   - Set up the environment for your application
+   - Create deployment scripts
+
+### Step 2: Code Deployment
+
+After infrastructure deployment completes:
+
+1. **Note the public IP** from the deployment output
+2. **Deploy your code**:
+   ```powershell
+   .\deploy-code.ps1 -PublicIP "your-ec2-public-ip" -KeyFile "path\to\your-key.pem"
+   ```
+
+3. **The deployment script will**:
+   - Connect to your EC2 instance
+   - Clone the latest code from GitHub
+   - Install Python dependencies
+   - Run database migrations
+   - Start the FastAPI application
+
+### Step 3: Verify Deployment
+
+1. **Check application status**:
+   ```
+   http://your-public-ip:8000
+   http://your-public-ip:8000/docs  (API documentation)
+   ```
+
+2. **SSH to monitor** (if needed):
+   ```bash
+   ssh -i your-key.pem ubuntu@your-public-ip
+   sudo systemctl status exam-center
+   sudo journalctl -u exam-center -f
+   ```
+
+## Manual Code Updates
+
+To update your application code after initial deployment:
+
+1. **SSH to the instance**:
+   ```bash
+   ssh -i your-key.pem ubuntu@your-public-ip
+   ```
+
+2. **Run the deployment script**:
+   ```bash
+   sudo /opt/exam-center/deploy-from-git.sh
+   ```
+
+This will pull the latest changes from GitHub and restart the application.
+
+## Configuration Files
+
+- **CloudFormation Template**: `cloudformation-template.yaml`
+- **PowerShell Deployment Script**: `deploy.ps1`
+- **Code Deployment Script**: `deploy-code.ps1`
+
+## Environment Variables
+
+The following environment variables are automatically configured:
+- `DATABASE_URL`: PostgreSQL connection string
+- `SECRET_KEY`: Auto-generated JWT secret
+- `ALGORITHM`: HS256
+- `ACCESS_TOKEN_EXPIRE_MINUTES`: 30
+- `DEBUG`: false
+- `ENVIRONMENT`: production
+
+## Monitoring and Troubleshooting
+
+### Check Application Status
+```bash
+sudo systemctl status exam-center
+```
+
+### View Application Logs
+```bash
+sudo journalctl -u exam-center -f
+```
+
+### Restart Application
+```bash
+sudo systemctl restart exam-center
+```
+
+### Check Database Connection
+```bash
+cd /opt/exam-center
+python3 -c "from database import engine; print('Database connection OK')"
+```
+
+## Security Considerations
+
+1. **Database Password**: Use a strong password with at least 8 characters
+2. **SSH Key**: Keep your SSH private key secure
+3. **Security Groups**: The template opens ports 22, 80, 443, and 8000
+4. **Secret Key**: A random secret key is generated automatically
+
+## Cost Optimization
+
+This deployment uses AWS Free Tier resources:
 - **EC2**: t2.micro instance (750 hours/month free)
-- **RDS**: db.t3.micro PostgreSQL (750 hours/month free, 20GB storage)
-- **VPC**: Virtual Private Cloud (free)
-- **Elastic IP**: 1 free static IP
-- **Data Transfer**: 15GB outbound per month
+- **RDS**: db.t3.micro PostgreSQL (750 hours/month free)
+- **Storage**: 20GB EBS storage (free tier included)
 
-## Step-by-Step Deployment
+## Cleanup
 
-### 1. Install AWS CLI
+To delete all resources and stop charges:
 
-```bash
-# On Linux/Mac
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-
-# Verify installation
-aws --version
+```powershell
+aws cloudformation delete-stack --stack-name exam-center-backend --region us-east-1
 ```
 
-### 2. Configure AWS CLI
+## Troubleshooting
 
-```bash
-aws configure
-# Enter your AWS Access Key ID
-# Enter your AWS Secret Access Key
-# Enter your preferred region (e.g., us-east-1)
-# Enter output format (json)
+### Common Issues
+
+1. **KeyPair not found**: Ensure you've created an EC2 Key Pair in the correct region
+2. **GitHub access**: Make sure your repository is public or configure SSH keys
+3. **Port issues**: Check security group settings if you can't access the application
+4. **Database connection**: Verify the database is running and environment variables are correct
+
+### Getting Help
+
+1. Check CloudFormation events in AWS Console
+2. SSH to the instance and check logs
+3. Verify all environment variables are set correctly
+
+## Repository Configuration
+
+The deployment assumes your GitHub repository structure:
+```
+exam_center/
+├── backend/          # FastAPI application
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── alembic.ini
+│   └── ...
+└── frontend/         # Optional frontend build
+    └── out/          # Built static files
 ```
 
-### 3. Create EC2 Key Pair
+Make sure your repository is accessible and the backend directory contains all necessary files.
 
-1. Go to AWS EC2 Console
-2. Navigate to "Key Pairs" in the left menu
-3. Click "Create key pair"
-4. Name it (e.g., "exam-center-key")
-5. Choose .pem format
-6. Download and save the .pem file securely
+## Quick Start Commands
+
+```powershell
+# 1. Deploy infrastructure
+.\deploy.ps1 -KeyPairName "exam-center-key"
+
+# 2. Deploy code (replace with your actual IP and key file)
+.\deploy-code.ps1 -PublicIP "54.123.45.67" -KeyFile ".\exam-center-key.pem"
+
+# 3. Check application
+# Open browser to: http://54.123.45.67:8000
+```
 7. Set correct permissions: `chmod 400 your-key.pem`
 
 ### 4. Update AMI ID for Your Region
