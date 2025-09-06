@@ -10,10 +10,30 @@
 !.yarn/releases
 !.yarn/versions
 venv/
+**/*.pyc
+**/__pycache__/
 
+# Next.js build files (both root and frontend)
+.next/
+.next/**
+/frontend/.next/
+/frontend/.next/**
+
+# AWS CLI distribution files
+aws/dist/
+aws/dist/**
+
+# Large binary files and distributions
+*.so
+*.so.*
+*.dylib
+*.dll
+*.wasm
+*.pack.gz
 # Frontend
 /frontend/node_modules
 /frontend/.next/
+/frontend/.next/**
 /frontend/out/
 /frontend/build
 /frontend/.env*
@@ -24,7 +44,9 @@ venv/
 /backend/.env*
 /backend/*.pyc
 /backend/venv
+/backend/venv/**
 /backend/.venv
+/backend/.venv/**
 
 # Shared
 .DS_Store
@@ -61,3 +83,23 @@ docker-compose.override.yml
 # Environment files (can opt-in for committing if needed)
 .env*
 !.env.example
+
+# Large files and build artifacts
+*.log
+*.map
+*.trace
+get-pip.py
+
+# Python compiled files
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+
+# Webpack and build caches
+**/cache/
+**/dist/
+**/build/
+
+# Binary and native extensions
+*.exe
+*.bin
