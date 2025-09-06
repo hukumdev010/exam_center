@@ -8,6 +8,7 @@ import httpx
 from database import get_db
 from models import User as UserModel
 from sessions import get_user_session
+from settings import get_settings
 from uuid import uuid4
 
 security = HTTPBearer()

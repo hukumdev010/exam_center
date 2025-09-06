@@ -10,6 +10,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from models import Base
+from settings import get_settings, get_settings_sync
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -31,7 +32,29 @@ target_metadata = Base.metadata
 
 
 def get_url():
-    return os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/exam_center")
+    """Get database URL from settings with Secrets Manager support"""
+    try:
+        # Try to get from environment first (for basic compatibility)
+        env_url = os.getenv("DATABASE_URL")
+        if env_url:
+            return env_url
+        
+        # Fall back to sync settings (won't include secrets, but better than hardcoded)
+        settings = get_settings_sync()
+        return settings.database_url
+    except Exception as e:
+        print(f"Warning: Error getting database URL from settings: {e}")
+        return "postgresql+asyncpg://postgres:postgres@localhost:5432/exam_center"
+
+
+async def get_url_async():
+    """Get database URL from settings with Secrets Manager support (async)"""
+    try:
+        settings = await get_settings()
+        return settings.database_url
+    except Exception as e:
+        print(f"Warning: Error getting database URL from async settings: {e}")
+        return get_url()
 
 
 def run_migrations_offline() -> None:
@@ -61,10 +84,12 @@ def run_migrations_offline() -> None:
 async def run_async_migrations():
     """In this scenario we need to create an Engine
     and associate a connection with the context.
-
+    Uses async settings to get database URL with Secrets Manager support.
     """
     
-    connectable = create_async_engine(get_url())
+    # Get database URL with secrets support
+    database_url = await get_url_async()
+    connectable = create_async_engine(database_url)
 
     async with connectable.connect() as connection:
         await connection.run_sync(do_run_migrations)

@@ -3,13 +3,9 @@ from pydantic import BaseModel
 import google.generativeai as genai
 import os
 from typing import List, Optional
+from settings import get_settings
 
 router = APIRouter()
-
-# Configure Gemini API
-GEMINI_API_KEY = os.getenv("GENINI_API")  # Note: Your env var is "GENINI_API"
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
 
 class ChatMessage(BaseModel):
     content: str
@@ -28,14 +24,21 @@ class ChatResponse(BaseModel):
 @router.post("/chat", response_model=ChatResponse)
 async def chat_with_ai(request: ChatRequest):
     """
-    Chat with Gemini AI assistant for study help
+    Chat with AI assistant for exam help
     """
     try:
-        if not GEMINI_API_KEY:
-            raise HTTPException(
-                status_code=500,
-                detail="Gemini API key not configured"
+        # Get settings with API key
+        settings = await get_settings()
+        gemini_api_key = settings.gemini_api_key
+        
+        if not gemini_api_key:
+            return ChatResponse(
+                response="I'm sorry, but the AI assistant is currently unavailable. Please try again later.",
+                error="Gemini API key not configured"
             )
+        
+        # Configure Gemini API with key from settings
+        genai.configure(api_key=gemini_api_key)
 
         # Initialize the model with current model name - using the latest stable version
         model = genai.GenerativeModel('gemini-2.0-flash')

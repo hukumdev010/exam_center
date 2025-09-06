@@ -12,3 +12,5 @@ pydantic-settings
 starlette
 anyio>=3.7.1,<4.0.0
 google-generativeai==0.8.3
+boto3>=1.26.0
+botocore>=1.29.0
