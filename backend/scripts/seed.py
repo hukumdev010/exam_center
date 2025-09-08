@@ -101,7 +101,7 @@ async def seed_database():
     print("🌱 Starting comprehensive database seeding with organized structure...")
     
     # Load all certifications dynamically
-    print("� Loading certifications from organized folder structure...")
+    print("📂 Loading certifications from organized folder structure...")
     all_certifications, all_questions = load_all_certifications()
     
     print(f"📊 Found {len(CATEGORIES)} categories and {len(all_certifications)} certifications")
