@@ -47,7 +47,7 @@ class Settings(BaseSettings):
     secrets_manager_secret_name: str = Field(default="examCenterCredentials", env="SECRETS_MANAGER_SECRET_NAME")
     
     # AI settings
-    gemini_api_key: str = Field(default="", env="GENINI_API")
+    gemini_api_key: str = Field(default="", env="GEMINI_API")
     
     @validator('environment')
     def validate_environment(cls, v):
@@ -66,6 +66,7 @@ class Settings(BaseSettings):
         env_file = ".env"
         env_file_encoding = "utf-8"
         case_sensitive = False
+        extra = "ignore"  # Ignore extra fields instead of raising validation error
 
 
 class SecretsManager:
@@ -226,7 +227,7 @@ class SettingsWithSecrets:
     
     @property
     def gemini_api_key(self) -> str:
-        return self._get_value('GENINI_API', self._base_settings.gemini_api_key)
+        return self._get_value('GEMINI_API', self._base_settings.gemini_api_key)
     
     async def refresh_secrets(self):
         """Refresh secrets from AWS Secrets Manager"""
