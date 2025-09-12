@@ -2,7 +2,13 @@
 
 from . import (
     digital_leader,
-    associate_cloud_engineer
+    associate_cloud_engineer,
+    professional_cloud_architect,
+    professional_data_engineer,
+    professional_devops_engineer,
+    professional_cloud_security_engineer,
+    professional_cloud_network_engineer,
+    professional_machine_learning_engineer
 )
 
 # Collect all Google Cloud certifications
@@ -12,7 +18,13 @@ ALL_QUESTIONS = {}
 # Import certifications and questions from all modules
 modules = [
     digital_leader,
-    associate_cloud_engineer
+    associate_cloud_engineer,
+    professional_cloud_architect,
+    professional_data_engineer,
+    professional_devops_engineer,
+    professional_cloud_security_engineer,
+    professional_cloud_network_engineer,
+    professional_machine_learning_engineer
 ]
 
 for module in modules:

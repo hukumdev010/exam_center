@@ -2,7 +2,14 @@
 
 from . import (
     pmp,
-    certified_scrummaster_csm
+    certified_scrummaster_csm,
+    capm,
+    pspo,
+    pmi_acp,
+    prince2_foundation,
+    prince2_practitioner,
+    cspo,
+    safe_scrum_master
 )
 
 # Collect all Project Management certifications
@@ -12,7 +19,14 @@ ALL_QUESTIONS = {}
 # Import certifications and questions from all modules
 modules = [
     pmp,
-    certified_scrummaster_csm
+    certified_scrummaster_csm,
+    capm,
+    pspo,
+    pmi_acp,
+    prince2_foundation,
+    prince2_practitioner,
+    cspo,
+    safe_scrum_master
 ]
 
 for module in modules:

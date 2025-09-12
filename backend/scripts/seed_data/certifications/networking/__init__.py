@@ -3,9 +3,14 @@
 from . import (
     cisco_ccna,
     cisco_ccnp,
+    cisco_ccie,
     comptia_network_plus,
     juniper_jncia,
-    cissp_network_security
+    juniper_jncip,
+    cissp_network_security,
+    palo_alto_pcnse,
+    fortinet_nse,
+    wireshark_wcna
 )
 
 # Collect all Networking certifications
@@ -16,9 +21,14 @@ ALL_QUESTIONS = {}
 modules = [
     cisco_ccna,
     cisco_ccnp,
+    cisco_ccie,
     comptia_network_plus,
     juniper_jncia,
-    cissp_network_security
+    juniper_jncip,
+    cissp_network_security,
+    palo_alto_pcnse,
+    fortinet_nse,
+    wireshark_wcna
 ]
 
 for module in modules:

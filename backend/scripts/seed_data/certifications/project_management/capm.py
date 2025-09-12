@@ -1,0 +1,75 @@
+"""Certified Associate in Project Management (CAPM) Certification"""
+
+CERTIFICATION = {
+    "name": "Certified Associate in Project Management (CAPM)",
+    "description": "Entry-level project management certification demonstrating understanding of fundamental project management practices",
+    "slug": "certified-associate-project-management-capm",
+    "level": "Associate",
+    "duration": 150,
+    "questions_count": 150,
+    "category_slug": "project-management",
+    "is_active": True
+}
+
+QUESTIONS = [
+    {
+        "text": "Which document formally authorizes the existence of a project?",
+        "explanation": "The Project Charter is the document that formally authorizes the existence of a project and provides the project manager with the authority to apply organizational resources to project activities.",
+        "reference": "https://www.pmi.org/pmbok-guide-standards/foundational/PMBOK",
+        "points": 1,
+        "answers": [
+            {"text": "Project Scope Statement", "is_correct": False},
+            {"text": "Project Charter", "is_correct": True},
+            {"text": "Work Breakdown Structure", "is_correct": False},
+            {"text": "Project Management Plan", "is_correct": False}
+        ]
+    },
+    {
+        "text": "What is the primary purpose of a Work Breakdown Structure (WBS)?",
+        "explanation": "The WBS is a hierarchical decomposition of the total scope of work to be carried out by the project team to accomplish the project objectives and create the required deliverables.",
+        "reference": "https://www.pmi.org/pmbok-guide-standards/foundational/PMBOK",
+        "points": 1,
+        "answers": [
+            {"text": "Schedule development", "is_correct": False},
+            {"text": "Decompose project scope into manageable work packages", "is_correct": True},
+            {"text": "Risk identification", "is_correct": False},
+            {"text": "Resource allocation", "is_correct": False}
+        ]
+    },
+    {
+        "text": "Which process group includes activities to define and refine objectives?",
+        "explanation": "The Planning Process Group includes those processes required to establish the scope of the project, refine the objectives, and define the course of action required to attain the objectives.",
+        "reference": "https://www.pmi.org/pmbok-guide-standards/foundational/PMBOK",
+        "points": 1,
+        "answers": [
+            {"text": "Initiating", "is_correct": False},
+            {"text": "Planning", "is_correct": True},
+            {"text": "Executing", "is_correct": False},
+            {"text": "Monitoring and Controlling", "is_correct": False}
+        ]
+    },
+    {
+        "text": "What is the critical path in project scheduling?",
+        "explanation": "The critical path is the sequence of activities that represents the longest path through a project, which determines the shortest possible duration for the project.",
+        "reference": "https://www.pmi.org/pmbok-guide-standards/foundational/PMBOK",
+        "points": 1,
+        "answers": [
+            {"text": "The most expensive path", "is_correct": False},
+            {"text": "The longest path determining project duration", "is_correct": True},
+            {"text": "The path with most resources", "is_correct": False},
+            {"text": "The path with highest risks", "is_correct": False}
+        ]
+    },
+    {
+        "text": "Which stakeholder has the primary responsibility for funding the project?",
+        "explanation": "The Project Sponsor is the person or group who provides resources and support for the project and is accountable for enabling success. They typically provide funding for the project.",
+        "reference": "https://www.pmi.org/pmbok-guide-standards/foundational/PMBOK",
+        "points": 1,
+        "answers": [
+            {"text": "Project Manager", "is_correct": False},
+            {"text": "Project Sponsor", "is_correct": True},
+            {"text": "Project Team", "is_correct": False},
+            {"text": "End Users", "is_correct": False}
+        ]
+    }
+]

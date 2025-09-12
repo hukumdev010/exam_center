@@ -1,0 +1,75 @@
+"""CompTIA CASP+ (CompTIA Advanced Security Practitioner) Certification"""
+
+CERTIFICATION = {
+    "name": "CompTIA CASP+ (Advanced Security Practitioner)",
+    "description": "Advanced-level cybersecurity skills for security architects and senior security engineers",
+    "slug": "comptia-casp-plus",
+    "level": "Advanced",
+    "duration": 165,
+    "questions_count": 90,
+    "category_slug": "cybersecurity",
+    "is_active": True
+}
+
+QUESTIONS = [
+    {
+        "text": "What is the primary goal of risk assessment in cybersecurity?",
+        "explanation": "Risk assessment identifies, evaluates, and prioritizes risks to organizational operations, assets, individuals, and other organizations resulting from the operation and use of information systems.",
+        "reference": "https://csrc.nist.gov/publications/detail/sp/800-30/rev-1/final",
+        "points": 1,
+        "answers": [
+            {"text": "Identify and evaluate potential security threats and vulnerabilities", "is_correct": True},
+            {"text": "Install security software", "is_correct": False},
+            {"text": "Train employees", "is_correct": False},
+            {"text": "Monitor network traffic", "is_correct": False}
+        ]
+    },
+    {
+        "text": "Which security control type is a firewall classified as?",
+        "explanation": "A firewall is a preventive technical control that filters network traffic based on predetermined security rules to prevent unauthorized access.",
+        "reference": "https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final",
+        "points": 1,
+        "answers": [
+            {"text": "Preventive technical control", "is_correct": True},
+            {"text": "Detective administrative control", "is_correct": False},
+            {"text": "Corrective physical control", "is_correct": False},
+            {"text": "Compensating procedural control", "is_correct": False}
+        ]
+    },
+    {
+        "text": "What is the purpose of security architecture?",
+        "explanation": "Security architecture provides a conceptual design that addresses the requirements and potential risks involved in a certain scenario or environment, ensuring security controls are properly integrated.",
+        "reference": "https://www.sans.org/reading-room/whitepapers/analyst/security-architecture-review-process-35012",
+        "points": 1,
+        "answers": [
+            {"text": "Design integrated security controls for systems and environments", "is_correct": True},
+            {"text": "Monitor system performance", "is_correct": False},
+            {"text": "Manage user accounts", "is_correct": False},
+            {"text": "Backup data", "is_correct": False}
+        ]
+    },
+    {
+        "text": "Which cryptographic concept ensures data has not been altered?",
+        "explanation": "Data integrity ensures that data has not been altered or tampered with. This is typically achieved through cryptographic hash functions and digital signatures.",
+        "reference": "https://csrc.nist.gov/publications/detail/fips/140/2/final",
+        "points": 1,
+        "answers": [
+            {"text": "Data integrity", "is_correct": True},
+            {"text": "Data confidentiality", "is_correct": False},
+            {"text": "Data availability", "is_correct": False},
+            {"text": "Data authentication", "is_correct": False}
+        ]
+    },
+    {
+        "text": "What is the difference between vulnerability assessment and penetration testing?",
+        "explanation": "Vulnerability assessment identifies and quantifies security vulnerabilities, while penetration testing actively exploits vulnerabilities to determine the impact of a successful attack.",
+        "reference": "https://www.sans.org/reading-room/whitepapers/analyst/vulnerability-assessment-penetration-testing-34635",
+        "points": 1,
+        "answers": [
+            {"text": "Vulnerability assessment identifies weaknesses; pen testing exploits them", "is_correct": True},
+            {"text": "They are the same thing", "is_correct": False},
+            {"text": "Pen testing only identifies weaknesses", "is_correct": False},
+            {"text": "Vulnerability assessment exploits weaknesses", "is_correct": False}
+        ]
+    }
+]

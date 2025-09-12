@@ -1,0 +1,75 @@
+"""Jenkins Certified Engineer Certification"""
+
+CERTIFICATION = {
+    "name": "Jenkins Certified Engineer",
+    "description": "Jenkins CI/CD pipeline automation and administration expertise",
+    "slug": "jenkins-certified-engineer",
+    "level": "Professional",
+    "duration": 120,
+    "questions_count": 60,
+    "category_slug": "devops",
+    "is_active": True
+}
+
+QUESTIONS = [
+    {
+        "text": "What is a Jenkins pipeline?",
+        "explanation": "A Jenkins pipeline is a suite of plugins that supports implementing and integrating continuous delivery pipelines into Jenkins. It provides an extensible set of tools for modeling delivery pipelines as code.",
+        "reference": "https://www.jenkins.io/doc/book/pipeline/",
+        "points": 1,
+        "answers": [
+            {"text": "A suite of plugins for implementing CI/CD pipelines as code", "is_correct": True},
+            {"text": "A Jenkins user interface theme", "is_correct": False},
+            {"text": "A backup tool for Jenkins", "is_correct": False},
+            {"text": "A Jenkins monitoring dashboard", "is_correct": False}
+        ]
+    },
+    {
+        "text": "What is the difference between Declarative and Scripted pipelines?",
+        "explanation": "Declarative pipelines use a more structured syntax with predefined sections like 'pipeline', 'stages', and 'steps', while Scripted pipelines use Groovy syntax and offer more flexibility but require more scripting knowledge.",
+        "reference": "https://www.jenkins.io/doc/book/pipeline/syntax/",
+        "points": 1,
+        "answers": [
+            {"text": "Declarative uses structured syntax; Scripted uses Groovy with more flexibility", "is_correct": True},
+            {"text": "Declarative is faster than Scripted", "is_correct": False},
+            {"text": "Scripted pipelines are deprecated", "is_correct": False},
+            {"text": "They are exactly the same", "is_correct": False}
+        ]
+    },
+    {
+        "text": "What is a Jenkins agent (slave)?",
+        "explanation": "A Jenkins agent is a machine that is set up to offload projects from the master instance. Agents can run on various operating systems and help distribute the workload.",
+        "reference": "https://www.jenkins.io/doc/book/using/using-agents/",
+        "points": 1,
+        "answers": [
+            {"text": "A machine that offloads build work from the master", "is_correct": True},
+            {"text": "A backup of the Jenkins master", "is_correct": False},
+            {"text": "A monitoring tool for Jenkins", "is_correct": False},
+            {"text": "A security plugin", "is_correct": False}
+        ]
+    },
+    {
+        "text": "Which file defines a Jenkins pipeline as code?",
+        "explanation": "Jenkinsfile is the file that contains the definition of a Jenkins pipeline. It can be stored in the project's source control repository alongside the application code.",
+        "reference": "https://www.jenkins.io/doc/book/pipeline/jenkinsfile/",
+        "points": 1,
+        "answers": [
+            {"text": "Jenkinsfile", "is_correct": True},
+            {"text": "pipeline.xml", "is_correct": False},
+            {"text": "build.gradle", "is_correct": False},
+            {"text": "config.json", "is_correct": False}
+        ]
+    },
+    {
+        "text": "What is the purpose of Jenkins shared libraries?",
+        "explanation": "Shared libraries allow you to share common pipeline code across multiple projects, promoting code reuse and maintaining consistency across different pipelines in your organization.",
+        "reference": "https://www.jenkins.io/doc/book/pipeline/shared-libraries/",
+        "points": 1,
+        "answers": [
+            {"text": "Share common pipeline code across multiple projects", "is_correct": True},
+            {"text": "Store Jenkins plugins", "is_correct": False},
+            {"text": "Backup Jenkins configuration", "is_correct": False},
+            {"text": "Monitor pipeline performance", "is_correct": False}
+        ]
+    }
+]
