@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Advanced-level cybersecurity skills for security architects and senior security engineers",
     "slug": "comptia-casp-plus",
     "level": "Advanced",
-    "duration": 165,
-    "questions_count": 90,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "cybersecurity",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,14 @@ QUESTIONS = [
         "reference": "https://csrc.nist.gov/publications/detail/sp/800-30/rev-1/final",
         "points": 1,
         "answers": [
-            {"text": "Identify and evaluate potential security threats and vulnerabilities", "is_correct": True},
+            {
+                "text": "Identify and evaluate potential security threats and vulnerabilities",
+                "is_correct": True,
+            },
             {"text": "Install security software", "is_correct": False},
             {"text": "Train employees", "is_correct": False},
-            {"text": "Monitor network traffic", "is_correct": False}
-        ]
+            {"text": "Monitor network traffic", "is_correct": False},
+        ],
     },
     {
         "text": "Which security control type is a firewall classified as?",
@@ -33,8 +36,8 @@ QUESTIONS = [
             {"text": "Preventive technical control", "is_correct": True},
             {"text": "Detective administrative control", "is_correct": False},
             {"text": "Corrective physical control", "is_correct": False},
-            {"text": "Compensating procedural control", "is_correct": False}
-        ]
+            {"text": "Compensating procedural control", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of security architecture?",
@@ -42,11 +45,14 @@ QUESTIONS = [
         "reference": "https://www.sans.org/reading-room/whitepapers/analyst/security-architecture-review-process-35012",
         "points": 1,
         "answers": [
-            {"text": "Design integrated security controls for systems and environments", "is_correct": True},
+            {
+                "text": "Design integrated security controls for systems and environments",
+                "is_correct": True,
+            },
             {"text": "Monitor system performance", "is_correct": False},
             {"text": "Manage user accounts", "is_correct": False},
-            {"text": "Backup data", "is_correct": False}
-        ]
+            {"text": "Backup data", "is_correct": False},
+        ],
     },
     {
         "text": "Which cryptographic concept ensures data has not been altered?",
@@ -57,8 +63,8 @@ QUESTIONS = [
             {"text": "Data integrity", "is_correct": True},
             {"text": "Data confidentiality", "is_correct": False},
             {"text": "Data availability", "is_correct": False},
-            {"text": "Data authentication", "is_correct": False}
-        ]
+            {"text": "Data authentication", "is_correct": False},
+        ],
     },
     {
         "text": "What is the difference between vulnerability assessment and penetration testing?",
@@ -66,10 +72,16 @@ QUESTIONS = [
         "reference": "https://www.sans.org/reading-room/whitepapers/analyst/vulnerability-assessment-penetration-testing-34635",
         "points": 1,
         "answers": [
-            {"text": "Vulnerability assessment identifies weaknesses; pen testing exploits them", "is_correct": True},
+            {
+                "text": "Vulnerability assessment identifies weaknesses; pen testing exploits them",
+                "is_correct": True,
+            },
             {"text": "They are the same thing", "is_correct": False},
             {"text": "Pen testing only identifies weaknesses", "is_correct": False},
-            {"text": "Vulnerability assessment exploits weaknesses", "is_correct": False}
-        ]
-    }
+            {
+                "text": "Vulnerability assessment exploits weaknesses",
+                "is_correct": False,
+            },
+        ],
+    },
 ]

@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Expert-level networking knowledge and advanced troubleshooting skills",
     "slug": "cisco-ccie",
     "level": "Expert",
-    "duration": 480,
-    "questions_count": 100,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "networking",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Type 1 (Router LSA)", "is_correct": False},
             {"text": "Type 2 (Network LSA)", "is_correct": True},
             {"text": "Type 3 (Summary LSA)", "is_correct": False},
-            {"text": "Type 5 (External LSA)", "is_correct": False}
-        ]
+            {"text": "Type 5 (External LSA)", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of BGP path attributes in route selection?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Encrypt routing updates", "is_correct": False},
             {"text": "Influence route selection", "is_correct": True},
             {"text": "Compress routing tables", "is_correct": False},
-            {"text": "Authenticate peers", "is_correct": False}
-        ]
+            {"text": "Authenticate peers", "is_correct": False},
+        ],
     },
     {
         "text": "In MPLS networks, what is the function of the Label Distribution Protocol (LDP)?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "Route advertisement", "is_correct": False},
             {"text": "Label distribution", "is_correct": True},
             {"text": "Traffic engineering", "is_correct": False},
-            {"text": "Quality of Service", "is_correct": False}
-        ]
+            {"text": "Quality of Service", "is_correct": False},
+        ],
     },
     {
         "text": "What is the default administrative distance for EIGRP internal routes?",
@@ -57,8 +57,8 @@ QUESTIONS = [
             {"text": "90", "is_correct": True},
             {"text": "100", "is_correct": False},
             {"text": "110", "is_correct": False},
-            {"text": "120", "is_correct": False}
-        ]
+            {"text": "120", "is_correct": False},
+        ],
     },
     {
         "text": "Which QoS mechanism is used to prevent network congestion by dropping packets before queues become full?",
@@ -69,7 +69,7 @@ QUESTIONS = [
             {"text": "Traffic Shaping", "is_correct": False},
             {"text": "WRED (Weighted Random Early Detection)", "is_correct": True},
             {"text": "Priority Queuing", "is_correct": False},
-            {"text": "Traffic Policing", "is_correct": False}
-        ]
-    }
+            {"text": "Traffic Policing", "is_correct": False},
+        ],
+    },
 ]

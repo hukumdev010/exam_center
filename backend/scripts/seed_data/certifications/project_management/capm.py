@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Entry-level project management certification demonstrating understanding of fundamental project management practices",
     "slug": "certified-associate-project-management-capm",
     "level": "Associate",
-    "duration": 150,
-    "questions_count": 150,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "project-management",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Project Scope Statement", "is_correct": False},
             {"text": "Project Charter", "is_correct": True},
             {"text": "Work Breakdown Structure", "is_correct": False},
-            {"text": "Project Management Plan", "is_correct": False}
-        ]
+            {"text": "Project Management Plan", "is_correct": False},
+        ],
     },
     {
         "text": "What is the primary purpose of a Work Breakdown Structure (WBS)?",
@@ -31,10 +31,13 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "Schedule development", "is_correct": False},
-            {"text": "Decompose project scope into manageable work packages", "is_correct": True},
+            {
+                "text": "Decompose project scope into manageable work packages",
+                "is_correct": True,
+            },
             {"text": "Risk identification", "is_correct": False},
-            {"text": "Resource allocation", "is_correct": False}
-        ]
+            {"text": "Resource allocation", "is_correct": False},
+        ],
     },
     {
         "text": "Which process group includes activities to define and refine objectives?",
@@ -45,8 +48,8 @@ QUESTIONS = [
             {"text": "Initiating", "is_correct": False},
             {"text": "Planning", "is_correct": True},
             {"text": "Executing", "is_correct": False},
-            {"text": "Monitoring and Controlling", "is_correct": False}
-        ]
+            {"text": "Monitoring and Controlling", "is_correct": False},
+        ],
     },
     {
         "text": "What is the critical path in project scheduling?",
@@ -55,10 +58,13 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "The most expensive path", "is_correct": False},
-            {"text": "The longest path determining project duration", "is_correct": True},
+            {
+                "text": "The longest path determining project duration",
+                "is_correct": True,
+            },
             {"text": "The path with most resources", "is_correct": False},
-            {"text": "The path with highest risks", "is_correct": False}
-        ]
+            {"text": "The path with highest risks", "is_correct": False},
+        ],
     },
     {
         "text": "Which stakeholder has the primary responsibility for funding the project?",
@@ -69,7 +75,7 @@ QUESTIONS = [
             {"text": "Project Manager", "is_correct": False},
             {"text": "Project Sponsor", "is_correct": True},
             {"text": "Project Team", "is_correct": False},
-            {"text": "End Users", "is_correct": False}
-        ]
-    }
+            {"text": "End Users", "is_correct": False},
+        ],
+    },
 ]

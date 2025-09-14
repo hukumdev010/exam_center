@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Skills to detect, respond to, and resolve computer security incidents",
     "slug": "giac-gcih",
     "level": "Intermediate",
-    "duration": 180,
-    "questions_count": 106,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "cybersecurity",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Preparation", "is_correct": True},
             {"text": "Detection and Analysis", "is_correct": False},
             {"text": "Containment", "is_correct": False},
-            {"text": "Recovery", "is_correct": False}
-        ]
+            {"text": "Recovery", "is_correct": False},
+        ],
     },
     {
         "text": "Which tool is commonly used for network packet analysis?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Wireshark", "is_correct": True},
             {"text": "Metasploit", "is_correct": False},
             {"text": "Nessus", "is_correct": False},
-            {"text": "John the Ripper", "is_correct": False}
-        ]
+            {"text": "John the Ripper", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of forensic imaging?",
@@ -42,11 +42,14 @@ QUESTIONS = [
         "reference": "https://www.sans.org/reading-room/whitepapers/incident/digital-forensics-incident-response-2242",
         "points": 1,
         "answers": [
-            {"text": "Create exact copies of storage media for analysis", "is_correct": True},
+            {
+                "text": "Create exact copies of storage media for analysis",
+                "is_correct": True,
+            },
             {"text": "Enhance image quality", "is_correct": False},
             {"text": "Compress files", "is_correct": False},
-            {"text": "Delete evidence", "is_correct": False}
-        ]
+            {"text": "Delete evidence", "is_correct": False},
+        ],
     },
     {
         "text": "Which Windows log file typically contains logon/logoff events?",
@@ -57,8 +60,8 @@ QUESTIONS = [
             {"text": "Security log", "is_correct": True},
             {"text": "Application log", "is_correct": False},
             {"text": "System log", "is_correct": False},
-            {"text": "Setup log", "is_correct": False}
-        ]
+            {"text": "Setup log", "is_correct": False},
+        ],
     },
     {
         "text": "What is indicators of compromise (IoCs)?",
@@ -66,10 +69,13 @@ QUESTIONS = [
         "reference": "https://www.sans.org/reading-room/whitepapers/detection/indicators-compromise-36352",
         "points": 1,
         "answers": [
-            {"text": "Forensic artifacts that indicate potential security breaches", "is_correct": True},
+            {
+                "text": "Forensic artifacts that indicate potential security breaches",
+                "is_correct": True,
+            },
             {"text": "Software vulnerabilities", "is_correct": False},
             {"text": "Network configuration errors", "is_correct": False},
-            {"text": "User account permissions", "is_correct": False}
-        ]
-    }
+            {"text": "User account permissions", "is_correct": False},
+        ],
+    },
 ]

@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Hands-on penetration testing certification focusing on practical exploitation skills",
     "slug": "oscp-offensive-security",
     "level": "Advanced",
-    "duration": 1440,  # 24 hours
-    "questions_count": 0,  # Practical exam
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "cybersecurity",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Systematic penetration testing methodology", "is_correct": True},
             {"text": "Risk assessment framework", "is_correct": False},
             {"text": "Incident response procedures", "is_correct": False},
-            {"text": "Compliance auditing", "is_correct": False}
-        ]
+            {"text": "Compliance auditing", "is_correct": False},
+        ],
     },
     {
         "text": "Which tool is commonly used for network enumeration?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Nmap", "is_correct": True},
             {"text": "Wireshark", "is_correct": False},
             {"text": "Burp Suite", "is_correct": False},
-            {"text": "John the Ripper", "is_correct": False}
-        ]
+            {"text": "John the Ripper", "is_correct": False},
+        ],
     },
     {
         "text": "What is privilege escalation?",
@@ -42,11 +42,14 @@ QUESTIONS = [
         "reference": "https://attack.mitre.org/tactics/TA0004/",
         "points": 1,
         "answers": [
-            {"text": "Gaining higher-level permissions on a compromised system", "is_correct": True},
+            {
+                "text": "Gaining higher-level permissions on a compromised system",
+                "is_correct": True,
+            },
             {"text": "Creating user accounts", "is_correct": False},
             {"text": "Installing antivirus software", "is_correct": False},
-            {"text": "Configuring firewalls", "is_correct": False}
-        ]
+            {"text": "Configuring firewalls", "is_correct": False},
+        ],
     },
     {
         "text": "Which framework is commonly used for exploitation?",
@@ -57,8 +60,8 @@ QUESTIONS = [
             {"text": "Metasploit", "is_correct": True},
             {"text": "NIST Framework", "is_correct": False},
             {"text": "COBIT", "is_correct": False},
-            {"text": "ITIL", "is_correct": False}
-        ]
+            {"text": "ITIL", "is_correct": False},
+        ],
     },
     {
         "text": "What is buffer overflow exploitation?",
@@ -66,10 +69,13 @@ QUESTIONS = [
         "reference": "https://owasp.org/www-community/vulnerabilities/Buffer_Overflow",
         "points": 1,
         "answers": [
-            {"text": "Overwriting memory to alter program execution", "is_correct": True},
+            {
+                "text": "Overwriting memory to alter program execution",
+                "is_correct": True,
+            },
             {"text": "Flooding networks with traffic", "is_correct": False},
             {"text": "Stealing user credentials", "is_correct": False},
-            {"text": "Analyzing log files", "is_correct": False}
-        ]
-    }
+            {"text": "Analyzing log files", "is_correct": False},
+        ],
+    },
 ]

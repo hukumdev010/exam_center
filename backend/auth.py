@@ -1,17 +1,20 @@
-from fastapi import HTTPException, Depends, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from sqlalchemy import select
-from typing import Optional, Dict, Any
-from pydantic import BaseModel
 import os
+from typing import Any, Dict, Optional
+from uuid import uuid4
+
 import httpx
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from pydantic import BaseModel
+from sqlalchemy import select
+
 from database import get_db
 from models import User as UserModel
 from sessions import get_user_session
 from settings import get_settings
-from uuid import uuid4
 
 security = HTTPBearer()
+
 
 class User(BaseModel):
     id: str
@@ -22,17 +25,18 @@ class User(BaseModel):
     class Config:
         from_attributes = True
 
+
 class UserSession(BaseModel):
     user: User
 
+
 async def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
-    db = Depends(get_db)
+    credentials: HTTPAuthorizationCredentials = Depends(security), db=Depends(get_db)
 ) -> UserSession:
     """Get current authenticated user"""
     try:
         token = credentials.credentials
-        
+
         # First check if it's a session token from Google OAuth
         user_data = get_user_session(token)
         if user_data:
@@ -49,49 +53,42 @@ async def get_current_user(
         else:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid authentication token"
+                detail="Invalid authentication token",
             )
-        
+
         # Get or create user in database
         stmt = select(UserModel).where(UserModel.email == email)
         result = await db.execute(stmt)
         user = result.scalar_one_or_none()
-        
+
         if user:
             # Update user info
             user.name = name
             user.image = picture
         else:
             # Create new user
-            user = UserModel(
-                id=user_id,
-                email=email,
-                name=name,
-                image=picture
-            )
+            user = UserModel(id=user_id, email=email, name=name, image=picture)
             db.add(user)
-        
+
         await db.commit()
         await db.refresh(user)
-        
+
         return UserSession(
-            user=User(
-                id=user.id,
-                email=user.email,
-                name=user.name,
-                image=user.image
-            )
+            user=User(id=user.id, email=user.email, name=user.name, image=user.image)
         )
-        
+
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Could not validate credentials"
+            detail="Could not validate credentials",
         )
 
+
 async def get_optional_user(
-    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
-    db = Depends(get_db)
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(
+        HTTPBearer(auto_error=False)
+    ),
+    db=Depends(get_db),
 ) -> Optional[UserSession]:
     """Get current user if authenticated, otherwise None"""
     if not credentials:

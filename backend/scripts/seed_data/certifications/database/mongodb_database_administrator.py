@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "MongoDB NoSQL database administration, sharding, and replica sets management",
     "slug": "mongodb-database-administrator",
     "level": "Professional",
-    "duration": 90,
-    "questions_count": 60,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "database",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,14 @@ QUESTIONS = [
         "reference": "https://docs.mongodb.com/manual/replication/",
         "points": 1,
         "answers": [
-            {"text": "A group of MongoDB processes maintaining the same data for high availability", "is_correct": True},
+            {
+                "text": "A group of MongoDB processes maintaining the same data for high availability",
+                "is_correct": True,
+            },
             {"text": "A collection of similar documents", "is_correct": False},
             {"text": "A backup storage mechanism", "is_correct": False},
-            {"text": "A query optimization technique", "is_correct": False}
-        ]
+            {"text": "A query optimization technique", "is_correct": False},
+        ],
     },
     {
         "text": "What is sharding in MongoDB?",
@@ -30,11 +33,17 @@ QUESTIONS = [
         "reference": "https://docs.mongodb.com/manual/sharding/",
         "points": 1,
         "answers": [
-            {"text": "Horizontal scaling by distributing data across multiple machines", "is_correct": True},
-            {"text": "Vertical scaling by adding more CPU and RAM", "is_correct": False},
+            {
+                "text": "Horizontal scaling by distributing data across multiple machines",
+                "is_correct": True,
+            },
+            {
+                "text": "Vertical scaling by adding more CPU and RAM",
+                "is_correct": False,
+            },
             {"text": "Creating indexes on collections", "is_correct": False},
-            {"text": "Compressing database files", "is_correct": False}
-        ]
+            {"text": "Compressing database files", "is_correct": False},
+        ],
     },
     {
         "text": "Which MongoDB command shows database statistics?",
@@ -45,8 +54,8 @@ QUESTIONS = [
             {"text": "db.stats()", "is_correct": True},
             {"text": "show stats", "is_correct": False},
             {"text": "db.info()", "is_correct": False},
-            {"text": "db.status()", "is_correct": False}
-        ]
+            {"text": "db.status()", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of MongoDB's oplog?",
@@ -54,11 +63,14 @@ QUESTIONS = [
         "reference": "https://docs.mongodb.com/manual/core/replica-set-oplog/",
         "points": 1,
         "answers": [
-            {"text": "Records all data modification operations for replication", "is_correct": True},
+            {
+                "text": "Records all data modification operations for replication",
+                "is_correct": True,
+            },
             {"text": "Stores user authentication data", "is_correct": False},
             {"text": "Contains database configuration settings", "is_correct": False},
-            {"text": "Logs query performance metrics", "is_correct": False}
-        ]
+            {"text": "Logs query performance metrics", "is_correct": False},
+        ],
     },
     {
         "text": "Which MongoDB storage engine is the default?",
@@ -69,7 +81,7 @@ QUESTIONS = [
             {"text": "WiredTiger", "is_correct": True},
             {"text": "MMAPv1", "is_correct": False},
             {"text": "InMemory", "is_correct": False},
-            {"text": "RocksDB", "is_correct": False}
-        ]
-    }
+            {"text": "RocksDB", "is_correct": False},
+        ],
+    },
 ]

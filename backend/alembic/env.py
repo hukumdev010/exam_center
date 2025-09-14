@@ -1,16 +1,18 @@
-from logging.config import fileConfig
-from sqlalchemy import pool
-from sqlalchemy.ext.asyncio import create_async_engine
-from alembic import context
 import asyncio
 import os
 import sys
+from logging.config import fileConfig
+
+from sqlalchemy import pool
+from sqlalchemy.ext.asyncio import create_async_engine
+
+from alembic import context
+from models import Base
+from settings import get_settings, get_settings_sync
 
 # Add the parent directory to the path to import our models
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from models import Base
-from settings import get_settings, get_settings_sync
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -38,8 +40,9 @@ def get_url():
         env_url = os.getenv("DATABASE_URL")
         if env_url:
             return env_url
-        
-        # Fall back to sync settings (won't include secrets, but better than hardcoded)
+
+        # Fall back to sync settings (won't include secrets, but better than
+        # hardcoded)
         settings = get_settings_sync()
         return settings.database_url
     except Exception as e:
@@ -86,7 +89,7 @@ async def run_async_migrations():
     and associate a connection with the context.
     Uses async settings to get database URL with Secrets Manager support.
     """
-    
+
     # Get database URL with secrets support
     database_url = await get_url_async()
     connectable = create_async_engine(database_url)

@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Ansible automation, configuration management, and orchestration expertise",
     "slug": "ansible-automation-specialist",
     "level": "Specialist",
-    "duration": 120,
-    "questions_count": 40,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "devops",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,14 @@ QUESTIONS = [
         "reference": "https://docs.ansible.com/ansible/latest/user_guide/playbooks.html",
         "points": 1,
         "answers": [
-            {"text": "A YAML file containing automation procedures for remote hosts", "is_correct": True},
+            {
+                "text": "A YAML file containing automation procedures for remote hosts",
+                "is_correct": True,
+            },
             {"text": "A GUI for managing Ansible", "is_correct": False},
             {"text": "A database of server configurations", "is_correct": False},
-            {"text": "A monitoring dashboard", "is_correct": False}
-        ]
+            {"text": "A monitoring dashboard", "is_correct": False},
+        ],
     },
     {
         "text": "What is the Ansible inventory?",
@@ -30,11 +33,14 @@ QUESTIONS = [
         "reference": "https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html",
         "points": 1,
         "answers": [
-            {"text": "A file defining hosts and groups that Ansible manages", "is_correct": True},
+            {
+                "text": "A file defining hosts and groups that Ansible manages",
+                "is_correct": True,
+            },
             {"text": "A list of available Ansible modules", "is_correct": False},
             {"text": "A backup of server configurations", "is_correct": False},
-            {"text": "A performance monitoring tool", "is_correct": False}
-        ]
+            {"text": "A performance monitoring tool", "is_correct": False},
+        ],
     },
     {
         "text": "What is an Ansible role?",
@@ -42,11 +48,14 @@ QUESTIONS = [
         "reference": "https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html",
         "points": 1,
         "answers": [
-            {"text": "A standardized way to organize and reuse playbooks", "is_correct": True},
+            {
+                "text": "A standardized way to organize and reuse playbooks",
+                "is_correct": True,
+            },
             {"text": "A user permission level", "is_correct": False},
             {"text": "A server function assignment", "is_correct": False},
-            {"text": "A backup strategy", "is_correct": False}
-        ]
+            {"text": "A backup strategy", "is_correct": False},
+        ],
     },
     {
         "text": "What is the difference between Ansible's 'copy' and 'template' modules?",
@@ -54,11 +63,14 @@ QUESTIONS = [
         "reference": "https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html",
         "points": 1,
         "answers": [
-            {"text": "Copy transfers files as-is; template processes Jinja2 templates first", "is_correct": True},
+            {
+                "text": "Copy transfers files as-is; template processes Jinja2 templates first",
+                "is_correct": True,
+            },
             {"text": "Copy is faster than template", "is_correct": False},
             {"text": "Template is deprecated", "is_correct": False},
-            {"text": "They do exactly the same thing", "is_correct": False}
-        ]
+            {"text": "They do exactly the same thing", "is_correct": False},
+        ],
     },
     {
         "text": "What is Ansible Vault?",
@@ -66,10 +78,13 @@ QUESTIONS = [
         "reference": "https://docs.ansible.com/ansible/latest/user_guide/vault.html",
         "points": 1,
         "answers": [
-            {"text": "A feature for encrypting sensitive data in Ansible files", "is_correct": True},
+            {
+                "text": "A feature for encrypting sensitive data in Ansible files",
+                "is_correct": True,
+            },
             {"text": "A backup storage system", "is_correct": False},
             {"text": "A performance optimization tool", "is_correct": False},
-            {"text": "A GUI for Ansible management", "is_correct": False}
-        ]
-    }
+            {"text": "A GUI for Ansible management", "is_correct": False},
+        ],
+    },
 ]

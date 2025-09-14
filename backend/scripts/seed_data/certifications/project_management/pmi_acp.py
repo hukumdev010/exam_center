@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Validates knowledge of agile principles, practices, tools, and techniques across agile methodologies",
     "slug": "pmi-agile-certified-practitioner-acp",
     "level": "Professional",
-    "duration": 180,
-    "questions_count": 120,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "project-management",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -19,10 +19,13 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "Comprehensive documentation", "is_correct": False},
-            {"text": "Individuals and interactions over processes and tools", "is_correct": True},
+            {
+                "text": "Individuals and interactions over processes and tools",
+                "is_correct": True,
+            },
             {"text": "Contract negotiation", "is_correct": False},
-            {"text": "Following a strict plan", "is_correct": False}
-        ]
+            {"text": "Following a strict plan", "is_correct": False},
+        ],
     },
     {
         "text": "In Scrum, what is the maximum recommended duration for a Sprint?",
@@ -33,8 +36,8 @@ QUESTIONS = [
             {"text": "2 weeks", "is_correct": False},
             {"text": "4 weeks (1 month)", "is_correct": True},
             {"text": "6 weeks", "is_correct": False},
-            {"text": "8 weeks", "is_correct": False}
-        ]
+            {"text": "8 weeks", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of a retrospective in agile methodologies?",
@@ -43,10 +46,13 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "To plan the next iteration", "is_correct": False},
-            {"text": "To identify improvements for future iterations", "is_correct": True},
+            {
+                "text": "To identify improvements for future iterations",
+                "is_correct": True,
+            },
             {"text": "To review completed features", "is_correct": False},
-            {"text": "To estimate user stories", "is_correct": False}
-        ]
+            {"text": "To estimate user stories", "is_correct": False},
+        ],
     },
     {
         "text": "Which principle is fundamental to Kanban?",
@@ -57,8 +63,8 @@ QUESTIONS = [
             {"text": "Fixed iterations", "is_correct": False},
             {"text": "Visualizing work and limiting WIP", "is_correct": True},
             {"text": "Daily standups", "is_correct": False},
-            {"text": "Sprint planning", "is_correct": False}
-        ]
+            {"text": "Sprint planning", "is_correct": False},
+        ],
     },
     {
         "text": "What does 'velocity' measure in agile project management?",
@@ -69,7 +75,7 @@ QUESTIONS = [
             {"text": "Team satisfaction", "is_correct": False},
             {"text": "Amount of work completed per Sprint", "is_correct": True},
             {"text": "Code quality", "is_correct": False},
-            {"text": "Customer satisfaction", "is_correct": False}
-        ]
-    }
+            {"text": "Customer satisfaction", "is_correct": False},
+        ],
+    },
 ]

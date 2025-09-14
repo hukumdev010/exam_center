@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "PostgreSQL database administration, performance tuning, and advanced features",
     "slug": "postgresql-database-administrator",
     "level": "Professional",
-    "duration": 120,
-    "questions_count": 65,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "database",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,14 @@ QUESTIONS = [
         "reference": "https://www.postgresql.org/docs/current/mvcc.html",
         "points": 1,
         "answers": [
-            {"text": "Multi-Version Concurrency Control for transaction isolation", "is_correct": True},
+            {
+                "text": "Multi-Version Concurrency Control for transaction isolation",
+                "is_correct": True,
+            },
             {"text": "Multiple Virtual Connection Controller", "is_correct": False},
             {"text": "Master-Validator Configuration Control", "is_correct": False},
-            {"text": "Memory Variable Cache Control", "is_correct": False}
-        ]
+            {"text": "Memory Variable Cache Control", "is_correct": False},
+        ],
     },
     {
         "text": "Which PostgreSQL command is used to analyze query performance?",
@@ -33,8 +36,8 @@ QUESTIONS = [
             {"text": "EXPLAIN ANALYZE", "is_correct": True},
             {"text": "SHOW PERFORMANCE", "is_correct": False},
             {"text": "ANALYZE QUERY", "is_correct": False},
-            {"text": "PERFORMANCE SCHEMA", "is_correct": False}
-        ]
+            {"text": "PERFORMANCE SCHEMA", "is_correct": False},
+        ],
     },
     {
         "text": "What is a PostgreSQL tablespace?",
@@ -42,11 +45,14 @@ QUESTIONS = [
         "reference": "https://www.postgresql.org/docs/current/manage-ag-tablespaces.html",
         "points": 1,
         "answers": [
-            {"text": "A location in the file system for storing database files", "is_correct": True},
+            {
+                "text": "A location in the file system for storing database files",
+                "is_correct": True,
+            },
             {"text": "A temporary storage area for queries", "is_correct": False},
             {"text": "A memory allocation for connections", "is_correct": False},
-            {"text": "A backup storage location", "is_correct": False}
-        ]
+            {"text": "A backup storage location", "is_correct": False},
+        ],
     },
     {
         "text": "Which PostgreSQL feature provides automatic query optimization?",
@@ -57,8 +63,8 @@ QUESTIONS = [
             {"text": "Query planner/optimizer", "is_correct": True},
             {"text": "Auto-vacuum", "is_correct": False},
             {"text": "WAL (Write-Ahead Logging)", "is_correct": False},
-            {"text": "Connection pooling", "is_correct": False}
-        ]
+            {"text": "Connection pooling", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of VACUUM in PostgreSQL?",
@@ -69,7 +75,7 @@ QUESTIONS = [
             {"text": "Reclaim storage and update statistics", "is_correct": True},
             {"text": "Create database backups", "is_correct": False},
             {"text": "Compress database files", "is_correct": False},
-            {"text": "Validate data integrity", "is_correct": False}
-        ]
-    }
+            {"text": "Validate data integrity", "is_correct": False},
+        ],
+    },
 ]

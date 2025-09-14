@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Advanced microservices design patterns and implementation",
     "slug": "microservices-architecture-professional",
     "level": "Professional",
-    "duration": 150,
-    "questions_count": 60,
+    "duration": 3,
+    "questions_count": 1,
     "category_slug": "system-design",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,7 +21,7 @@ QUESTIONS = [
             {"text": "A pattern for load balancing", "is_correct": False},
             {"text": "A pattern to prevent cascading failures", "is_correct": True},
             {"text": "A pattern for data consistency", "is_correct": False},
-            {"text": "A pattern for service discovery", "is_correct": False}
-        ]
+            {"text": "A pattern for service discovery", "is_correct": False},
+        ],
     }
 ]

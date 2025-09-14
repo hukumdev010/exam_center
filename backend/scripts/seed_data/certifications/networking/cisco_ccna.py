@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Networking fundamentals and Cisco technologies",
     "slug": "cisco-ccna",
     "level": "Associate",
-    "duration": 120,
-    "questions_count": 120,
+    "duration": 3,
+    "questions_count": 1,
     "category_slug": "networking",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,7 +21,7 @@ QUESTIONS = [
             {"text": "255.255.0.0", "is_correct": False},
             {"text": "255.255.255.0", "is_correct": True},
             {"text": "255.0.0.0", "is_correct": False},
-            {"text": "255.255.255.255", "is_correct": False}
-        ]
+            {"text": "255.255.255.255", "is_correct": False},
+        ],
     }
 ]

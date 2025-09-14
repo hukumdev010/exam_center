@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Advanced network security using Fortinet FortiGate technologies",
     "slug": "fortinet-nse",
     "level": "Professional",
-    "duration": 90,
-    "questions_count": 60,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "networking",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Load balancing", "is_correct": False},
             {"text": "Integrated security architecture", "is_correct": True},
             {"text": "Network routing", "is_correct": False},
-            {"text": "Content filtering", "is_correct": False}
-        ]
+            {"text": "Content filtering", "is_correct": False},
+        ],
     },
     {
         "text": "Which FortiGate feature provides application control and identification?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Web Filter", "is_correct": False},
             {"text": "Application Control", "is_correct": True},
             {"text": "IPS", "is_correct": False},
-            {"text": "SSL Inspection", "is_correct": False}
-        ]
+            {"text": "SSL Inspection", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of FortiGuard services?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "Hardware monitoring", "is_correct": False},
             {"text": "Threat intelligence and security updates", "is_correct": True},
             {"text": "Network optimization", "is_correct": False},
-            {"text": "User authentication", "is_correct": False}
-        ]
+            {"text": "User authentication", "is_correct": False},
+        ],
     },
     {
         "text": "Which FortiGate operating mode provides the highest level of security inspection?",
@@ -57,8 +57,8 @@ QUESTIONS = [
             {"text": "NAT mode", "is_correct": False},
             {"text": "Flow-based inspection", "is_correct": True},
             {"text": "Transparent mode", "is_correct": False},
-            {"text": "Bridge mode", "is_correct": False}
-        ]
+            {"text": "Bridge mode", "is_correct": False},
+        ],
     },
     {
         "text": "What is the function of FortiAnalyzer in Fortinet's ecosystem?",
@@ -69,7 +69,7 @@ QUESTIONS = [
             {"text": "Firewall management", "is_correct": False},
             {"text": "Centralized logging and analytics", "is_correct": True},
             {"text": "Endpoint protection", "is_correct": False},
-            {"text": "Network switching", "is_correct": False}
-        ]
-    }
+            {"text": "Network switching", "is_correct": False},
+        ],
+    },
 ]

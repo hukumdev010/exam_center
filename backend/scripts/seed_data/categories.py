@@ -6,90 +6,90 @@ CATEGORIES = [
         "description": "Amazon Web Services Cloud Computing Certifications",
         "slug": "aws",
         "icon": "aws",
-        "color": "orange"
+        "color": "orange",
     },
     {
         "name": "Azure",
         "description": "Microsoft Azure Cloud Computing Certifications",
         "slug": "azure",
         "icon": "azure",
-        "color": "blue"
+        "color": "blue",
     },
     {
         "name": "Google Cloud",
         "description": "Google Cloud Platform Certifications",
         "slug": "google-cloud",
         "icon": "gcp",
-        "color": "green"
+        "color": "green",
     },
     {
         "name": "DevOps",
         "description": "DevOps, Infrastructure, and Automation Certifications",
         "slug": "devops",
         "icon": "devops",
-        "color": "purple"
+        "color": "purple",
     },
     {
         "name": "Programming",
         "description": "Programming Languages and Software Development",
         "slug": "programming",
         "icon": "code",
-        "color": "teal"
+        "color": "teal",
     },
     {
         "name": "Cybersecurity",
         "description": "Information Security and Cybersecurity Certifications",
         "slug": "cybersecurity",
         "icon": "shield",
-        "color": "red"
+        "color": "red",
     },
     {
         "name": "Data & Analytics",
         "description": "Data Science, Analytics, and Machine Learning",
         "slug": "data-analytics",
         "icon": "chart",
-        "color": "indigo"
+        "color": "indigo",
     },
     {
         "name": "Project Management",
         "description": "Project Management and Agile Methodologies",
         "slug": "project-management",
         "icon": "project",
-        "color": "yellow"
+        "color": "yellow",
     },
     {
         "name": "Networking",
         "description": "Computer Networking and Infrastructure",
         "slug": "networking",
         "icon": "network",
-        "color": "cyan"
+        "color": "cyan",
     },
     {
         "name": "Database",
         "description": "Database Management and Administration",
         "slug": "database",
         "icon": "database",
-        "color": "pink"
+        "color": "pink",
     },
     {
         "name": "Linux & System Administration",
         "description": "Linux, Unix, and System Administration Certifications",
         "slug": "linux",
         "icon": "linux",
-        "color": "gray"
+        "color": "gray",
     },
     {
         "name": "System Design & Architecture",
         "description": "Software Architecture and System Design",
         "slug": "system-design",
         "icon": "architecture",
-        "color": "emerald"
+        "color": "emerald",
     },
     {
         "name": "Data Structures & Algorithms",
         "description": "Data Structures, Algorithms, and Competitive Programming",
         "slug": "data-structures-algorithms",
         "icon": "algorithm",
-        "color": "violet"
-    }
+        "color": "violet",
+    },
 ]

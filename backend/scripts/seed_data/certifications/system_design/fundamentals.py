@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Fundamental concepts for system design interviews",
     "slug": "system-design-fundamentals",
     "level": "Intermediate",
-    "duration": 120,
-    "questions_count": 50,
+    "duration": 6,
+    "questions_count": 2,
     "category_slug": "system-design",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,14 @@ QUESTIONS = [
         "reference": "https://en.wikipedia.org/wiki/Scalability#Horizontal_(scale_out)_and_vertical_scaling_(scale_up)",
         "points": 1,
         "answers": [
-            {"text": "Adding more powerful hardware to existing servers", "is_correct": False},
+            {
+                "text": "Adding more powerful hardware to existing servers",
+                "is_correct": False,
+            },
             {"text": "Adding more servers to the system", "is_correct": True},
             {"text": "Optimizing database queries", "is_correct": False},
-            {"text": "Implementing caching mechanisms", "is_correct": False}
-        ]
+            {"text": "Implementing caching mechanisms", "is_correct": False},
+        ],
     },
     {
         "text": "What is the CAP theorem?",
@@ -31,9 +34,12 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "Consistency, Availability, Performance", "is_correct": False},
-            {"text": "Consistency, Availability, Partition tolerance", "is_correct": True},
+            {
+                "text": "Consistency, Availability, Partition tolerance",
+                "is_correct": True,
+            },
             {"text": "Caching, API design, Performance", "is_correct": False},
-            {"text": "Concurrency, Algorithms, Protocols", "is_correct": False}
-        ]
-    }
+            {"text": "Concurrency, Algorithms, Protocols", "is_correct": False},
+        ],
+    },
 ]

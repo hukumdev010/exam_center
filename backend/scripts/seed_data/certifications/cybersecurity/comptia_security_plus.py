@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Foundational cybersecurity skills and knowledge",
     "slug": "comptia-security-plus",
     "level": "Entry",
-    "duration": 90,
-    "questions_count": 90,
+    "duration": 6,
+    "questions_count": 2,
     "category_slug": "cybersecurity",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Central Intelligence Agency", "is_correct": False},
             {"text": "Confidentiality, Integrity, Availability", "is_correct": True},
             {"text": "Computer Information Access", "is_correct": False},
-            {"text": "Cyber Intelligence Analytics", "is_correct": False}
-        ]
+            {"text": "Cyber Intelligence Analytics", "is_correct": False},
+        ],
     },
     {
         "text": "Which type of attack involves overwhelming a system with traffic?",
@@ -33,7 +33,7 @@ QUESTIONS = [
             {"text": "SQL Injection", "is_correct": False},
             {"text": "Cross-Site Scripting", "is_correct": False},
             {"text": "Denial of Service", "is_correct": True},
-            {"text": "Man-in-the-Middle", "is_correct": False}
-        ]
-    }
+            {"text": "Man-in-the-Middle", "is_correct": False},
+        ],
+    },
 ]

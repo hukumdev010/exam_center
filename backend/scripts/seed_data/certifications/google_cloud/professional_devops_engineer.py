@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Use Google Cloud to build software delivery pipelines, deploy and monitor services, and manage incidents",
     "slug": "google-professional-devops-engineer",
     "level": "Professional",
-    "duration": 120,
-    "questions_count": 50,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "google-cloud",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Cloud Build", "is_correct": True},
             {"text": "Cloud Deploy", "is_correct": False},
             {"text": "Cloud Run", "is_correct": False},
-            {"text": "Cloud Functions", "is_correct": False}
-        ]
+            {"text": "Cloud Functions", "is_correct": False},
+        ],
     },
     {
         "text": "What is the primary purpose of Google Cloud Operations Suite (formerly Stackdriver)?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Code deployment", "is_correct": False},
             {"text": "Monitoring and observability", "is_correct": True},
             {"text": "Data storage", "is_correct": False},
-            {"text": "Network configuration", "is_correct": False}
-        ]
+            {"text": "Network configuration", "is_correct": False},
+        ],
     },
     {
         "text": "Which tool is recommended for Infrastructure as Code on Google Cloud?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "Cloud Shell", "is_correct": False},
             {"text": "Terraform", "is_correct": True},
             {"text": "gcloud CLI", "is_correct": False},
-            {"text": "Cloud Console", "is_correct": False}
-        ]
+            {"text": "Cloud Console", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of Cloud Source Repositories?",
@@ -57,8 +57,8 @@ QUESTIONS = [
             {"text": "Container registry", "is_correct": False},
             {"text": "Git repository hosting", "is_correct": True},
             {"text": "Application deployment", "is_correct": False},
-            {"text": "Secret management", "is_correct": False}
-        ]
+            {"text": "Secret management", "is_correct": False},
+        ],
     },
     {
         "text": "Which Google Cloud service helps with progressive deployment strategies?",
@@ -69,7 +69,7 @@ QUESTIONS = [
             {"text": "Cloud Build", "is_correct": False},
             {"text": "Cloud Deploy", "is_correct": True},
             {"text": "GKE", "is_correct": False},
-            {"text": "Cloud Run", "is_correct": False}
-        ]
-    }
+            {"text": "Cloud Run", "is_correct": False},
+        ],
+    },
 ]

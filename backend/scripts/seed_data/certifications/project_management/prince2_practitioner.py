@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Advanced application of PRINCE2 methodology in real project scenarios",
     "slug": "prince2-practitioner",
     "level": "Professional",
-    "duration": 150,
-    "questions_count": 68,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "project-management",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "SWOT Analysis", "is_correct": False},
             {"text": "Risk Register", "is_correct": True},
             {"text": "Monte Carlo Simulation", "is_correct": False},
-            {"text": "Decision Tree", "is_correct": False}
-        ]
+            {"text": "Decision Tree", "is_correct": False},
+        ],
     },
     {
         "text": "When should tolerance levels be set in a PRINCE2 project?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Only at project closure", "is_correct": False},
             {"text": "During initiation and stage planning", "is_correct": True},
             {"text": "After problems occur", "is_correct": False},
-            {"text": "Only for major milestones", "is_correct": False}
-        ]
+            {"text": "Only for major milestones", "is_correct": False},
+        ],
     },
     {
         "text": "What is the primary purpose of the Quality Register in PRINCE2?",
@@ -43,10 +43,13 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "Track project costs", "is_correct": False},
-            {"text": "Summary of planned and completed quality activities", "is_correct": True},
+            {
+                "text": "Summary of planned and completed quality activities",
+                "is_correct": True,
+            },
             {"text": "Monitor team performance", "is_correct": False},
-            {"text": "Record stakeholder feedback", "is_correct": False}
-        ]
+            {"text": "Record stakeholder feedback", "is_correct": False},
+        ],
     },
     {
         "text": "In PRINCE2, what should happen when a stage tolerance is forecast to be exceeded?",
@@ -57,8 +60,8 @@ QUESTIONS = [
             {"text": "Continue as normal", "is_correct": False},
             {"text": "Prepare Exception Report for Project Board", "is_correct": True},
             {"text": "Increase the tolerance", "is_correct": False},
-            {"text": "Stop the project immediately", "is_correct": False}
-        ]
+            {"text": "Stop the project immediately", "is_correct": False},
+        ],
     },
     {
         "text": "Which PRINCE2 technique helps ensure products meet quality requirements?",
@@ -69,7 +72,7 @@ QUESTIONS = [
             {"text": "Product Breakdown Structure", "is_correct": False},
             {"text": "Quality Review Technique", "is_correct": True},
             {"text": "Change Control", "is_correct": False},
-            {"text": "Configuration Management", "is_correct": False}
-        ]
-    }
+            {"text": "Configuration Management", "is_correct": False},
+        ],
+    },
 ]

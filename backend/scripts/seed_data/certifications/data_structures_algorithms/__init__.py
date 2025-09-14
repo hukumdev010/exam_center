@@ -1,12 +1,12 @@
 """Data Structures & Algorithms Certifications Module"""
 
 from . import (
-    data_structures_fundamentals,
-    algorithms_fundamentals,
-    advanced_data_structures,
     advanced_algorithms,
+    advanced_data_structures,
     algorithm_design_analysis,
-    competitive_programming
+    algorithms_fundamentals,
+    competitive_programming,
+    data_structures_fundamentals,
 )
 
 # Collect all Data Structures & Algorithms certifications
@@ -20,12 +20,12 @@ modules = [
     advanced_data_structures,
     advanced_algorithms,
     algorithm_design_analysis,
-    competitive_programming
+    competitive_programming,
 ]
 
 for module in modules:
     CERTIFICATIONS.append(module.CERTIFICATION)
-    if hasattr(module, 'QUESTIONS') and module.QUESTIONS:
-        ALL_QUESTIONS[module.CERTIFICATION['slug']] = module.QUESTIONS
+    if hasattr(module, "QUESTIONS") and module.QUESTIONS:
+        ALL_QUESTIONS[module.CERTIFICATION["slug"]] = module.QUESTIONS
 
-__all__ = ['CERTIFICATIONS', 'ALL_QUESTIONS']
+__all__ = ["CERTIFICATIONS", "ALL_QUESTIONS"]

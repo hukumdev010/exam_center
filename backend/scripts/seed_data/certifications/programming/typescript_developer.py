@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "TypeScript language features, type system, and advanced programming concepts",
     "slug": "typescript-developer-certification",
     "level": "Associate",
-    "duration": 120,
-    "questions_count": 65,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "programming",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Faster runtime performance", "is_correct": False},
             {"text": "Static type checking", "is_correct": True},
             {"text": "Smaller bundle size", "is_correct": False},
-            {"text": "Built-in testing framework", "is_correct": False}
-        ]
+            {"text": "Built-in testing framework", "is_correct": False},
+        ],
     },
     {
         "text": "Which TypeScript feature allows you to define optional properties in an interface?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "property?", "is_correct": True},
             {"text": "property | undefined", "is_correct": False},
             {"text": "optional property", "is_correct": False},
-            {"text": "property: any", "is_correct": False}
-        ]
+            {"text": "property: any", "is_correct": False},
+        ],
     },
     {
         "text": "What does the 'never' type represent in TypeScript?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "A type that can be anything", "is_correct": False},
             {"text": "A type that represents null or undefined", "is_correct": False},
             {"text": "A type for values that never occur", "is_correct": True},
-            {"text": "A type for boolean values", "is_correct": False}
-        ]
+            {"text": "A type for boolean values", "is_correct": False},
+        ],
     },
     {
         "text": "How do you define a generic function in TypeScript?",
@@ -57,8 +57,8 @@ QUESTIONS = [
             {"text": "function<T>(param: T): T", "is_correct": True},
             {"text": "function(param: generic): generic", "is_correct": False},
             {"text": "generic function(param: T): T", "is_correct": False},
-            {"text": "function[T](param: T): T", "is_correct": False}
-        ]
+            {"text": "function[T](param: T): T", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of the 'readonly' modifier in TypeScript?",
@@ -69,7 +69,7 @@ QUESTIONS = [
             {"text": "Makes properties private", "is_correct": False},
             {"text": "Prevents modification after initialization", "is_correct": True},
             {"text": "Makes properties optional", "is_correct": False},
-            {"text": "Allows null values", "is_correct": False}
-        ]
-    }
+            {"text": "Allows null values", "is_correct": False},
+        ],
+    },
 ]

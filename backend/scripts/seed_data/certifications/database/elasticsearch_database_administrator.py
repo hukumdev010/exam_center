@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Elasticsearch search and analytics engine administration, indexing, and cluster management",
     "slug": "elasticsearch-database-administrator",
     "level": "Advanced",
-    "duration": 105,
-    "questions_count": 55,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "database",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,14 @@ QUESTIONS = [
         "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/current/indices.html",
         "points": 1,
         "answers": [
-            {"text": "A collection of documents with similar characteristics", "is_correct": True},
+            {
+                "text": "A collection of documents with similar characteristics",
+                "is_correct": True,
+            },
             {"text": "A single document in Elasticsearch", "is_correct": False},
             {"text": "A search query", "is_correct": False},
-            {"text": "A backup file", "is_correct": False}
-        ]
+            {"text": "A backup file", "is_correct": False},
+        ],
     },
     {
         "text": "What is sharding in Elasticsearch?",
@@ -30,11 +33,14 @@ QUESTIONS = [
         "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/current/scalability.html",
         "points": 1,
         "answers": [
-            {"text": "Dividing an index into multiple pieces for distribution", "is_correct": True},
+            {
+                "text": "Dividing an index into multiple pieces for distribution",
+                "is_correct": True,
+            },
             {"text": "Creating backup copies of data", "is_correct": False},
             {"text": "Encrypting data at rest", "is_correct": False},
-            {"text": "Compressing search results", "is_correct": False}
-        ]
+            {"text": "Compressing search results", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of Elasticsearch mappings?",
@@ -42,11 +48,14 @@ QUESTIONS = [
         "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html",
         "points": 1,
         "answers": [
-            {"text": "Define how documents and fields are stored and indexed", "is_correct": True},
+            {
+                "text": "Define how documents and fields are stored and indexed",
+                "is_correct": True,
+            },
             {"text": "Create relationships between indices", "is_correct": False},
             {"text": "Configure user permissions", "is_correct": False},
-            {"text": "Set up data replication", "is_correct": False}
-        ]
+            {"text": "Set up data replication", "is_correct": False},
+        ],
     },
     {
         "text": "What is the difference between primary and replica shards?",
@@ -54,11 +63,20 @@ QUESTIONS = [
         "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/current/scalability.html#replica-shards",
         "points": 1,
         "answers": [
-            {"text": "Primary shards contain original data; replicas are copies for redundancy", "is_correct": True},
-            {"text": "Primary shards are faster than replica shards", "is_correct": False},
-            {"text": "Replica shards contain original data; primary shards are backups", "is_correct": False},
-            {"text": "There is no difference between them", "is_correct": False}
-        ]
+            {
+                "text": "Primary shards contain original data; replicas are copies for redundancy",
+                "is_correct": True,
+            },
+            {
+                "text": "Primary shards are faster than replica shards",
+                "is_correct": False,
+            },
+            {
+                "text": "Replica shards contain original data; primary shards are backups",
+                "is_correct": False,
+            },
+            {"text": "There is no difference between them", "is_correct": False},
+        ],
     },
     {
         "text": "What is Elasticsearch's inverted index?",
@@ -66,10 +84,13 @@ QUESTIONS = [
         "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/current/documents-indices.html#inverted-index",
         "points": 1,
         "answers": [
-            {"text": "Maps terms to documents containing them for fast search", "is_correct": True},
+            {
+                "text": "Maps terms to documents containing them for fast search",
+                "is_correct": True,
+            },
             {"text": "Reverses the order of search results", "is_correct": False},
             {"text": "Creates backup copies of indices", "is_correct": False},
-            {"text": "Encrypts document content", "is_correct": False}
-        ]
-    }
+            {"text": "Encrypts document content", "is_correct": False},
+        ],
+    },
 ]

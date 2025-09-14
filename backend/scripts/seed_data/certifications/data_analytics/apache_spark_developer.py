@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Develop and optimize big data applications using Apache Spark for distributed computing",
     "slug": "apache-spark-developer",
     "level": "Intermediate",
-    "duration": 90,
-    "questions_count": 40,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "data-analytics",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "RDD (Resilient Distributed Dataset)", "is_correct": True},
             {"text": "DataFrame", "is_correct": False},
             {"text": "Dataset", "is_correct": False},
-            {"text": "Array", "is_correct": False}
-        ]
+            {"text": "Array", "is_correct": False},
+        ],
     },
     {
         "text": "Which Spark component is used for SQL queries?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Spark SQL", "is_correct": True},
             {"text": "Spark Streaming", "is_correct": False},
             {"text": "MLlib", "is_correct": False},
-            {"text": "GraphX", "is_correct": False}
-        ]
+            {"text": "GraphX", "is_correct": False},
+        ],
     },
     {
         "text": "What is the difference between transformations and actions in Spark?",
@@ -42,11 +42,17 @@ QUESTIONS = [
         "reference": "https://spark.apache.org/docs/latest/rdd-programming-guide.html#rdd-operations",
         "points": 1,
         "answers": [
-            {"text": "Transformations are lazy; actions trigger computation", "is_correct": True},
+            {
+                "text": "Transformations are lazy; actions trigger computation",
+                "is_correct": True,
+            },
             {"text": "Transformations are faster than actions", "is_correct": False},
-            {"text": "Actions are lazy; transformations trigger computation", "is_correct": False},
-            {"text": "They are the same thing", "is_correct": False}
-        ]
+            {
+                "text": "Actions are lazy; transformations trigger computation",
+                "is_correct": False,
+            },
+            {"text": "They are the same thing", "is_correct": False},
+        ],
     },
     {
         "text": "Which storage level persists RDDs in memory?",
@@ -57,8 +63,8 @@ QUESTIONS = [
             {"text": "MEMORY_ONLY", "is_correct": True},
             {"text": "DISK_ONLY", "is_correct": False},
             {"text": "NONE", "is_correct": False},
-            {"text": "MEMORY_AND_DISK_SER", "is_correct": False}
-        ]
+            {"text": "MEMORY_AND_DISK_SER", "is_correct": False},
+        ],
     },
     {
         "text": "What is a Spark DataFrame?",
@@ -66,10 +72,13 @@ QUESTIONS = [
         "reference": "https://spark.apache.org/docs/latest/sql-programming-guide.html#datasets-and-dataframes",
         "points": 1,
         "answers": [
-            {"text": "A distributed collection of data organized into named columns", "is_correct": True},
+            {
+                "text": "A distributed collection of data organized into named columns",
+                "is_correct": True,
+            },
             {"text": "A single machine data structure", "is_correct": False},
             {"text": "A configuration file", "is_correct": False},
-            {"text": "A machine learning model", "is_correct": False}
-        ]
-    }
+            {"text": "A machine learning model", "is_correct": False},
+        ],
+    },
 ]

@@ -1,20 +1,20 @@
 """Cybersecurity Certifications Module"""
 
 from . import (
-    comptia_security_plus,
     certified_ethical_hacker,
     cisa,
+    ciscp_professional,
     cism,
     cissp,
-    comptia_cysa_plus,
-    comptia_pentest_plus,
-    giac_gsec,
-    ciscp_professional,
     comptia_casp_plus,
-    giac_gcih,
-    giac_gcfa,
+    comptia_cysa_plus,
     comptia_network_plus_security,
-    oscp_offensive_security
+    comptia_pentest_plus,
+    comptia_security_plus,
+    giac_gcfa,
+    giac_gcih,
+    giac_gsec,
+    oscp_offensive_security,
 )
 
 # Collect all Cybersecurity certifications
@@ -36,10 +36,10 @@ for module in [
     giac_gcih,
     giac_gcfa,
     comptia_network_plus_security,
-    oscp_offensive_security
+    oscp_offensive_security,
 ]:
     CERTIFICATIONS.append(module.CERTIFICATION)
-    if hasattr(module, 'QUESTIONS') and module.QUESTIONS:
-        ALL_QUESTIONS[module.CERTIFICATION['slug']] = module.QUESTIONS
+    if hasattr(module, "QUESTIONS") and module.QUESTIONS:
+        ALL_QUESTIONS[module.CERTIFICATION["slug"]] = module.QUESTIONS
 
-__all__ = ['CERTIFICATIONS', 'ALL_QUESTIONS']
+__all__ = ["CERTIFICATIONS", "ALL_QUESTIONS"]

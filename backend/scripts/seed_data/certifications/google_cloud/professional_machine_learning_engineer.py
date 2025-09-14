@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Design, build, and productionize machine learning models to solve business challenges using Google Cloud",
     "slug": "google-professional-machine-learning-engineer",
     "level": "Professional",
-    "duration": 120,
-    "questions_count": 50,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "google-cloud",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "AI Platform", "is_correct": False},
             {"text": "Vertex AI", "is_correct": True},
             {"text": "AutoML", "is_correct": False},
-            {"text": "BigQuery ML", "is_correct": False}
-        ]
+            {"text": "BigQuery ML", "is_correct": False},
+        ],
     },
     {
         "text": "What is the primary purpose of BigQuery ML?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Data storage", "is_correct": False},
             {"text": "ML model creation using SQL", "is_correct": True},
             {"text": "Data visualization", "is_correct": False},
-            {"text": "ETL processing", "is_correct": False}
-        ]
+            {"text": "ETL processing", "is_correct": False},
+        ],
     },
     {
         "text": "Which Google Cloud service provides pre-trained models for common AI tasks?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "Vertex AI", "is_correct": False},
             {"text": "Cloud AI APIs", "is_correct": True},
             {"text": "AutoML", "is_correct": False},
-            {"text": "AI Notebooks", "is_correct": False}
-        ]
+            {"text": "AI Notebooks", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of Kubeflow Pipelines in Google Cloud?",
@@ -57,8 +57,8 @@ QUESTIONS = [
             {"text": "Data storage", "is_correct": False},
             {"text": "ML workflow orchestration", "is_correct": True},
             {"text": "Model serving", "is_correct": False},
-            {"text": "Feature engineering", "is_correct": False}
-        ]
+            {"text": "Feature engineering", "is_correct": False},
+        ],
     },
     {
         "text": "Which Google Cloud service provides managed Jupyter notebooks for ML development?",
@@ -69,7 +69,7 @@ QUESTIONS = [
             {"text": "Colab", "is_correct": False},
             {"text": "Vertex AI Workbench", "is_correct": True},
             {"text": "Datalab", "is_correct": False},
-            {"text": "Cloud Shell", "is_correct": False}
-        ]
-    }
+            {"text": "Cloud Shell", "is_correct": False},
+        ],
+    },
 ]

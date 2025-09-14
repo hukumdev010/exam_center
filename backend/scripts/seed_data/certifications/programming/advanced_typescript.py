@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Advanced TypeScript concepts including utility types, mapped types, conditional types, and decorators",
     "slug": "advanced-typescript-certification",
     "level": "Professional",
-    "duration": 150,
-    "questions_count": 80,
+    "duration": 9,
+    "questions_count": 3,
     "category_slug": "programming",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Makes all properties required", "is_correct": False},
             {"text": "Makes all properties optional", "is_correct": True},
             {"text": "Removes all properties", "is_correct": False},
-            {"text": "Makes all properties readonly", "is_correct": False}
-        ]
+            {"text": "Makes all properties readonly", "is_correct": False},
+        ],
     },
     {
         "text": "How do you create a mapped type that makes all properties readonly?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "{ readonly [K in keyof T]: T[K] }", "is_correct": True},
             {"text": "{ [K in keyof T]: readonly T[K] }", "is_correct": False},
             {"text": "{ [readonly K in keyof T]: T[K] }", "is_correct": False},
-            {"text": "readonly { [K in keyof T]: T[K] }", "is_correct": False}
-        ]
+            {"text": "readonly { [K in keyof T]: T[K] }", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of conditional types in TypeScript?",
@@ -45,7 +45,7 @@ QUESTIONS = [
             {"text": "To make types optional", "is_correct": False},
             {"text": "To choose between types based on conditions", "is_correct": True},
             {"text": "To create union types", "is_correct": False},
-            {"text": "To make types readonly", "is_correct": False}
-        ]
-    }
+            {"text": "To make types readonly", "is_correct": False},
+        ],
+    },
 ]

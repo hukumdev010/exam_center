@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Design and develop Qlik Sense applications and data models for business intelligence",
     "slug": "qlik-sense-data-architect",
     "level": "Professional",
-    "duration": 120,
-    "questions_count": 50,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "data-analytics",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,14 @@ QUESTIONS = [
         "reference": "https://help.qlik.com/en-US/sense/November2023/Subsystems/Hub/Content/Sense_Hub/Introduction/qlik-associative-model.htm",
         "points": 1,
         "answers": [
-            {"text": "A data model that maintains associations between all data elements", "is_correct": True},
+            {
+                "text": "A data model that maintains associations between all data elements",
+                "is_correct": True,
+            },
             {"text": "A relational database structure", "is_correct": False},
             {"text": "A machine learning algorithm", "is_correct": False},
-            {"text": "A visualization technique", "is_correct": False}
-        ]
+            {"text": "A visualization technique", "is_correct": False},
+        ],
     },
     {
         "text": "Which function is used to load data in Qlik Sense scripts?",
@@ -33,8 +36,8 @@ QUESTIONS = [
             {"text": "LOAD", "is_correct": True},
             {"text": "SELECT", "is_correct": False},
             {"text": "IMPORT", "is_correct": False},
-            {"text": "GET", "is_correct": False}
-        ]
+            {"text": "GET", "is_correct": False},
+        ],
     },
     {
         "text": "What is a synthetic key in Qlik Sense?",
@@ -42,11 +45,14 @@ QUESTIONS = [
         "reference": "https://help.qlik.com/en-US/sense/November2023/Subsystems/Hub/Content/Sense_Hub/Scripting/ScriptPrefixes/synthetic-keys.htm",
         "points": 1,
         "answers": [
-            {"text": "An automatically created key when tables share multiple common fields", "is_correct": True},
+            {
+                "text": "An automatically created key when tables share multiple common fields",
+                "is_correct": True,
+            },
             {"text": "A manually created primary key", "is_correct": False},
             {"text": "An encrypted field", "is_correct": False},
-            {"text": "A calculated dimension", "is_correct": False}
-        ]
+            {"text": "A calculated dimension", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of the Set Analysis in Qlik Sense?",
@@ -54,11 +60,14 @@ QUESTIONS = [
         "reference": "https://help.qlik.com/en-US/sense/November2023/Subsystems/Hub/Content/Sense_Hub/ChartFunctions/SetAnalysis/set-analysis.htm",
         "points": 1,
         "answers": [
-            {"text": "Define a set of data different from current selections for calculations", "is_correct": True},
+            {
+                "text": "Define a set of data different from current selections for calculations",
+                "is_correct": True,
+            },
             {"text": "Analyze user behavior", "is_correct": False},
             {"text": "Set up data connections", "is_correct": False},
-            {"text": "Configure security settings", "is_correct": False}
-        ]
+            {"text": "Configure security settings", "is_correct": False},
+        ],
     },
     {
         "text": "Which Qlik Sense feature provides data lineage and impact analysis?",
@@ -69,7 +78,7 @@ QUESTIONS = [
             {"text": "Data Manager and Data Model Viewer", "is_correct": True},
             {"text": "Set Analysis", "is_correct": False},
             {"text": "Master Items", "is_correct": False},
-            {"text": "Storytelling", "is_correct": False}
-        ]
-    }
+            {"text": "Storytelling", "is_correct": False},
+        ],
+    },
 ]

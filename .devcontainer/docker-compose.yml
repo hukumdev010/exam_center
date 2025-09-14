@@ -13,6 +13,8 @@ services:
       - db
     environment:
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/exam_center
+    env_file:
+      - ../.env
 
   db:
     image: postgres:15-alpine

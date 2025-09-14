@@ -5,12 +5,83 @@ CERTIFICATION = {
     "description": "Networking concepts and troubleshooting",
     "slug": "comptia-network-plus",
     "level": "Associate",
-    "duration": 90,
-    "questions_count": 90,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "networking",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
-    # Add sample questions here following the same format
+    {
+        "text": "What is the purpose of the OSI model?",
+        "explanation": "The OSI (Open Systems Interconnection) model is a conceptual framework that describes how different network protocols interact and communicate in a layered approach, providing a standard for network communication.",
+        "reference": "https://www.comptia.org/certifications/network",
+        "points": 1,
+        "answers": [
+            {"text": "To encrypt network traffic", "is_correct": False},
+            {
+                "text": "To provide a framework for network communication layers",
+                "is_correct": True,
+            },
+            {"text": "To manage IP addresses", "is_correct": False},
+            {"text": "To configure routers", "is_correct": False},
+        ],
+    },
+    {
+        "text": "What is the difference between TCP and UDP?",
+        "explanation": "TCP (Transmission Control Protocol) is connection-oriented and provides reliable, ordered delivery of data, while UDP (User Datagram Protocol) is connectionless and provides faster but unreliable data transmission.",
+        "reference": "https://www.comptia.org/certifications/network",
+        "points": 1,
+        "answers": [
+            {"text": "TCP is faster, UDP is more reliable", "is_correct": False},
+            {
+                "text": "TCP is reliable and connection-oriented, UDP is fast and connectionless",
+                "is_correct": True,
+            },
+            {"text": "TCP and UDP are the same protocol", "is_correct": False},
+            {
+                "text": "TCP is for wireless, UDP is for wired networks",
+                "is_correct": False,
+            },
+        ],
+    },
+    {
+        "text": "What is DHCP used for?",
+        "explanation": "DHCP (Dynamic Host Configuration Protocol) automatically assigns IP addresses, subnet masks, default gateways, and other network configuration parameters to devices on a network.",
+        "reference": "https://www.comptia.org/certifications/network",
+        "points": 1,
+        "answers": [
+            {"text": "Encrypting network traffic", "is_correct": False},
+            {
+                "text": "Automatically assigning IP addresses to devices",
+                "is_correct": True,
+            },
+            {"text": "Routing packets between networks", "is_correct": False},
+            {"text": "Managing network security", "is_correct": False},
+        ],
+    },
+    {
+        "text": "What is a VLAN?",
+        "explanation": "A VLAN (Virtual Local Area Network) is a logical grouping of devices on different physical network segments that can communicate as if they were on the same physical network segment.",
+        "reference": "https://www.comptia.org/certifications/network",
+        "points": 1,
+        "answers": [
+            {"text": "A physical network cable", "is_correct": False},
+            {"text": "A logical grouping of network devices", "is_correct": True},
+            {"text": "A type of router", "is_correct": False},
+            {"text": "A wireless access point", "is_correct": False},
+        ],
+    },
+    {
+        "text": "What is the purpose of DNS?",
+        "explanation": "DNS (Domain Name System) translates human-readable domain names (like www.example.com) into IP addresses that computers use to communicate with each other.",
+        "reference": "https://www.comptia.org/certifications/network",
+        "points": 1,
+        "answers": [
+            {"text": "To encrypt web traffic", "is_correct": False},
+            {"text": "To translate domain names to IP addresses", "is_correct": True},
+            {"text": "To assign IP addresses automatically", "is_correct": False},
+            {"text": "To monitor network performance", "is_correct": False},
+        ],
+    },
 ]

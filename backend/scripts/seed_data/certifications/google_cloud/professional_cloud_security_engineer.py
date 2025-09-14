@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Configure access within a cloud solution environment and ensure compliance with security policies",
     "slug": "google-professional-cloud-security-engineer",
     "level": "Professional",
-    "duration": 120,
-    "questions_count": 50,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "google-cloud",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Cloud KMS", "is_correct": False},
             {"text": "Secret Manager", "is_correct": True},
             {"text": "Cloud IAM", "is_correct": False},
-            {"text": "Cloud Security Center", "is_correct": False}
-        ]
+            {"text": "Cloud Security Center", "is_correct": False},
+        ],
     },
     {
         "text": "What is the primary purpose of Cloud Key Management Service (KMS)?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "User authentication", "is_correct": False},
             {"text": "Cryptographic key management", "is_correct": True},
             {"text": "Network security", "is_correct": False},
-            {"text": "Access logging", "is_correct": False}
-        ]
+            {"text": "Access logging", "is_correct": False},
+        ],
     },
     {
         "text": "Which service provides security insights and recommendations for Google Cloud resources?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "Cloud Asset Inventory", "is_correct": False},
             {"text": "Security Command Center", "is_correct": True},
             {"text": "Cloud Audit Logs", "is_correct": False},
-            {"text": "Cloud Identity", "is_correct": False}
-        ]
+            {"text": "Cloud Identity", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of VPC Service Controls?",
@@ -57,8 +57,8 @@ QUESTIONS = [
             {"text": "Network routing", "is_correct": False},
             {"text": "Data exfiltration protection", "is_correct": True},
             {"text": "Load balancing", "is_correct": False},
-            {"text": "DNS resolution", "is_correct": False}
-        ]
+            {"text": "DNS resolution", "is_correct": False},
+        ],
     },
     {
         "text": "Which Google Cloud service provides web application firewall capabilities?",
@@ -69,7 +69,7 @@ QUESTIONS = [
             {"text": "Cloud CDN", "is_correct": False},
             {"text": "Cloud Armor", "is_correct": True},
             {"text": "Cloud Load Balancing", "is_correct": False},
-            {"text": "VPC Firewall", "is_correct": False}
-        ]
-    }
+            {"text": "VPC Firewall", "is_correct": False},
+        ],
+    },
 ]

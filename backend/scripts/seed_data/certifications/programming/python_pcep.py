@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Python Certified Entry-Level Programmer",
     "slug": "python-pcep",
     "level": "Entry",
-    "duration": 65,
-    "questions_count": 30,
+    "duration": 6,
+    "questions_count": 2,
     "category_slug": "programming",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "tuple", "is_correct": False},
             {"text": "string", "is_correct": False},
             {"text": "list", "is_correct": True},
-            {"text": "frozenset", "is_correct": False}
-        ]
+            {"text": "frozenset", "is_correct": False},
+        ],
     },
     {
         "text": "What is the output of print(type(5.0))?",
@@ -33,7 +33,7 @@ QUESTIONS = [
             {"text": "<class 'int'>", "is_correct": False},
             {"text": "<class 'float'>", "is_correct": True},
             {"text": "<class 'number'>", "is_correct": False},
-            {"text": "<class 'decimal'>", "is_correct": False}
-        ]
-    }
+            {"text": "<class 'decimal'>", "is_correct": False},
+        ],
+    },
 ]

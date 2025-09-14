@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "MySQL database administration, optimization, and management skills",
     "slug": "mysql-database-administrator",
     "level": "Professional",
-    "duration": 150,
-    "questions_count": 70,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "database",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "InnoDB", "is_correct": True},
             {"text": "MyISAM", "is_correct": False},
             {"text": "MEMORY", "is_correct": False},
-            {"text": "CSV", "is_correct": False}
-        ]
+            {"text": "CSV", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of MySQL's binary log?",
@@ -30,11 +30,14 @@ QUESTIONS = [
         "reference": "https://dev.mysql.com/doc/refman/8.0/en/binary-log.html",
         "points": 1,
         "answers": [
-            {"text": "Records database changes for replication and recovery", "is_correct": True},
+            {
+                "text": "Records database changes for replication and recovery",
+                "is_correct": True,
+            },
             {"text": "Stores user authentication information", "is_correct": False},
             {"text": "Contains system configuration settings", "is_correct": False},
-            {"text": "Logs error messages only", "is_correct": False}
-        ]
+            {"text": "Logs error messages only", "is_correct": False},
+        ],
     },
     {
         "text": "Which command is used to optimize a MySQL table?",
@@ -45,8 +48,8 @@ QUESTIONS = [
             {"text": "OPTIMIZE TABLE", "is_correct": True},
             {"text": "ANALYZE TABLE", "is_correct": False},
             {"text": "REPAIR TABLE", "is_correct": False},
-            {"text": "CHECK TABLE", "is_correct": False}
-        ]
+            {"text": "CHECK TABLE", "is_correct": False},
+        ],
     },
     {
         "text": "What is MySQL replication?",
@@ -54,11 +57,14 @@ QUESTIONS = [
         "reference": "https://dev.mysql.com/doc/refman/8.0/en/replication.html",
         "points": 1,
         "answers": [
-            {"text": "Copying data from master to one or more slave servers", "is_correct": True},
+            {
+                "text": "Copying data from master to one or more slave servers",
+                "is_correct": True,
+            },
             {"text": "Creating database backups", "is_correct": False},
             {"text": "Encrypting database connections", "is_correct": False},
-            {"text": "Compressing database files", "is_correct": False}
-        ]
+            {"text": "Compressing database files", "is_correct": False},
+        ],
     },
     {
         "text": "Which MySQL configuration file parameter controls the maximum number of connections?",
@@ -69,7 +75,7 @@ QUESTIONS = [
             {"text": "max_connections", "is_correct": True},
             {"text": "max_users", "is_correct": False},
             {"text": "connection_limit", "is_correct": False},
-            {"text": "max_sessions", "is_correct": False}
-        ]
-    }
+            {"text": "max_sessions", "is_correct": False},
+        ],
+    },
 ]

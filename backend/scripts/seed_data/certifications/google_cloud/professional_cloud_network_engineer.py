@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Implement and manage network architectures in Google Cloud Platform",
     "slug": "google-professional-cloud-network-engineer",
     "level": "Professional",
-    "duration": 120,
-    "questions_count": 50,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "google-cloud",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Cloud VPN", "is_correct": False},
             {"text": "Private Google Access", "is_correct": True},
             {"text": "Cloud Interconnect", "is_correct": False},
-            {"text": "Cloud NAT", "is_correct": False}
-        ]
+            {"text": "Cloud NAT", "is_correct": False},
+        ],
     },
     {
         "text": "What is the primary benefit of using Cloud Interconnect?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Cost reduction", "is_correct": False},
             {"text": "High bandwidth, low latency connectivity", "is_correct": True},
             {"text": "Enhanced security", "is_correct": False},
-            {"text": "Automatic scaling", "is_correct": False}
-        ]
+            {"text": "Automatic scaling", "is_correct": False},
+        ],
     },
     {
         "text": "Which load balancer type is best for global HTTP(S) traffic distribution?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "Regional TCP Load Balancer", "is_correct": False},
             {"text": "Global HTTP(S) Load Balancer", "is_correct": True},
             {"text": "Internal Load Balancer", "is_correct": False},
-            {"text": "Network Load Balancer", "is_correct": False}
-        ]
+            {"text": "Network Load Balancer", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of Cloud NAT?",
@@ -55,10 +55,13 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "Load balancing", "is_correct": False},
-            {"text": "Outbound internet access for private instances", "is_correct": True},
+            {
+                "text": "Outbound internet access for private instances",
+                "is_correct": True,
+            },
             {"text": "DNS resolution", "is_correct": False},
-            {"text": "VPN connectivity", "is_correct": False}
-        ]
+            {"text": "VPN connectivity", "is_correct": False},
+        ],
     },
     {
         "text": "Which Google Cloud service provides content delivery network capabilities?",
@@ -69,7 +72,7 @@ QUESTIONS = [
             {"text": "Cloud Storage", "is_correct": False},
             {"text": "Cloud CDN", "is_correct": True},
             {"text": "Cloud Load Balancing", "is_correct": False},
-            {"text": "Cloud Armor", "is_correct": False}
-        ]
-    }
+            {"text": "Cloud Armor", "is_correct": False},
+        ],
+    },
 ]

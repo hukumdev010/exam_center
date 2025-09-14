@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Design and build data processing systems and machine learning models on Google Cloud Platform",
     "slug": "google-cloud-professional-data-engineer",
     "level": "Professional",
-    "duration": 120,
-    "questions_count": 50,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "data-analytics",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Cloud Dataflow", "is_correct": True},
             {"text": "BigQuery", "is_correct": False},
             {"text": "Cloud Storage", "is_correct": False},
-            {"text": "Cloud SQL", "is_correct": False}
-        ]
+            {"text": "Cloud SQL", "is_correct": False},
+        ],
     },
     {
         "text": "What is BigQuery's primary use case?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Serverless data warehouse for analytics", "is_correct": True},
             {"text": "Real-time messaging", "is_correct": False},
             {"text": "File storage", "is_correct": False},
-            {"text": "Machine learning training", "is_correct": False}
-        ]
+            {"text": "Machine learning training", "is_correct": False},
+        ],
     },
     {
         "text": "Which service provides managed Apache Spark on Google Cloud?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "Cloud Dataproc", "is_correct": True},
             {"text": "Cloud Dataflow", "is_correct": False},
             {"text": "Cloud Composer", "is_correct": False},
-            {"text": "Cloud Functions", "is_correct": False}
-        ]
+            {"text": "Cloud Functions", "is_correct": False},
+        ],
     },
     {
         "text": "What is Cloud Pub/Sub used for?",
@@ -57,8 +57,8 @@ QUESTIONS = [
             {"text": "Asynchronous messaging and event streaming", "is_correct": True},
             {"text": "Data warehouse storage", "is_correct": False},
             {"text": "Machine learning model training", "is_correct": False},
-            {"text": "User authentication", "is_correct": False}
-        ]
+            {"text": "User authentication", "is_correct": False},
+        ],
     },
     {
         "text": "Which tool is used for data pipeline orchestration on Google Cloud?",
@@ -69,7 +69,7 @@ QUESTIONS = [
             {"text": "Cloud Composer", "is_correct": True},
             {"text": "Cloud Scheduler", "is_correct": False},
             {"text": "Cloud Tasks", "is_correct": False},
-            {"text": "Cloud Build", "is_correct": False}
-        ]
-    }
+            {"text": "Cloud Build", "is_correct": False},
+        ],
+    },
 ]

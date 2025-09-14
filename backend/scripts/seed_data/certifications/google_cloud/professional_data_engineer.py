@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Design, build, operationalize, secure, and monitor data processing systems on Google Cloud",
     "slug": "google-professional-data-engineer",
     "level": "Professional",
-    "duration": 120,
-    "questions_count": 50,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "google-cloud",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "BigQuery", "is_correct": False},
             {"text": "Cloud Dataflow", "is_correct": True},
             {"text": "Cloud Storage", "is_correct": False},
-            {"text": "Cloud Pub/Sub", "is_correct": False}
-        ]
+            {"text": "Cloud Pub/Sub", "is_correct": False},
+        ],
     },
     {
         "text": "What is the primary purpose of Cloud Pub/Sub?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Data warehousing", "is_correct": False},
             {"text": "Messaging and event ingestion", "is_correct": True},
             {"text": "Machine learning", "is_correct": False},
-            {"text": "File storage", "is_correct": False}
-        ]
+            {"text": "File storage", "is_correct": False},
+        ],
     },
     {
         "text": "Which Google Cloud service provides a managed Apache Spark and Hadoop environment?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "Cloud Dataproc", "is_correct": True},
             {"text": "Cloud Dataflow", "is_correct": False},
             {"text": "BigQuery", "is_correct": False},
-            {"text": "Cloud Composer", "is_correct": False}
-        ]
+            {"text": "Cloud Composer", "is_correct": False},
+        ],
     },
     {
         "text": "What is the recommended approach for data transformation in BigQuery?",
@@ -57,8 +57,8 @@ QUESTIONS = [
             {"text": "Python scripts", "is_correct": False},
             {"text": "SQL transformations", "is_correct": True},
             {"text": "Java applications", "is_correct": False},
-            {"text": "REST APIs", "is_correct": False}
-        ]
+            {"text": "REST APIs", "is_correct": False},
+        ],
     },
     {
         "text": "Which Google Cloud service orchestrates and schedules data workflows?",
@@ -69,7 +69,7 @@ QUESTIONS = [
             {"text": "Cloud Scheduler", "is_correct": False},
             {"text": "Cloud Composer", "is_correct": True},
             {"text": "Cloud Functions", "is_correct": False},
-            {"text": "Cloud Build", "is_correct": False}
-        ]
-    }
+            {"text": "Cloud Build", "is_correct": False},
+        ],
+    },
 ]

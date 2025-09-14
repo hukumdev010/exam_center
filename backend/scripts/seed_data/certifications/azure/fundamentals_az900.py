@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Foundational knowledge of Azure cloud concepts",
     "slug": "azure-fundamentals-az900",
     "level": "Foundational",
-    "duration": 85,
-    "questions_count": 40,
+    "duration": 9,
+    "questions_count": 3,
     "category_slug": "azure",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "IaaS, PaaS, SaaS", "is_correct": True},
             {"text": "Public, Private, Hybrid", "is_correct": False},
             {"text": "Compute, Storage, Network", "is_correct": False},
-            {"text": "Basic, Standard, Premium", "is_correct": False}
-        ]
+            {"text": "Basic, Standard, Premium", "is_correct": False},
+        ],
     },
     {
         "text": "Which Azure service provides serverless compute?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Azure Virtual Machines", "is_correct": False},
             {"text": "Azure Functions", "is_correct": True},
             {"text": "Azure Container Instances", "is_correct": False},
-            {"text": "Azure App Service", "is_correct": False}
-        ]
+            {"text": "Azure App Service", "is_correct": False},
+        ],
     },
     {
         "text": "What is Azure Resource Manager (ARM)?",
@@ -45,7 +45,7 @@ QUESTIONS = [
             {"text": "A monitoring service", "is_correct": False},
             {"text": "A deployment and management service", "is_correct": True},
             {"text": "A storage service", "is_correct": False},
-            {"text": "A networking service", "is_correct": False}
-        ]
-    }
+            {"text": "A networking service", "is_correct": False},
+        ],
+    },
 ]

@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Designing and implementing high-performance, scalable systems",
     "slug": "high-performance-system-architecture",
     "level": "Expert",
-    "duration": 180,
-    "questions_count": 75,
+    "duration": 3,
+    "questions_count": 1,
     "category_slug": "system-design",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,7 +21,7 @@ QUESTIONS = [
             {"text": "Increased security", "is_correct": False},
             {"text": "Reduced latency and improved performance", "is_correct": True},
             {"text": "Better SEO rankings", "is_correct": False},
-            {"text": "Lower storage costs", "is_correct": False}
-        ]
+            {"text": "Lower storage costs", "is_correct": False},
+        ],
     }
 ]

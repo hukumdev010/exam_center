@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Modern JavaScript and ES6+ features",
     "slug": "javascript-developer-certification",
     "level": "Associate",
-    "duration": 120,
-    "questions_count": 60,
+    "duration": 3,
+    "questions_count": 1,
     "category_slug": "programming",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -19,9 +19,12 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "No difference", "is_correct": False},
-            {"text": "'===' is stricter and doesn't perform type coercion", "is_correct": True},
+            {
+                "text": "'===' is stricter and doesn't perform type coercion",
+                "is_correct": True,
+            },
             {"text": "'==' is stricter", "is_correct": False},
-            {"text": "They work only with numbers", "is_correct": False}
-        ]
+            {"text": "They work only with numbers", "is_correct": False},
+        ],
     }
 ]

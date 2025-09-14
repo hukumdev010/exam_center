@@ -1,16 +1,16 @@
 """Networking Certifications Module"""
 
 from . import (
+    cisco_ccie,
     cisco_ccna,
     cisco_ccnp,
-    cisco_ccie,
+    cissp_network_security,
     comptia_network_plus,
+    fortinet_nse,
     juniper_jncia,
     juniper_jncip,
-    cissp_network_security,
     palo_alto_pcnse,
-    fortinet_nse,
-    wireshark_wcna
+    wireshark_wcna,
 )
 
 # Collect all Networking certifications
@@ -28,12 +28,12 @@ modules = [
     cissp_network_security,
     palo_alto_pcnse,
     fortinet_nse,
-    wireshark_wcna
+    wireshark_wcna,
 ]
 
 for module in modules:
     CERTIFICATIONS.append(module.CERTIFICATION)
-    if hasattr(module, 'QUESTIONS') and module.QUESTIONS:
-        ALL_QUESTIONS[module.CERTIFICATION['slug']] = module.QUESTIONS
+    if hasattr(module, "QUESTIONS") and module.QUESTIONS:
+        ALL_QUESTIONS[module.CERTIFICATION["slug"]] = module.QUESTIONS
 
-__all__ = ['CERTIFICATIONS', 'ALL_QUESTIONS']
+__all__ = ["CERTIFICATIONS", "ALL_QUESTIONS"]

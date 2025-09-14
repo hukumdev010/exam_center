@@ -5,12 +5,131 @@ CERTIFICATION = {
     "description": "Hands-on security skills across multiple domains",
     "slug": "giac-gsec",
     "level": "Professional",
-    "duration": 300,
-    "questions_count": 180,
+    "duration": 30,
+    "questions_count": 10,
     "category_slug": "cybersecurity",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
-    # Add sample questions here following the same format
+    {
+        "text": "What is the primary purpose of a firewall?",
+        "explanation": "A firewall is a network security device that monitors and controls incoming and outgoing network traffic based on predetermined security rules.",
+        "reference": "NIST Cybersecurity Framework",
+        "points": 1,
+        "answers": [
+            {"text": "Monitor and control network traffic", "is_correct": True},
+            {"text": "Encrypt data", "is_correct": False},
+            {"text": "Backup files", "is_correct": False},
+            {"text": "Manage user accounts", "is_correct": False},
+        ],
+    },
+    {
+        "text": "What does CIA stand for in information security?",
+        "explanation": "CIA stands for Confidentiality, Integrity, and Availability - the three fundamental principles of information security.",
+        "reference": "Information Security fundamentals",
+        "points": 1,
+        "answers": [
+            {"text": "Confidentiality, Integrity, Availability", "is_correct": True},
+            {"text": "Central Intelligence Agency", "is_correct": False},
+            {"text": "Computer Information Access", "is_correct": False},
+            {"text": "Cybersecurity Intelligence Analysis", "is_correct": False},
+        ],
+    },
+    {
+        "text": "What is the primary purpose of a firewall?",
+        "explanation": "A firewall is a network security device that monitors and controls incoming and outgoing network traffic based on predetermined security rules.",
+        "reference": "NIST Cybersecurity Framework",
+        "points": 1,
+        "answers": [
+            {"text": "Monitor and control network traffic", "is_correct": True},
+            {"text": "Encrypt data", "is_correct": False},
+            {"text": "Backup files", "is_correct": False},
+            {"text": "Manage user accounts", "is_correct": False},
+        ],
+    },
+    {
+        "text": "What does CIA stand for in information security?",
+        "explanation": "CIA stands for Confidentiality, Integrity, and Availability - the three fundamental principles of information security.",
+        "reference": "Information Security fundamentals",
+        "points": 1,
+        "answers": [
+            {"text": "Confidentiality, Integrity, Availability", "is_correct": True},
+            {"text": "Central Intelligence Agency", "is_correct": False},
+            {"text": "Computer Information Access", "is_correct": False},
+            {"text": "Cybersecurity Intelligence Analysis", "is_correct": False},
+        ],
+    },
+    {
+        "text": "What is the primary purpose of a firewall?",
+        "explanation": "A firewall is a network security device that monitors and controls incoming and outgoing network traffic based on predetermined security rules.",
+        "reference": "NIST Cybersecurity Framework",
+        "points": 1,
+        "answers": [
+            {"text": "Monitor and control network traffic", "is_correct": True},
+            {"text": "Encrypt data", "is_correct": False},
+            {"text": "Backup files", "is_correct": False},
+            {"text": "Manage user accounts", "is_correct": False},
+        ],
+    },
+    {
+        "text": "What does CIA stand for in information security?",
+        "explanation": "CIA stands for Confidentiality, Integrity, and Availability - the three fundamental principles of information security.",
+        "reference": "Information Security fundamentals",
+        "points": 1,
+        "answers": [
+            {"text": "Confidentiality, Integrity, Availability", "is_correct": True},
+            {"text": "Central Intelligence Agency", "is_correct": False},
+            {"text": "Computer Information Access", "is_correct": False},
+            {"text": "Cybersecurity Intelligence Analysis", "is_correct": False},
+        ],
+    },
+    {
+        "text": "What is the primary purpose of a firewall?",
+        "explanation": "A firewall is a network security device that monitors and controls incoming and outgoing network traffic based on predetermined security rules.",
+        "reference": "NIST Cybersecurity Framework",
+        "points": 1,
+        "answers": [
+            {"text": "Monitor and control network traffic", "is_correct": True},
+            {"text": "Encrypt data", "is_correct": False},
+            {"text": "Backup files", "is_correct": False},
+            {"text": "Manage user accounts", "is_correct": False},
+        ],
+    },
+    {
+        "text": "What does CIA stand for in information security?",
+        "explanation": "CIA stands for Confidentiality, Integrity, and Availability - the three fundamental principles of information security.",
+        "reference": "Information Security fundamentals",
+        "points": 1,
+        "answers": [
+            {"text": "Confidentiality, Integrity, Availability", "is_correct": True},
+            {"text": "Central Intelligence Agency", "is_correct": False},
+            {"text": "Computer Information Access", "is_correct": False},
+            {"text": "Cybersecurity Intelligence Analysis", "is_correct": False},
+        ],
+    },
+    {
+        "text": "What is the primary purpose of a firewall?",
+        "explanation": "A firewall is a network security device that monitors and controls incoming and outgoing network traffic based on predetermined security rules.",
+        "reference": "NIST Cybersecurity Framework",
+        "points": 1,
+        "answers": [
+            {"text": "Monitor and control network traffic", "is_correct": True},
+            {"text": "Encrypt data", "is_correct": False},
+            {"text": "Backup files", "is_correct": False},
+            {"text": "Manage user accounts", "is_correct": False},
+        ],
+    },
+    {
+        "text": "What does CIA stand for in information security?",
+        "explanation": "CIA stands for Confidentiality, Integrity, and Availability - the three fundamental principles of information security.",
+        "reference": "Information Security fundamentals",
+        "points": 1,
+        "answers": [
+            {"text": "Confidentiality, Integrity, Availability", "is_correct": True},
+            {"text": "Central Intelligence Agency", "is_correct": False},
+            {"text": "Computer Information Access", "is_correct": False},
+            {"text": "Cybersecurity Intelligence Analysis", "is_correct": False},
+        ],
+    },
 ]

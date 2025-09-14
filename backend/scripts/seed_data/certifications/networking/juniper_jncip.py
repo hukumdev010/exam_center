@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Advanced Juniper networking technologies and enterprise routing",
     "slug": "juniper-jncip",
     "level": "Professional",
-    "duration": 90,
-    "questions_count": 65,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "networking",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "OSPF", "is_correct": False},
             {"text": "BGP", "is_correct": True},
             {"text": "ISIS", "is_correct": False},
-            {"text": "RIP", "is_correct": False}
-        ]
+            {"text": "RIP", "is_correct": False},
+        ],
     },
     {
         "text": "Which Junos command is used to display the routing table?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "show ip route", "is_correct": False},
             {"text": "show route", "is_correct": True},
             {"text": "display route", "is_correct": False},
-            {"text": "get route", "is_correct": False}
-        ]
+            {"text": "get route", "is_correct": False},
+        ],
     },
     {
         "text": "What is the default preference value for OSPF internal routes in Junos?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "10", "is_correct": True},
             {"text": "100", "is_correct": False},
             {"text": "110", "is_correct": False},
-            {"text": "150", "is_correct": False}
-        ]
+            {"text": "150", "is_correct": False},
+        ],
     },
     {
         "text": "Which Juniper technology provides network segmentation and virtualization?",
@@ -57,8 +57,8 @@ QUESTIONS = [
             {"text": "VPLS", "is_correct": False},
             {"text": "EVPN", "is_correct": True},
             {"text": "L2Circuit", "is_correct": False},
-            {"text": "CCC", "is_correct": False}
-        ]
+            {"text": "CCC", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of the Junos commit model?",
@@ -69,7 +69,7 @@ QUESTIONS = [
             {"text": "Backup configurations", "is_correct": False},
             {"text": "Atomic configuration changes", "is_correct": True},
             {"text": "Performance monitoring", "is_correct": False},
-            {"text": "User authentication", "is_correct": False}
-        ]
-    }
+            {"text": "User authentication", "is_correct": False},
+        ],
+    },
 ]

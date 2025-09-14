@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Demonstrates expertise in product ownership and value maximization in Scrum teams",
     "slug": "certified-scrum-product-owner-cspo",
     "level": "Professional",
-    "duration": 60,
-    "questions_count": 50,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "project-management",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Managing the Development Team", "is_correct": False},
             {"text": "Maximizing the value of the product", "is_correct": True},
             {"text": "Facilitating Scrum events", "is_correct": False},
-            {"text": "Writing technical documentation", "is_correct": False}
-        ]
+            {"text": "Writing technical documentation", "is_correct": False},
+        ],
     },
     {
         "text": "Who can change the priority of items in the Product Backlog?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Any stakeholder", "is_correct": False},
             {"text": "Product Owner only", "is_correct": True},
             {"text": "Scrum Master", "is_correct": False},
-            {"text": "Development Team", "is_correct": False}
-        ]
+            {"text": "Development Team", "is_correct": False},
+        ],
     },
     {
         "text": "What happens if the Product Owner is not available during a Sprint?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "Sprint continues normally", "is_correct": False},
             {"text": "May impact team's ability to deliver value", "is_correct": True},
             {"text": "Scrum Master takes over", "is_correct": False},
-            {"text": "Sprint is automatically cancelled", "is_correct": False}
-        ]
+            {"text": "Sprint is automatically cancelled", "is_correct": False},
+        ],
     },
     {
         "text": "What is the relationship between the Product Owner and stakeholders?",
@@ -57,8 +57,8 @@ QUESTIONS = [
             {"text": "No direct relationship", "is_correct": False},
             {"text": "Represents stakeholders to the Scrum Team", "is_correct": True},
             {"text": "Stakeholders manage the Product Owner", "is_correct": False},
-            {"text": "Equal partnership with no hierarchy", "is_correct": False}
-        ]
+            {"text": "Equal partnership with no hierarchy", "is_correct": False},
+        ],
     },
     {
         "text": "When should Product Backlog refinement occur?",
@@ -69,7 +69,7 @@ QUESTIONS = [
             {"text": "Only during Sprint Planning", "is_correct": False},
             {"text": "Ongoing throughout the Sprint", "is_correct": True},
             {"text": "Only at Sprint Review", "is_correct": False},
-            {"text": "Once per Sprint maximum", "is_correct": False}
-        ]
-    }
+            {"text": "Once per Sprint maximum", "is_correct": False},
+        ],
+    },
 ]

@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Scaled Agile Framework expertise for Scrum Masters in enterprise environments",
     "slug": "safe-scrum-master",
     "level": "Professional",
-    "duration": 90,
-    "questions_count": 45,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "project-management",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -19,10 +19,13 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "Managing the team's backlog", "is_correct": False},
-            {"text": "Facilitating team events and removing impediments", "is_correct": True},
+            {
+                "text": "Facilitating team events and removing impediments",
+                "is_correct": True,
+            },
             {"text": "Making technical decisions", "is_correct": False},
-            {"text": "Assigning tasks to team members", "is_correct": False}
-        ]
+            {"text": "Assigning tasks to team members", "is_correct": False},
+        ],
     },
     {
         "text": "What is an Agile Release Train (ART) in SAFe?",
@@ -31,10 +34,13 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "A single Scrum team", "is_correct": False},
-            {"text": "A collection of Agile teams working together", "is_correct": True},
+            {
+                "text": "A collection of Agile teams working together",
+                "is_correct": True,
+            },
             {"text": "A project management tool", "is_correct": False},
-            {"text": "A type of user story", "is_correct": False}
-        ]
+            {"text": "A type of user story", "is_correct": False},
+        ],
     },
     {
         "text": "How long is a typical Program Increment (PI) in SAFe?",
@@ -45,8 +51,8 @@ QUESTIONS = [
             {"text": "2-4 weeks", "is_correct": False},
             {"text": "8-12 weeks", "is_correct": True},
             {"text": "6 months", "is_correct": False},
-            {"text": "1 year", "is_correct": False}
-        ]
+            {"text": "1 year", "is_correct": False},
+        ],
     },
     {
         "text": "What happens during PI Planning in SAFe?",
@@ -55,10 +61,13 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "Individual team sprint planning", "is_correct": False},
-            {"text": "ART-level planning for the upcoming Program Increment", "is_correct": True},
+            {
+                "text": "ART-level planning for the upcoming Program Increment",
+                "is_correct": True,
+            },
             {"text": "Annual budget planning", "is_correct": False},
-            {"text": "Performance reviews", "is_correct": False}
-        ]
+            {"text": "Performance reviews", "is_correct": False},
+        ],
     },
     {
         "text": "What is the Scrum Master's role during the Inspect and Adapt (I&A) event?",
@@ -67,9 +76,12 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "Present demo to stakeholders", "is_correct": False},
-            {"text": "Facilitate retrospective and support team improvement", "is_correct": True},
+            {
+                "text": "Facilitate retrospective and support team improvement",
+                "is_correct": True,
+            },
             {"text": "Plan next PI objectives", "is_correct": False},
-            {"text": "Conduct performance evaluations", "is_correct": False}
-        ]
-    }
+            {"text": "Conduct performance evaluations", "is_correct": False},
+        ],
+    },
 ]

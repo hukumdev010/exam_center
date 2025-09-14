@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Redis in-memory data structure store administration, clustering, and optimization",
     "slug": "redis-database-administrator",
     "level": "Intermediate",
-    "duration": 90,
-    "questions_count": 50,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "database",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "In-memory data structure store", "is_correct": True},
             {"text": "Relational database", "is_correct": False},
             {"text": "Document database", "is_correct": False},
-            {"text": "Graph database", "is_correct": False}
-        ]
+            {"text": "Graph database", "is_correct": False},
+        ],
     },
     {
         "text": "Which Redis data type would you use for a leaderboard?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Sorted Set (ZSET)", "is_correct": True},
             {"text": "List", "is_correct": False},
             {"text": "Hash", "is_correct": False},
-            {"text": "String", "is_correct": False}
-        ]
+            {"text": "String", "is_correct": False},
+        ],
     },
     {
         "text": "What is Redis persistence?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "Writing data to disk to survive restarts", "is_correct": True},
             {"text": "Keeping data only in memory", "is_correct": False},
             {"text": "Replicating data to other servers", "is_correct": False},
-            {"text": "Compressing data structures", "is_correct": False}
-        ]
+            {"text": "Compressing data structures", "is_correct": False},
+        ],
     },
     {
         "text": "What is Redis Cluster?",
@@ -54,11 +54,17 @@ QUESTIONS = [
         "reference": "https://redis.io/docs/manual/scaling/",
         "points": 1,
         "answers": [
-            {"text": "Automatic sharding across multiple Redis nodes", "is_correct": True},
-            {"text": "A single Redis instance with multiple databases", "is_correct": False},
+            {
+                "text": "Automatic sharding across multiple Redis nodes",
+                "is_correct": True,
+            },
+            {
+                "text": "A single Redis instance with multiple databases",
+                "is_correct": False,
+            },
             {"text": "A backup and recovery solution", "is_correct": False},
-            {"text": "A monitoring tool for Redis", "is_correct": False}
-        ]
+            {"text": "A monitoring tool for Redis", "is_correct": False},
+        ],
     },
     {
         "text": "Which Redis command is used to set a key expiration time?",
@@ -69,7 +75,7 @@ QUESTIONS = [
             {"text": "EXPIRE", "is_correct": True},
             {"text": "TIMEOUT", "is_correct": False},
             {"text": "DELETE", "is_correct": False},
-            {"text": "REMOVE", "is_correct": False}
-        ]
-    }
+            {"text": "REMOVE", "is_correct": False},
+        ],
+    },
 ]

@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Jenkins CI/CD pipeline automation and administration expertise",
     "slug": "jenkins-certified-engineer",
     "level": "Professional",
-    "duration": 120,
-    "questions_count": 60,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "devops",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,14 @@ QUESTIONS = [
         "reference": "https://www.jenkins.io/doc/book/pipeline/",
         "points": 1,
         "answers": [
-            {"text": "A suite of plugins for implementing CI/CD pipelines as code", "is_correct": True},
+            {
+                "text": "A suite of plugins for implementing CI/CD pipelines as code",
+                "is_correct": True,
+            },
             {"text": "A Jenkins user interface theme", "is_correct": False},
             {"text": "A backup tool for Jenkins", "is_correct": False},
-            {"text": "A Jenkins monitoring dashboard", "is_correct": False}
-        ]
+            {"text": "A Jenkins monitoring dashboard", "is_correct": False},
+        ],
     },
     {
         "text": "What is the difference between Declarative and Scripted pipelines?",
@@ -30,11 +33,14 @@ QUESTIONS = [
         "reference": "https://www.jenkins.io/doc/book/pipeline/syntax/",
         "points": 1,
         "answers": [
-            {"text": "Declarative uses structured syntax; Scripted uses Groovy with more flexibility", "is_correct": True},
+            {
+                "text": "Declarative uses structured syntax; Scripted uses Groovy with more flexibility",
+                "is_correct": True,
+            },
             {"text": "Declarative is faster than Scripted", "is_correct": False},
             {"text": "Scripted pipelines are deprecated", "is_correct": False},
-            {"text": "They are exactly the same", "is_correct": False}
-        ]
+            {"text": "They are exactly the same", "is_correct": False},
+        ],
     },
     {
         "text": "What is a Jenkins agent (slave)?",
@@ -42,11 +48,14 @@ QUESTIONS = [
         "reference": "https://www.jenkins.io/doc/book/using/using-agents/",
         "points": 1,
         "answers": [
-            {"text": "A machine that offloads build work from the master", "is_correct": True},
+            {
+                "text": "A machine that offloads build work from the master",
+                "is_correct": True,
+            },
             {"text": "A backup of the Jenkins master", "is_correct": False},
             {"text": "A monitoring tool for Jenkins", "is_correct": False},
-            {"text": "A security plugin", "is_correct": False}
-        ]
+            {"text": "A security plugin", "is_correct": False},
+        ],
     },
     {
         "text": "Which file defines a Jenkins pipeline as code?",
@@ -57,8 +66,8 @@ QUESTIONS = [
             {"text": "Jenkinsfile", "is_correct": True},
             {"text": "pipeline.xml", "is_correct": False},
             {"text": "build.gradle", "is_correct": False},
-            {"text": "config.json", "is_correct": False}
-        ]
+            {"text": "config.json", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of Jenkins shared libraries?",
@@ -66,10 +75,13 @@ QUESTIONS = [
         "reference": "https://www.jenkins.io/doc/book/pipeline/shared-libraries/",
         "points": 1,
         "answers": [
-            {"text": "Share common pipeline code across multiple projects", "is_correct": True},
+            {
+                "text": "Share common pipeline code across multiple projects",
+                "is_correct": True,
+            },
             {"text": "Store Jenkins plugins", "is_correct": False},
             {"text": "Backup Jenkins configuration", "is_correct": False},
-            {"text": "Monitor pipeline performance", "is_correct": False}
-        ]
-    }
+            {"text": "Monitor pipeline performance", "is_correct": False},
+        ],
+    },
 ]

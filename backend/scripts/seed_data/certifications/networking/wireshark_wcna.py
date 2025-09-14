@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Network protocol analysis and troubleshooting with Wireshark",
     "slug": "wireshark-wcna",
     "level": "Professional",
-    "duration": 60,
-    "questions_count": 50,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "networking",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "tcp.port == 80", "is_correct": False},
             {"text": "http", "is_correct": True},
             {"text": "protocol == http", "is_correct": False},
-            {"text": "port 80", "is_correct": False}
-        ]
+            {"text": "port 80", "is_correct": False},
+        ],
     },
     {
         "text": "What does the TCP sequence number help identify in network analysis?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Packet encryption", "is_correct": False},
             {"text": "Packet ordering and retransmissions", "is_correct": True},
             {"text": "Network latency", "is_correct": False},
-            {"text": "Bandwidth utilization", "is_correct": False}
-        ]
+            {"text": "Bandwidth utilization", "is_correct": False},
+        ],
     },
     {
         "text": "Which Wireshark feature allows you to follow a complete TCP conversation?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "Flow Graph", "is_correct": False},
             {"text": "Follow TCP Stream", "is_correct": True},
             {"text": "Conversation List", "is_correct": False},
-            {"text": "Protocol Hierarchy", "is_correct": False}
-        ]
+            {"text": "Protocol Hierarchy", "is_correct": False},
+        ],
     },
     {
         "text": "What information does the Wireshark Expert System provide?",
@@ -57,8 +57,8 @@ QUESTIONS = [
             {"text": "Bandwidth statistics", "is_correct": False},
             {"text": "Automatic problem detection and warnings", "is_correct": True},
             {"text": "Protocol documentation", "is_correct": False},
-            {"text": "Capture file compression", "is_correct": False}
-        ]
+            {"text": "Capture file compression", "is_correct": False},
+        ],
     },
     {
         "text": "Which Wireshark statistic would help identify the most active talkers on a network?",
@@ -69,7 +69,7 @@ QUESTIONS = [
             {"text": "Protocol Hierarchy", "is_correct": False},
             {"text": "Conversations", "is_correct": True},
             {"text": "Packet Lengths", "is_correct": False},
-            {"text": "IO Graph", "is_correct": False}
-        ]
-    }
+            {"text": "IO Graph", "is_correct": False},
+        ],
+    },
 ]

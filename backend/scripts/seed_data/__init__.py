@@ -2,4 +2,4 @@
 
 from .categories import CATEGORIES
 
-__all__ = ['CATEGORIES']
+__all__ = ["CATEGORIES"]

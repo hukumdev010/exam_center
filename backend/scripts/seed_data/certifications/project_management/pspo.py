@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Demonstrates understanding of Product Owner role in Scrum framework and product management principles",
     "slug": "professional-scrum-product-owner-pspo",
     "level": "Professional",
-    "duration": 60,
-    "questions_count": 80,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "project-management",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "Managing the Scrum Team", "is_correct": False},
             {"text": "Maximizing the value of the product", "is_correct": True},
             {"text": "Writing code", "is_correct": False},
-            {"text": "Conducting daily standups", "is_correct": False}
-        ]
+            {"text": "Conducting daily standups", "is_correct": False},
+        ],
     },
     {
         "text": "Who is responsible for prioritizing the Product Backlog?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Scrum Master", "is_correct": False},
             {"text": "Product Owner", "is_correct": True},
             {"text": "Development Team", "is_correct": False},
-            {"text": "Stakeholders", "is_correct": False}
-        ]
+            {"text": "Stakeholders", "is_correct": False},
+        ],
     },
     {
         "text": "What should Product Backlog items include to be considered 'Ready'?",
@@ -43,10 +43,13 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "Only a title", "is_correct": False},
-            {"text": "Clear acceptance criteria and sufficient detail", "is_correct": True},
+            {
+                "text": "Clear acceptance criteria and sufficient detail",
+                "is_correct": True,
+            },
             {"text": "Technical specifications only", "is_correct": False},
-            {"text": "Just the business value", "is_correct": False}
-        ]
+            {"text": "Just the business value", "is_correct": False},
+        ],
     },
     {
         "text": "During which event does the Product Owner participate to inspect and adapt the product?",
@@ -57,8 +60,8 @@ QUESTIONS = [
             {"text": "Daily Scrum", "is_correct": False},
             {"text": "Sprint Review", "is_correct": True},
             {"text": "Sprint Planning", "is_correct": False},
-            {"text": "Sprint Retrospective", "is_correct": False}
-        ]
+            {"text": "Sprint Retrospective", "is_correct": False},
+        ],
     },
     {
         "text": "What is a key characteristic of a good user story?",
@@ -69,7 +72,7 @@ QUESTIONS = [
             {"text": "Very detailed technical specifications", "is_correct": False},
             {"text": "Independent, valuable, and estimable", "is_correct": True},
             {"text": "Written only by developers", "is_correct": False},
-            {"text": "Never changes once written", "is_correct": False}
-        ]
-    }
+            {"text": "Never changes once written", "is_correct": False},
+        ],
+    },
 ]

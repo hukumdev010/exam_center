@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "GitLab CI/CD pipeline development, DevOps practices, and automation",
     "slug": "gitlab-cicd-associate",
     "level": "Associate",
-    "duration": 90,
-    "questions_count": 60,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "devops",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,14 @@ QUESTIONS = [
         "reference": "https://docs.gitlab.com/ee/ci/",
         "points": 1,
         "answers": [
-            {"text": "A built-in tool for automated build, test, and deployment", "is_correct": True},
+            {
+                "text": "A built-in tool for automated build, test, and deployment",
+                "is_correct": True,
+            },
             {"text": "A version control system", "is_correct": False},
             {"text": "A project management tool", "is_correct": False},
-            {"text": "A code review platform", "is_correct": False}
-        ]
+            {"text": "A code review platform", "is_correct": False},
+        ],
     },
     {
         "text": "What file defines GitLab CI/CD pipelines?",
@@ -33,8 +36,8 @@ QUESTIONS = [
             {"text": ".gitlab-ci.yml", "is_correct": True},
             {"text": "Dockerfile", "is_correct": False},
             {"text": "pipeline.json", "is_correct": False},
-            {"text": "config.yaml", "is_correct": False}
-        ]
+            {"text": "config.yaml", "is_correct": False},
+        ],
     },
     {
         "text": "What is a GitLab Runner?",
@@ -45,8 +48,8 @@ QUESTIONS = [
             {"text": "An application that executes CI/CD jobs", "is_correct": True},
             {"text": "A user with special permissions", "is_correct": False},
             {"text": "A backup system", "is_correct": False},
-            {"text": "A monitoring tool", "is_correct": False}
-        ]
+            {"text": "A monitoring tool", "is_correct": False},
+        ],
     },
     {
         "text": "What are GitLab CI/CD stages?",
@@ -54,11 +57,14 @@ QUESTIONS = [
         "reference": "https://docs.gitlab.com/ee/ci/yaml/#stages",
         "points": 1,
         "answers": [
-            {"text": "Groups of jobs that define execution order in pipelines", "is_correct": True},
+            {
+                "text": "Groups of jobs that define execution order in pipelines",
+                "is_correct": True,
+            },
             {"text": "Different environments for deployment", "is_correct": False},
             {"text": "User permission levels", "is_correct": False},
-            {"text": "Git branch types", "is_correct": False}
-        ]
+            {"text": "Git branch types", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of GitLab CI/CD variables?",
@@ -66,10 +72,13 @@ QUESTIONS = [
         "reference": "https://docs.gitlab.com/ee/ci/variables/",
         "points": 1,
         "answers": [
-            {"text": "Pass configuration and sensitive data to jobs securely", "is_correct": True},
+            {
+                "text": "Pass configuration and sensitive data to jobs securely",
+                "is_correct": True,
+            },
             {"text": "Store git commit messages", "is_correct": False},
             {"text": "Define user permissions", "is_correct": False},
-            {"text": "Configure GitLab server settings", "is_correct": False}
-        ]
-    }
+            {"text": "Configure GitLab server settings", "is_correct": False},
+        ],
+    },
 ]

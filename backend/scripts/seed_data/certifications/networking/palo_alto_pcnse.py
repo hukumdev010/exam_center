@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Advanced network security using Palo Alto Networks technologies",
     "slug": "palo-alto-pcnse",
     "level": "Professional",
-    "duration": 80,
-    "questions_count": 75,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "networking",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "User identification", "is_correct": False},
             {"text": "Application identification", "is_correct": True},
             {"text": "Content filtering", "is_correct": False},
-            {"text": "Threat prevention", "is_correct": False}
-        ]
+            {"text": "Threat prevention", "is_correct": False},
+        ],
     },
     {
         "text": "Which Palo Alto Networks feature provides automated threat intelligence updates?",
@@ -33,8 +33,8 @@ QUESTIONS = [
             {"text": "Panorama", "is_correct": False},
             {"text": "WildFire", "is_correct": True},
             {"text": "GlobalProtect", "is_correct": False},
-            {"text": "User-ID", "is_correct": False}
-        ]
+            {"text": "User-ID", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of Security Profiles in PAN-OS?",
@@ -45,8 +45,8 @@ QUESTIONS = [
             {"text": "Network routing", "is_correct": False},
             {"text": "Threat prevention and content security", "is_correct": True},
             {"text": "User authentication", "is_correct": False},
-            {"text": "Quality of Service", "is_correct": False}
-        ]
+            {"text": "Quality of Service", "is_correct": False},
+        ],
     },
     {
         "text": "Which zone type is used for external untrusted networks in Palo Alto Networks?",
@@ -57,8 +57,8 @@ QUESTIONS = [
             {"text": "Internal", "is_correct": False},
             {"text": "External", "is_correct": True},
             {"text": "DMZ", "is_correct": False},
-            {"text": "Tap", "is_correct": False}
-        ]
+            {"text": "Tap", "is_correct": False},
+        ],
     },
     {
         "text": "What is the primary benefit of GlobalProtect in Palo Alto Networks?",
@@ -69,7 +69,7 @@ QUESTIONS = [
             {"text": "Central management", "is_correct": False},
             {"text": "Remote access VPN and endpoint protection", "is_correct": True},
             {"text": "Threat analysis", "is_correct": False},
-            {"text": "Application control", "is_correct": False}
-        ]
-    }
+            {"text": "Application control", "is_correct": False},
+        ],
+    },
 ]

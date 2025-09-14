@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Demonstrates understanding of PRINCE2 methodology for structured project management",
     "slug": "prince2-foundation",
     "level": "Associate",
-    "duration": 60,
-    "questions_count": 60,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "project-management",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -21,8 +21,8 @@ QUESTIONS = [
             {"text": "5", "is_correct": False},
             {"text": "7", "is_correct": True},
             {"text": "9", "is_correct": False},
-            {"text": "12", "is_correct": False}
-        ]
+            {"text": "12", "is_correct": False},
+        ],
     },
     {
         "text": "What does the principle 'Manage by Stages' mean in PRINCE2?",
@@ -31,10 +31,13 @@ QUESTIONS = [
         "points": 1,
         "answers": [
             {"text": "Projects should have multiple teams", "is_correct": False},
-            {"text": "Projects are planned and controlled stage-by-stage", "is_correct": True},
+            {
+                "text": "Projects are planned and controlled stage-by-stage",
+                "is_correct": True,
+            },
             {"text": "All work must be done in sequence", "is_correct": False},
-            {"text": "Stages should be equal in length", "is_correct": False}
-        ]
+            {"text": "Stages should be equal in length", "is_correct": False},
+        ],
     },
     {
         "text": "Which PRINCE2 theme addresses the question 'What is the project aiming to achieve'?",
@@ -45,8 +48,8 @@ QUESTIONS = [
             {"text": "Organization", "is_correct": False},
             {"text": "Business Case", "is_correct": True},
             {"text": "Quality", "is_correct": False},
-            {"text": "Plans", "is_correct": False}
-        ]
+            {"text": "Plans", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of the Project Board in PRINCE2?",
@@ -57,8 +60,8 @@ QUESTIONS = [
             {"text": "Execute project work", "is_correct": False},
             {"text": "Provide project direction and key decisions", "is_correct": True},
             {"text": "Create detailed plans", "is_correct": False},
-            {"text": "Manage daily operations", "is_correct": False}
-        ]
+            {"text": "Manage daily operations", "is_correct": False},
+        ],
     },
     {
         "text": "How many processes are there in PRINCE2?",
@@ -69,7 +72,7 @@ QUESTIONS = [
             {"text": "5", "is_correct": False},
             {"text": "7", "is_correct": True},
             {"text": "9", "is_correct": False},
-            {"text": "10", "is_correct": False}
-        ]
-    }
+            {"text": "10", "is_correct": False},
+        ],
+    },
 ]

@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Digital forensics skills for investigating computer incidents and crimes",
     "slug": "giac-gcfa",
     "level": "Advanced",
-    "duration": 180,
-    "questions_count": 115,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "cybersecurity",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,14 @@ QUESTIONS = [
         "reference": "https://www.sans.org/reading-room/whitepapers/legal/legal-issues-conducting-computer-forensics-34852",
         "points": 1,
         "answers": [
-            {"text": "Documentation of evidence handling from collection to court", "is_correct": True},
+            {
+                "text": "Documentation of evidence handling from collection to court",
+                "is_correct": True,
+            },
             {"text": "A forensic software tool", "is_correct": False},
             {"text": "A type of encryption", "is_correct": False},
-            {"text": "A network security protocol", "is_correct": False}
-        ]
+            {"text": "A network security protocol", "is_correct": False},
+        ],
     },
     {
         "text": "Which file system is commonly found on Windows systems?",
@@ -33,8 +36,8 @@ QUESTIONS = [
             {"text": "NTFS", "is_correct": True},
             {"text": "EXT4", "is_correct": False},
             {"text": "HFS+", "is_correct": False},
-            {"text": "ZFS", "is_correct": False}
-        ]
+            {"text": "ZFS", "is_correct": False},
+        ],
     },
     {
         "text": "What is slack space in digital forensics?",
@@ -42,11 +45,14 @@ QUESTIONS = [
         "reference": "https://www.sans.org/reading-room/whitepapers/forensics/understanding-slack-space-34521",
         "points": 1,
         "answers": [
-            {"text": "Unused space in disk clusters that may contain old data", "is_correct": True},
+            {
+                "text": "Unused space in disk clusters that may contain old data",
+                "is_correct": True,
+            },
             {"text": "Free memory in RAM", "is_correct": False},
             {"text": "Bandwidth not being used", "is_correct": False},
-            {"text": "Empty registry entries", "is_correct": False}
-        ]
+            {"text": "Empty registry entries", "is_correct": False},
+        ],
     },
     {
         "text": "Which forensic technique can recover deleted files?",
@@ -57,8 +63,8 @@ QUESTIONS = [
             {"text": "File carving", "is_correct": True},
             {"text": "Password cracking", "is_correct": False},
             {"text": "Network scanning", "is_correct": False},
-            {"text": "Vulnerability assessment", "is_correct": False}
-        ]
+            {"text": "Vulnerability assessment", "is_correct": False},
+        ],
     },
     {
         "text": "What is volatile memory analysis used for?",
@@ -66,10 +72,13 @@ QUESTIONS = [
         "reference": "https://www.sans.org/reading-room/whitepapers/forensics/extracting-windows-volatile-memory-analyzing-advanced-malware-36192",
         "points": 1,
         "answers": [
-            {"text": "Analyzing data in RAM that disappears when power is lost", "is_correct": True},
+            {
+                "text": "Analyzing data in RAM that disappears when power is lost",
+                "is_correct": True,
+            },
             {"text": "Examining hard drive contents", "is_correct": False},
             {"text": "Reviewing system logs", "is_correct": False},
-            {"text": "Monitoring network traffic", "is_correct": False}
-        ]
-    }
+            {"text": "Monitoring network traffic", "is_correct": False},
+        ],
+    },
 ]

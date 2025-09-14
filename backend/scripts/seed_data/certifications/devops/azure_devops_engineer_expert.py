@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Azure DevOps services for CI/CD, infrastructure management, and collaboration",
     "slug": "azure-devops-engineer-expert",
     "level": "Expert",
-    "duration": 180,
-    "questions_count": 60,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "devops",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,14 @@ QUESTIONS = [
         "reference": "https://docs.microsoft.com/en-us/azure/devops/",
         "points": 1,
         "answers": [
-            {"text": "A set of development tools and services for the software development lifecycle", "is_correct": True},
+            {
+                "text": "A set of development tools and services for the software development lifecycle",
+                "is_correct": True,
+            },
             {"text": "A cloud computing platform", "is_correct": False},
             {"text": "A database management system", "is_correct": False},
-            {"text": "A container orchestration service", "is_correct": False}
-        ]
+            {"text": "A container orchestration service", "is_correct": False},
+        ],
     },
     {
         "text": "What is Azure Pipelines?",
@@ -30,11 +33,14 @@ QUESTIONS = [
         "reference": "https://docs.microsoft.com/en-us/azure/devops/pipelines/",
         "points": 1,
         "answers": [
-            {"text": "A cloud service for automated build, test, and deployment", "is_correct": True},
+            {
+                "text": "A cloud service for automated build, test, and deployment",
+                "is_correct": True,
+            },
             {"text": "A version control system", "is_correct": False},
             {"text": "A project management tool", "is_correct": False},
-            {"text": "A code review platform", "is_correct": False}
-        ]
+            {"text": "A code review platform", "is_correct": False},
+        ],
     },
     {
         "text": "What is the difference between Build and Release pipelines in Azure DevOps?",
@@ -42,11 +48,17 @@ QUESTIONS = [
         "reference": "https://docs.microsoft.com/en-us/azure/devops/pipelines/release/",
         "points": 1,
         "answers": [
-            {"text": "Build pipelines create artifacts; Release pipelines deploy them", "is_correct": True},
-            {"text": "Build pipelines are faster than Release pipelines", "is_correct": False},
+            {
+                "text": "Build pipelines create artifacts; Release pipelines deploy them",
+                "is_correct": True,
+            },
+            {
+                "text": "Build pipelines are faster than Release pipelines",
+                "is_correct": False,
+            },
             {"text": "Release pipelines are deprecated", "is_correct": False},
-            {"text": "They are exactly the same", "is_correct": False}
-        ]
+            {"text": "They are exactly the same", "is_correct": False},
+        ],
     },
     {
         "text": "What is Azure Repos?",
@@ -54,11 +66,14 @@ QUESTIONS = [
         "reference": "https://docs.microsoft.com/en-us/azure/devops/repos/",
         "points": 1,
         "answers": [
-            {"text": "Git repositories and version control for source code", "is_correct": True},
+            {
+                "text": "Git repositories and version control for source code",
+                "is_correct": True,
+            },
             {"text": "A container registry", "is_correct": False},
             {"text": "A package management system", "is_correct": False},
-            {"text": "A monitoring service", "is_correct": False}
-        ]
+            {"text": "A monitoring service", "is_correct": False},
+        ],
     },
     {
         "text": "What is Azure Boards?",
@@ -66,10 +81,13 @@ QUESTIONS = [
         "reference": "https://docs.microsoft.com/en-us/azure/devops/boards/",
         "points": 1,
         "answers": [
-            {"text": "Agile tools for planning and tracking work using Kanban and Scrum", "is_correct": True},
+            {
+                "text": "Agile tools for planning and tracking work using Kanban and Scrum",
+                "is_correct": True,
+            },
             {"text": "A deployment dashboard", "is_correct": False},
             {"text": "A code analysis tool", "is_correct": False},
-            {"text": "A testing framework", "is_correct": False}
-        ]
-    }
+            {"text": "A testing framework", "is_correct": False},
+        ],
+    },
 ]

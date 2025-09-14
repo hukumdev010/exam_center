@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Foundational skills in Tableau Desktop for data visualization and analysis",
     "slug": "tableau-desktop-specialist",
     "level": "Entry",
-    "duration": 60,
-    "questions_count": 45,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "data-analytics",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,17 @@ QUESTIONS = [
         "reference": "https://help.tableau.com/current/pro/desktop/en-us/datafields_typesandroles.htm",
         "points": 1,
         "answers": [
-            {"text": "Dimensions are categorical; measures are numerical and aggregatable", "is_correct": True},
-            {"text": "Dimensions are numerical; measures are categorical", "is_correct": False},
+            {
+                "text": "Dimensions are categorical; measures are numerical and aggregatable",
+                "is_correct": True,
+            },
+            {
+                "text": "Dimensions are numerical; measures are categorical",
+                "is_correct": False,
+            },
             {"text": "They are the same thing", "is_correct": False},
-            {"text": "Dimensions are always dates", "is_correct": False}
-        ]
+            {"text": "Dimensions are always dates", "is_correct": False},
+        ],
     },
     {
         "text": "Which chart type is best for showing parts of a whole?",
@@ -33,8 +39,8 @@ QUESTIONS = [
             {"text": "Pie chart", "is_correct": True},
             {"text": "Line chart", "is_correct": False},
             {"text": "Scatter plot", "is_correct": False},
-            {"text": "Histogram", "is_correct": False}
-        ]
+            {"text": "Histogram", "is_correct": False},
+        ],
     },
     {
         "text": "What is a calculated field in Tableau?",
@@ -42,11 +48,14 @@ QUESTIONS = [
         "reference": "https://help.tableau.com/current/pro/desktop/en-us/calculations_calculatedfields.htm",
         "points": 1,
         "answers": [
-            {"text": "A new field created by performing calculations on existing fields", "is_correct": True},
+            {
+                "text": "A new field created by performing calculations on existing fields",
+                "is_correct": True,
+            },
             {"text": "A field imported from the data source", "is_correct": False},
             {"text": "A field used only for filtering", "is_correct": False},
-            {"text": "A field that stores metadata", "is_correct": False}
-        ]
+            {"text": "A field that stores metadata", "is_correct": False},
+        ],
     },
     {
         "text": "What does the Marks card control in Tableau?",
@@ -54,11 +63,14 @@ QUESTIONS = [
         "reference": "https://help.tableau.com/current/pro/desktop/en-us/buildmanual_marks.htm",
         "points": 1,
         "answers": [
-            {"text": "Visual properties of marks like color, size, and shape", "is_correct": True},
+            {
+                "text": "Visual properties of marks like color, size, and shape",
+                "is_correct": True,
+            },
             {"text": "Data source connections", "is_correct": False},
             {"text": "Dashboard layout", "is_correct": False},
-            {"text": "User permissions", "is_correct": False}
-        ]
+            {"text": "User permissions", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of data blending in Tableau?",
@@ -66,10 +78,13 @@ QUESTIONS = [
         "reference": "https://help.tableau.com/current/pro/desktop/en-us/multiple_connections.htm",
         "points": 1,
         "answers": [
-            {"text": "Combine data from multiple data sources in a single view", "is_correct": True},
+            {
+                "text": "Combine data from multiple data sources in a single view",
+                "is_correct": True,
+            },
             {"text": "Clean and transform data", "is_correct": False},
             {"text": "Create calculated fields", "is_correct": False},
-            {"text": "Export data to external systems", "is_correct": False}
-        ]
-    }
+            {"text": "Export data to external systems", "is_correct": False},
+        ],
+    },
 ]

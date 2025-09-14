@@ -5,10 +5,10 @@ CERTIFICATION = {
     "description": "Infrastructure as Code using Terraform for cloud resource management",
     "slug": "terraform-associate",
     "level": "Associate",
-    "duration": 60,
-    "questions_count": 57,
+    "duration": 15,
+    "questions_count": 5,
     "category_slug": "devops",
-    "is_active": True
+    "is_active": True,
 }
 
 QUESTIONS = [
@@ -18,11 +18,17 @@ QUESTIONS = [
         "reference": "https://www.terraform.io/intro",
         "points": 1,
         "answers": [
-            {"text": "Managing infrastructure through machine-readable definition files", "is_correct": True},
-            {"text": "Writing application code for infrastructure", "is_correct": False},
+            {
+                "text": "Managing infrastructure through machine-readable definition files",
+                "is_correct": True,
+            },
+            {
+                "text": "Writing application code for infrastructure",
+                "is_correct": False,
+            },
             {"text": "Manually configuring servers", "is_correct": False},
-            {"text": "Using only graphical interfaces", "is_correct": False}
-        ]
+            {"text": "Using only graphical interfaces", "is_correct": False},
+        ],
     },
     {
         "text": "What is the Terraform state file?",
@@ -30,11 +36,17 @@ QUESTIONS = [
         "reference": "https://www.terraform.io/language/state",
         "points": 1,
         "answers": [
-            {"text": "A file that tracks managed resources and their current state", "is_correct": True},
-            {"text": "A configuration file for Terraform settings", "is_correct": False},
+            {
+                "text": "A file that tracks managed resources and their current state",
+                "is_correct": True,
+            },
+            {
+                "text": "A configuration file for Terraform settings",
+                "is_correct": False,
+            },
             {"text": "A backup of infrastructure code", "is_correct": False},
-            {"text": "A log file of Terraform operations", "is_correct": False}
-        ]
+            {"text": "A log file of Terraform operations", "is_correct": False},
+        ],
     },
     {
         "text": "What does 'terraform plan' do?",
@@ -42,11 +54,14 @@ QUESTIONS = [
         "reference": "https://www.terraform.io/cli/commands/plan",
         "points": 1,
         "answers": [
-            {"text": "Creates an execution plan showing proposed changes", "is_correct": True},
+            {
+                "text": "Creates an execution plan showing proposed changes",
+                "is_correct": True,
+            },
             {"text": "Applies changes to infrastructure", "is_correct": False},
             {"text": "Destroys all resources", "is_correct": False},
-            {"text": "Validates syntax only", "is_correct": False}
-        ]
+            {"text": "Validates syntax only", "is_correct": False},
+        ],
     },
     {
         "text": "What is a Terraform provider?",
@@ -54,11 +69,14 @@ QUESTIONS = [
         "reference": "https://www.terraform.io/language/providers",
         "points": 1,
         "answers": [
-            {"text": "A plugin that manages resources for specific services", "is_correct": True},
+            {
+                "text": "A plugin that manages resources for specific services",
+                "is_correct": True,
+            },
             {"text": "A user who provides Terraform code", "is_correct": False},
             {"text": "A hosting service for Terraform", "is_correct": False},
-            {"text": "A backup solution", "is_correct": False}
-        ]
+            {"text": "A backup solution", "is_correct": False},
+        ],
     },
     {
         "text": "What is the purpose of Terraform modules?",
@@ -66,10 +84,13 @@ QUESTIONS = [
         "reference": "https://www.terraform.io/language/modules",
         "points": 1,
         "answers": [
-            {"text": "Reusable packages of configuration for code organization", "is_correct": True},
+            {
+                "text": "Reusable packages of configuration for code organization",
+                "is_correct": True,
+            },
             {"text": "Individual resource definitions", "is_correct": False},
             {"text": "Terraform installation packages", "is_correct": False},
-            {"text": "Database schemas", "is_correct": False}
-        ]
-    }
+            {"text": "Database schemas", "is_correct": False},
+        ],
+    },
 ]
