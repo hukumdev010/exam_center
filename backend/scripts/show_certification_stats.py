@@ -39,7 +39,10 @@ def get_certification_stats(file_path: str) -> Dict:
         }
 
         # Extract CERTIFICATION dictionary info
-        cert_match = re.search(r"CERTIFICATION\s*=\s*(\{[^}]*\})", content, re.DOTALL)
+        cert_match = re.search(
+            r"CERTIFICATION\s*=\s*(\{[^}]*\})",
+            content,
+            re.DOTALL)
         if cert_match:
             cert_str = cert_match.group(1)
 
@@ -48,9 +51,11 @@ def get_certification_stats(file_path: str) -> Dict:
             if name_match:
                 stats["name"] = name_match.group(1)
 
-            questions_match = re.search(r'"questions_count":\s*(\d+)', cert_str)
+            questions_match = re.search(
+                r'"questions_count":\s*(\d+)', cert_str)
             if questions_match:
-                stats["questions_count_defined"] = int(questions_match.group(1))
+                stats["questions_count_defined"] = int(
+                    questions_match.group(1))
 
             duration_match = re.search(r'"duration":\s*(\d+)', cert_str)
             if duration_match:
@@ -60,12 +65,14 @@ def get_certification_stats(file_path: str) -> Dict:
             if level_match:
                 stats["level"] = level_match.group(1)
 
-            category_match = re.search(r'"category_slug":\s*"([^"]*)"', cert_str)
+            category_match = re.search(
+                r'"category_slug":\s*"([^"]*)"', cert_str)
             if category_match:
                 stats["category"] = category_match.group(1)
 
         # Count actual questions
-        questions_match = re.search(r"QUESTIONS\s*=\s*\[(.*)\]", content, re.DOTALL)
+        questions_match = re.search(
+            r"QUESTIONS\s*=\s*\[(.*)\]", content, re.DOTALL)
         if questions_match:
             questions_content = questions_match.group(1)
             # Count question objects by looking for the pattern:
@@ -151,7 +158,8 @@ def main():
             status = "✓ OK"
 
         # Format name to fit column
-        name = stats["name"][:42] + "..." if len(stats["name"]) > 45 else stats["name"]
+        name = stats["name"][:42] + \
+            "..." if len(stats["name"]) > 45 else stats["name"]
 
         print(
             f"{name:<45} {category:<12} {level:<12} {stats['questions_count_defined']:<5} {stats['actual_questions']:<5} {stats['duration_defined']:<5} {stats['calculated_duration']:<5} {status}"

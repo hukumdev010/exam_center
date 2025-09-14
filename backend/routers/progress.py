@@ -108,7 +108,9 @@ async def update_user_progress(
         certification = cert_result.scalar_one_or_none()
 
         if not certification:
-            raise HTTPException(status_code=404, detail="Certification not found")
+            raise HTTPException(
+                status_code=404,
+                detail="Certification not found")
 
         # Check if progress already exists
         progress_stmt = select(UserProgressModel).where(
@@ -161,4 +163,6 @@ async def update_user_progress(
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Failed to update progress")
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to update progress")

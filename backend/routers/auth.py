@@ -68,7 +68,9 @@ async def google_callback(code: str = None, error: str = None):
         raise HTTPException(status_code=400, detail=f"OAuth error: {error}")
 
     if not code:
-        raise HTTPException(status_code=400, detail="Missing authorization code")
+        raise HTTPException(
+            status_code=400,
+            detail="Missing authorization code")
 
     try:
         # Exchange code for tokens
@@ -94,7 +96,9 @@ async def google_callback(code: str = None, error: str = None):
         id_token = tokens.get("id_token")
 
         if not access_token:
-            raise HTTPException(status_code=400, detail="No access token received")
+            raise HTTPException(
+                status_code=400,
+                detail="No access token received")
 
         # Get user info from Google
         async with httpx.AsyncClient() as client:
@@ -104,7 +108,9 @@ async def google_callback(code: str = None, error: str = None):
             )
 
         if user_response.status_code != 200:
-            raise HTTPException(status_code=400, detail="Failed to get user info")
+            raise HTTPException(
+                status_code=400,
+                detail="Failed to get user info")
 
         user_info = user_response.json()
 

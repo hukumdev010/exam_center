@@ -54,7 +54,9 @@ class Certification(Base):
     # Relationships
     category = relationship("Category", back_populates="certifications")
     questions = relationship("Question", back_populates="certification")
-    user_progress = relationship("UserProgress", back_populates="certification")
+    user_progress = relationship(
+        "UserProgress",
+        back_populates="certification")
     quiz_attempts = relationship("QuizAttempt", back_populates="certification")
 
 
@@ -67,7 +69,10 @@ class Question(Base):
     # URL reference for additional information
     reference = Column(String, nullable=True)
     points = Column(Integer, default=1)
-    certification_id = Column(Integer, ForeignKey("certifications.id"), nullable=False)
+    certification_id = Column(
+        Integer,
+        ForeignKey("certifications.id"),
+        nullable=False)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
@@ -101,7 +106,12 @@ class Account(Base):
     __tablename__ = "accounts"
 
     id = Column(String, primary_key=True)
-    user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    user_id = Column(
+        String,
+        ForeignKey(
+            "users.id",
+            ondelete="CASCADE"),
+        nullable=False)
     type = Column(String, nullable=False)
     provider = Column(String, nullable=False)
     provider_account_id = Column(String, nullable=False)
@@ -124,7 +134,12 @@ class Session(Base):
 
     id = Column(String, primary_key=True)
     session_token = Column(String, unique=True, nullable=False)
-    user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    user_id = Column(
+        String,
+        ForeignKey(
+            "users.id",
+            ondelete="CASCADE"),
+        nullable=False)
     expires = Column(DateTime, nullable=False)
 
     # Relationships
@@ -175,8 +190,16 @@ class UserProgress(Base):
     __tablename__ = "user_progress"
 
     id = Column(String, primary_key=True)
-    user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
-    certification_id = Column(Integer, ForeignKey("certifications.id"), nullable=False)
+    user_id = Column(
+        String,
+        ForeignKey(
+            "users.id",
+            ondelete="CASCADE"),
+        nullable=False)
+    certification_id = Column(
+        Integer,
+        ForeignKey("certifications.id"),
+        nullable=False)
     current_question = Column(Integer, default=0)
     total_questions = Column(Integer, nullable=False)
     correct_answers = Column(Integer, default=0)
@@ -188,7 +211,9 @@ class UserProgress(Base):
 
     # Relationships
     user = relationship("User", back_populates="progress")
-    certification = relationship("Certification", back_populates="user_progress")
+    certification = relationship(
+        "Certification",
+        back_populates="user_progress")
 
     __table_args__ = (UniqueConstraint("user_id", "certification_id"),)
 
@@ -197,8 +222,16 @@ class QuizAttempt(Base):
     __tablename__ = "quiz_attempts"
 
     id = Column(String, primary_key=True)
-    user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
-    certification_id = Column(Integer, ForeignKey("certifications.id"), nullable=False)
+    user_id = Column(
+        String,
+        ForeignKey(
+            "users.id",
+            ondelete="CASCADE"),
+        nullable=False)
+    certification_id = Column(
+        Integer,
+        ForeignKey("certifications.id"),
+        nullable=False)
     score = Column(Integer, nullable=False)
     total_questions = Column(Integer, nullable=False)
     correct_answers = Column(Integer, nullable=False)
@@ -208,4 +241,6 @@ class QuizAttempt(Base):
 
     # Relationships
     user = relationship("User", back_populates="quiz_attempts")
-    certification = relationship("Certification", back_populates="quiz_attempts")
+    certification = relationship(
+        "Certification",
+        back_populates="quiz_attempts")

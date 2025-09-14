@@ -9,50 +9,39 @@ CERTIFICATION = {
     "is_active": True,
 }
 
-questions = [
-    {
-        "text": "What are the eight domains of the CISSP Common Body of Knowledge (CBK)?",
-        "explanation": "The eight domains of the CISSP CBK are  Security and Risk Management, Asset Security, Security Architecture and Engineering, Communication and Network Security, Identity and Access Management (IAM), Security Assessment and Testing, Security Operations, and Software Development Security.",
-        "reference": "https://www.isc2.org/Certifications/CISSP",
-        "points": 1,
-        "answers": [
-            {
-                "text": "Security and Risk Management, Asset Security, Security Architecture and Engineering, Communication and Network Security, Identity and Access Management (IAM), Security Assessment and Testing, Security Operations, Software Development Security",
-                "is_correct": True,
-            },
-            {
-                "text": "Network Security, Application Security, Cloud Security, Data Security",
-                "is_correct": False,
-            },
-            {
-                "text": "Physical Security, Cybersecurity, Information Security, Operational Security",
-                "is_correct": False,
-            },
-            {
-                "text": "Risk Management, Compliance, Governance, Audit",
-                "is_correct": False,
-            },
-        ],
-    },
-    {
-        "text": "What is the primary purpose of the CISSP certification?",
-        "explanation": "The primary purpose of the CISSP certification is to validate an individual's expertise in designing, implementing, and managing a best-in-class cybersecurity program.",
-        "reference": "https://www.isc2.org/Certifications/CISSP",
-        "points": 1,
-        "answers": [
-            {
-                "text": "To validate expertise in designing, implementing, and managing a best-in-class        cybersecurity program",
-                "is_correct": True,
-            },
-            {"text": "To certify knowledge of basic IT concepts", "is_correct": False},
-            {
-                "text": "To demonstrate proficiency in programming languages",
-                "is_correct": False,
-            },
-            {
-                "text": "To show understanding of network infrastructure",
-                "is_correct": False,
-            },
-        ],
-    },
-]
+questions = [{"text": "What are the eight domains of the CISSP Common Body of Knowledge (CBK)?",
+              "explanation": "The eight domains of the CISSP CBK are  Security and Risk Management, Asset Security, Security Architecture and Engineering, Communication and Network Security, Identity and Access Management (IAM), Security Assessment and Testing, Security Operations, and Software Development Security.",
+              "reference": "https://www.isc2.org/Certifications/CISSP",
+              "points": 1,
+              "answers": [{"text": "Security and Risk Management, Asset Security, Security Architecture and Engineering, Communication and Network Security, Identity and Access Management (IAM), Security Assessment and Testing, Security Operations, Software Development Security",
+                           "is_correct": True,
+                           },
+                          {"text": "Network Security, Application Security, Cloud Security, Data Security",
+                           "is_correct": False,
+                           },
+                          {"text": "Physical Security, Cybersecurity, Information Security, Operational Security",
+                           "is_correct": False,
+                           },
+                          {"text": "Risk Management, Compliance, Governance, Audit",
+                           "is_correct": False,
+                           },
+                          ],
+              },
+             {"text": "What is the primary purpose of the CISSP certification?",
+              "explanation": "The primary purpose of the CISSP certification is to validate an individual's expertise in designing, implementing, and managing a best-in-class cybersecurity program.",
+              "reference": "https://www.isc2.org/Certifications/CISSP",
+              "points": 1,
+              "answers": [{"text": "To validate expertise in designing, implementing, and managing a best-in-class        cybersecurity program",
+                           "is_correct": True,
+                           },
+                          {"text": "To certify knowledge of basic IT concepts",
+                           "is_correct": False},
+                          {"text": "To demonstrate proficiency in programming languages",
+                           "is_correct": False,
+                           },
+                          {"text": "To show understanding of network infrastructure",
+                           "is_correct": False,
+                           },
+                          ],
+              },
+             ]

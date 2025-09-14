@@ -31,8 +31,8 @@ class UserSession(BaseModel):
 
 
 async def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security), db=Depends(get_db)
-) -> UserSession:
+        credentials: HTTPAuthorizationCredentials = Depends(security),
+        db=Depends(get_db)) -> UserSession:
     """Get current authenticated user"""
     try:
         token = credentials.credentials
@@ -74,8 +74,11 @@ async def get_current_user(
         await db.refresh(user)
 
         return UserSession(
-            user=User(id=user.id, email=user.email, name=user.name, image=user.image)
-        )
+            user=User(
+                id=user.id,
+                email=user.email,
+                name=user.name,
+                image=user.image))
 
     except Exception as e:
         raise HTTPException(

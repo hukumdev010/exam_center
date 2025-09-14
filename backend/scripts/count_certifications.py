@@ -64,7 +64,8 @@ def count_certifications():
             f"✅ SUCCESS: We have {total_certifications} certifications (30+ requirement met!)"
         )
     else:
-        print(f"❌ Need more: Only {total_certifications} certifications (need 30+)")
+        print(
+            f"❌ Need more: Only {total_certifications} certifications (need 30+)")
 
 
 if __name__ == "__main__":

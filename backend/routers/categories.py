@@ -103,7 +103,8 @@ async def get_categories(db=Depends(get_db)):
         )
 
 
-@router.get("/{category_slug}/certifications", response_model=PaginatedCertifications)
+@router.get("/{category_slug}/certifications",
+            response_model=PaginatedCertifications)
 async def get_category_certifications(
     category_slug: str,
     page: int = Query(1, ge=1, description="Page number"),
@@ -113,7 +114,8 @@ async def get_category_certifications(
     """Get paginated certifications for a specific category"""
     try:
         # First, get the category
-        category_stmt = select(CategoryModel).where(CategoryModel.slug == category_slug)
+        category_stmt = select(CategoryModel).where(
+            CategoryModel.slug == category_slug)
         category_result = await db.execute(category_stmt)
         category = category_result.scalar_one_or_none()
 
@@ -121,9 +123,11 @@ async def get_category_certifications(
             raise HTTPException(status_code=404, detail="Category not found")
 
         # Count total certifications
-        count_stmt = select(func.count(CertificationModel.id)).where(
-            CertificationModel.category_id == category.id, CertificationModel.is_active
-        )
+        count_stmt = select(
+            func.count(
+                CertificationModel.id)).where(
+            CertificationModel.category_id == category.id,
+            CertificationModel.is_active)
         count_result = await db.execute(count_stmt)
         total = count_result.scalar()
 

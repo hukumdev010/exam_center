@@ -15,7 +15,10 @@ DATABASE_URL = _sync_settings.database_url
 engine = create_async_engine(DATABASE_URL, echo=False)
 
 # Create async session factory
-AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+AsyncSessionLocal = sessionmaker(
+    engine,
+    class_=AsyncSession,
+    expire_on_commit=False)
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
@@ -36,7 +39,8 @@ async def init_db():
     # Recreate engine with potentially updated database URL from secrets
     if settings.database_url != DATABASE_URL:
         await engine.dispose()
-        engine = create_async_engine(settings.database_url, echo=settings.debug)
+        engine = create_async_engine(
+            settings.database_url, echo=settings.debug)
         print(f"Database engine updated with URL from settings")
 
     async with engine.begin() as conn:

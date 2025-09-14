@@ -66,15 +66,22 @@ app.add_middleware(
 
 # Include routers
 app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
-app.include_router(categories_router, prefix="/api/categories", tags=["categories"])
 app.include_router(
-    certifications_router, prefix="/api/certifications", tags=["certifications"]
-)
+    categories_router,
+    prefix="/api/categories",
+    tags=["categories"])
+app.include_router(
+    certifications_router,
+    prefix="/api/certifications",
+    tags=["certifications"])
 app.include_router(progress_router, prefix="/api/progress", tags=["progress"])
 app.include_router(
     quiz_attempts_router, prefix="/api/quiz-attempts", tags=["quiz-attempts"]
 )
-app.include_router(ai_assistant_router, prefix="/api/ai", tags=["ai-assistant"])
+app.include_router(
+    ai_assistant_router,
+    prefix="/api/ai",
+    tags=["ai-assistant"])
 
 # Health check endpoints
 

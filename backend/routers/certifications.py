@@ -21,21 +21,23 @@ async def get_certification(slug: str, db=Depends(get_db)):
     """Get certification by slug with questions and answers"""
     try:
         stmt = (
-            select(CertificationModel)
-            .options(
-                selectinload(CertificationModel.questions).selectinload(
-                    QuestionModel.answers
-                ),
-                selectinload(CertificationModel.category),
-            )
-            .where(CertificationModel.slug == slug, CertificationModel.is_active)
-        )
+            select(CertificationModel) .options(
+                selectinload(
+                    CertificationModel.questions).selectinload(
+                    QuestionModel.answers),
+                selectinload(
+                    CertificationModel.category),
+            ) .where(
+                CertificationModel.slug == slug,
+                CertificationModel.is_active))
 
         result = await db.execute(stmt)
         certification = result.scalar_one_or_none()
 
         if not certification:
-            raise HTTPException(status_code=404, detail="Certification not found")
+            raise HTTPException(
+                status_code=404,
+                detail="Certification not found")
 
         # Manually transform the data to use camelCase for the frontend
         questions_data = []
@@ -91,7 +93,8 @@ async def get_certification(slug: str, db=Depends(get_db)):
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Failed to fetch certification")
+        raise HTTPException(status_code=500,
+                            detail="Failed to fetch certification")
 
 
 @router.get("/search")
@@ -122,10 +125,12 @@ async def search_certifications(
 
         # Add filter conditions
         if category_id:
-            search_conditions.append(CertificationModel.category_id == category_id)
+            search_conditions.append(
+                CertificationModel.category_id == category_id)
 
         if level:
-            search_conditions.append(CertificationModel.level.ilike(f"%{level}%"))
+            search_conditions.append(
+                CertificationModel.level.ilike(f"%{level}%"))
 
         if search_conditions:
             stmt = stmt.where(and_(*search_conditions))
@@ -165,7 +170,8 @@ async def search_certifications(
         return {"results": results, "total": len(results), "query": q}
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Failed to search certifications")
+        raise HTTPException(status_code=500,
+                            detail="Failed to search certifications")
 
 
 # Pydantic models for answer verification
@@ -201,7 +207,9 @@ async def verify_answer(
         certification = cert_result.scalar_one_or_none()
 
         if not certification:
-            raise HTTPException(status_code=404, detail="Certification not found")
+            raise HTTPException(
+                status_code=404,
+                detail="Certification not found")
 
         # Get the question with answers
         question_stmt = (
@@ -263,17 +271,16 @@ async def verify_answer(
                     update_data["correct_answers"] = (
                         UserProgressModel.correct_answers + 1
                     )
-                    update_data["points"] = UserProgressModel.points + points_earned
+                    update_data["points"] = UserProgressModel.points + \
+                        points_earned
 
                 if update_data:
                     update_stmt = (
-                        update(UserProgressModel)
-                        .where(
+                        update(UserProgressModel) .where(
                             UserProgressModel.user_id == user_id,
                             UserProgressModel.certification_id == certification.id,
-                        )
-                        .values(**update_data)
-                    )
+                        ) .values(
+                            **update_data))
                     await db.execute(update_stmt)
 
             await db.commit()
@@ -288,8 +295,7 @@ async def verify_answer(
                 progress_result = await db.execute(progress_stmt)
                 updated_progress = progress_result.scalar_one_or_none()
                 total_points = (
-                    updated_progress.points if updated_progress else points_earned
-                )
+                    updated_progress.points if updated_progress else points_earned)
 
         return AnswerVerificationResponse(
             is_correct=is_correct,

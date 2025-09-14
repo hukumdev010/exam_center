@@ -31,13 +31,20 @@ class Settings(BaseSettings):
     google_client_id: str = Field(default="", env="GOOGLE_CLIENT_ID")
     google_client_secret: str = Field(default="", env="GOOGLE_CLIENT_SECRET")
     nextauth_secret: str = Field(default="", env="NEXTAUTH_SECRET")
-    nextauth_url: str = Field(default="http://localhost:3000", env="NEXTAUTH_URL")
+    nextauth_url: str = Field(
+        default="http://localhost:3000",
+        env="NEXTAUTH_URL")
     # API settings
-    api_base_url: str = Field(default="http://127.0.0.1:8000", env="API_BASE_URL")
-    frontend_url: str = Field(default="http://127.0.0.1:3000", env="FRONTEND_URL")
+    api_base_url: str = Field(
+        default="http://127.0.0.1:8000",
+        env="API_BASE_URL")
+    frontend_url: str = Field(
+        default="http://127.0.0.1:3000",
+        env="FRONTEND_URL")
     # AWS settings
     aws_region: str = Field(default="", env="AWS_REGION")
-    aws_access_key_id: Optional[str] = Field(default=None, env="AWS_ACCESS_KEY_ID")
+    aws_access_key_id: Optional[str] = Field(
+        default=None, env="AWS_ACCESS_KEY_ID")
     aws_secret_access_key: Optional[str] = Field(
         default=None, env="AWS_SECRET_ACCESS_KEY"
     )

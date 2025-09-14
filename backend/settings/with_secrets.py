@@ -45,7 +45,12 @@ class SettingsWithSecrets:
         """Get value from secrets cache first, then fall back to environment"""
         if self._secrets_cache and key in self._secrets_cache:
             return self._secrets_cache[key]
-        return getattr(self._base_settings, key.lower().replace("-", "_"), default)
+        return getattr(
+            self._base_settings,
+            key.lower().replace(
+                "-",
+                "_"),
+            default)
 
     @property
     def environment(self) -> str:
@@ -60,7 +65,9 @@ class SettingsWithSecrets:
 
     @property
     def database_url(self) -> str:
-        return self._get_value("DATABASE_URL", self._base_settings.database_url)
+        return self._get_value(
+            "DATABASE_URL",
+            self._base_settings.database_url)
 
     @property
     def secret_key(self) -> str:
@@ -80,7 +87,9 @@ class SettingsWithSecrets:
 
     @property
     def google_client_id(self) -> str:
-        return self._get_value("GOOGLE_CLIENT_ID", self._base_settings.google_client_id)
+        return self._get_value(
+            "GOOGLE_CLIENT_ID",
+            self._base_settings.google_client_id)
 
     @property
     def google_client_secret(self) -> str:
@@ -90,19 +99,27 @@ class SettingsWithSecrets:
 
     @property
     def nextauth_secret(self) -> str:
-        return self._get_value("NEXTAUTH_SECRET", self._base_settings.nextauth_secret)
+        return self._get_value(
+            "NEXTAUTH_SECRET",
+            self._base_settings.nextauth_secret)
 
     @property
     def nextauth_url(self) -> str:
-        return self._get_value("NEXTAUTH_URL", self._base_settings.nextauth_url)
+        return self._get_value(
+            "NEXTAUTH_URL",
+            self._base_settings.nextauth_url)
 
     @property
     def api_base_url(self) -> str:
-        return self._get_value("API_BASE_URL", self._base_settings.api_base_url)
+        return self._get_value(
+            "API_BASE_URL",
+            self._base_settings.api_base_url)
 
     @property
     def frontend_url(self) -> str:
-        return self._get_value("FRONTEND_URL", self._base_settings.frontend_url)
+        return self._get_value(
+            "FRONTEND_URL",
+            self._base_settings.frontend_url)
 
     @property
     def aws_region(self) -> str:
@@ -110,8 +127,9 @@ class SettingsWithSecrets:
 
     @property
     def gemini_api_key(self) -> str:
-        return self._get_value("GEMINI_API", self._base_settings.gemini_api_key)
-        
+        return self._get_value(
+            "GEMINI_API",
+            self._base_settings.gemini_api_key)
 
     async def refresh_secrets(self):
         """Refresh secrets from AWS Secrets Manager"""

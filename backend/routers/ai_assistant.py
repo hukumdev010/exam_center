@@ -124,7 +124,9 @@ async def list_models():
     """
     try:
         if not GEMINI_API_KEY:
-            raise HTTPException(status_code=500, detail="Gemini API key not configured")
+            raise HTTPException(
+                status_code=500,
+                detail="Gemini API key not configured")
 
         models = genai.list_models()
         model_info = []
@@ -146,8 +148,9 @@ async def list_models():
 
 @router.post("/generate-study-prompt")
 async def generate_study_prompt(
-    context: str = None, current_question: str = None, prompt_type: str = "explain"
-):
+        context: str = None,
+        current_question: str = None,
+        prompt_type: str = "explain"):
     """
     Generate pre-written prompts for different study needs
     """

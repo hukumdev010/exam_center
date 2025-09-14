@@ -29,7 +29,8 @@ def count_questions_in_file(file_path: str) -> int:
             content = f.read()
 
         # Count questions in QUESTIONS list
-        questions_match = re.search(r"QUESTIONS\s*=\s*\[(.*)\]", content, re.DOTALL)
+        questions_match = re.search(
+            r"QUESTIONS\s*=\s*\[(.*)\]", content, re.DOTALL)
         if not questions_match:
             return 0
 
@@ -42,7 +43,11 @@ def count_questions_in_file(file_path: str) -> int:
         # This pattern is more specific than just counting "text" fields
         # which would include answer choices too
         question_pattern = r'{\s*"text":\s*"[^"]*",\s*"explanation":'
-        question_count = len(re.findall(question_pattern, questions_content, re.DOTALL))
+        question_count = len(
+            re.findall(
+                question_pattern,
+                questions_content,
+                re.DOTALL))
 
         return question_count
 
@@ -64,12 +69,18 @@ def update_certification_values(file_path: str, question_count: int) -> bool:
         original_content = content
 
         # Update duration - use raw string and proper escaping
-        content = re.sub(r'("duration":\s*)\d+', r"\g<1>" + str(new_duration), content)
+        content = re.sub(
+            r'("duration":\s*)\d+',
+            r"\g<1>" +
+            str(new_duration),
+            content)
 
         # Update questions_count - use raw string and proper escaping
         content = re.sub(
-            r'("questions_count":\s*)\d+', r"\g<1>" + str(question_count), content
-        )
+            r'("questions_count":\s*)\d+',
+            r"\g<1>" +
+            str(question_count),
+            content)
 
         # If content changed, write it back
         if content != original_content:
@@ -88,7 +99,8 @@ def main():
     """Main function to update all certification files"""
     print("🔧 ROBUST CERTIFICATION FILES UPDATER")
     print("=" * 60)
-    print(f"Duration calculation: {MINUTES_PER_QUESTION} minutes per question\n")
+    print(
+        f"Duration calculation: {MINUTES_PER_QUESTION} minutes per question\n")
 
     # Find all certification files in all categories
     base_path = Path(__file__).parent / "seed_data" / "certifications"
@@ -98,7 +110,8 @@ def main():
         print("No certification files found!")
         return
 
-    print(f"Found {len(certification_files)} certification files in all categories\n")
+    print(
+        f"Found {len(certification_files)} certification files in all categories\n")
 
     updated_count = 0
 
@@ -106,8 +119,9 @@ def main():
     for file_path in sorted(certification_files):
         relative_path = os.path.relpath(file_path, base_path.parent.parent)
         cert_name = (
-            os.path.basename(file_path).replace(".py", "").replace("_", " ").title()
-        )
+            os.path.basename(file_path).replace(
+                ".py", "").replace(
+                "_", " ").title())
 
         question_count = count_questions_in_file(file_path)
 
@@ -124,7 +138,8 @@ def main():
                 print(f"   File: {relative_path}")
                 print()
             else:
-                print(f"✓ Already correct: {cert_name} ({question_count} questions)")
+                print(
+                    f"✓ Already correct: {cert_name} ({question_count} questions)")
         else:
             print(f"⚠️  No questions: {cert_name}")
 

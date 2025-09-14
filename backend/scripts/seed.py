@@ -66,7 +66,8 @@ def load_all_certifications():
                     continue
 
                 try:
-                    cert_module_name = os.path.splitext(os.path.basename(cert_file))[0]
+                    cert_module_name = os.path.splitext(
+                        os.path.basename(cert_file))[0]
                     cert_module_path = (
                         f"seed_data.certifications.{category_folder}.{cert_module_name}"
                     )
@@ -75,10 +76,10 @@ def load_all_certifications():
                     if hasattr(cert_module, "CERTIFICATION"):
                         category_certs.append(cert_module.CERTIFICATION)
 
-                        if hasattr(cert_module, "QUESTIONS") and cert_module.QUESTIONS:
+                        if hasattr(cert_module,
+                                   "QUESTIONS") and cert_module.QUESTIONS:
                             category_questions[cert_module.CERTIFICATION["slug"]] = (
-                                cert_module.QUESTIONS
-                            )
+                                cert_module.QUESTIONS)
 
                 except ImportError as cert_e:
                     print(f"    ❌ Failed to load {cert_module_name}: {cert_e}")
@@ -251,7 +252,8 @@ async def seed_database():
                     for cert in all_certifications
                     if cert["category_slug"] == category_data["slug"]
                 )
-                print(f"  {category_data['name']}: {cert_count} certifications")
+                print(
+                    f"  {category_data['name']}: {cert_count} certifications")
 
         except Exception as e:
             print(f"❌ Error seeding database: {e}")

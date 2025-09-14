@@ -58,4 +58,6 @@ async def create_quiz_attempt(
 
         return quiz_attempt
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Failed to save quiz attempt")
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to save quiz attempt")

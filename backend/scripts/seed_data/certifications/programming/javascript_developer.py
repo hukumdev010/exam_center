@@ -11,20 +11,18 @@ CERTIFICATION = {
     "is_active": True,
 }
 
-QUESTIONS = [
-    {
-        "text": "What is the difference between '==' and '===' operators in JavaScript?",
-        "explanation": "'==' performs type coercion and compares values, while '===' compares both value and type without coercion.",
-        "reference": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness",
-        "points": 1,
-        "answers": [
-            {"text": "No difference", "is_correct": False},
-            {
-                "text": "'===' is stricter and doesn't perform type coercion",
-                "is_correct": True,
-            },
-            {"text": "'==' is stricter", "is_correct": False},
-            {"text": "They work only with numbers", "is_correct": False},
-        ],
-    }
-]
+QUESTIONS = [{"text": "What is the difference between '==' and '===' operators in JavaScript?",
+              "explanation": "'==' performs type coercion and compares values, while '===' compares both value and type without coercion.",
+              "reference": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness",
+              "points": 1,
+              "answers": [{"text": "No difference",
+                           "is_correct": False},
+                          {"text": "'===' is stricter and doesn't perform type coercion",
+                           "is_correct": True,
+                           },
+                          {"text": "'==' is stricter",
+                           "is_correct": False},
+                          {"text": "They work only with numbers",
+                           "is_correct": False},
+                          ],
+              }]

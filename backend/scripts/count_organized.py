@@ -64,7 +64,8 @@ def count_organized_certifications():
                     continue
 
                 try:
-                    cert_module_name = os.path.splitext(os.path.basename(cert_file))[0]
+                    cert_module_name = os.path.splitext(
+                        os.path.basename(cert_file))[0]
                     cert_module_path = (
                         f"seed_data.certifications.{category_folder}.{cert_module_name}"
                     )
@@ -73,7 +74,8 @@ def count_organized_certifications():
                     if hasattr(cert_module, "CERTIFICATION"):
                         cert_count += 1
 
-                        if hasattr(cert_module, "QUESTIONS") and cert_module.QUESTIONS:
+                        if hasattr(cert_module,
+                                   "QUESTIONS") and cert_module.QUESTIONS:
                             question_count += len(cert_module.QUESTIONS)
 
                 except ImportError:
@@ -114,12 +116,13 @@ def count_organized_certifications():
             f"✅ SUCCESS: We have {total_certifications} certifications (30+ requirement met!)"
         )
     else:
-        print(f"❌ Need more: Only {total_certifications} certifications (need 30+)")
+        print(
+            f"❌ Need more: Only {total_certifications} certifications (need 30+)")
 
     # Show new categories
     new_categories = [
-        cat for cat in category_stats.keys() if cat in ["linux", "system_design"]
-    ]
+        cat for cat in category_stats.keys() if cat in [
+            "linux", "system_design"]]
     if new_categories:
         print(f"\n🆕 NEW CATEGORIES ADDED:")
         for cat in new_categories:
