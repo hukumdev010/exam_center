@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+from typing import Dict, Any, Optional
 
 from fastapi import HTTPException
 from sqlalchemy import or_, select
@@ -6,6 +6,7 @@ from sqlalchemy.orm import selectinload
 
 from models import Certification as CertificationModel
 from models import Question as QuestionModel
+from models import Category as CategoryModel
 
 
 class CertificationService:
@@ -96,17 +97,24 @@ class CertificationService:
 
     async def search_certifications(
         self, db, query: Optional[str] = None
-    ) -> List[Dict[str, Any]]:
+    ) -> Dict[str, Any]:
         """Search certifications by query"""
         try:
-            stmt = select(CertificationModel).where(
-                CertificationModel.is_active
+            stmt = (
+                select(CertificationModel)
+                .options(selectinload(CertificationModel.category))
+                .where(CertificationModel.is_active)
             )
 
             if query:
+                # Search in certification name, description, level and category
                 search_filter = or_(
                     CertificationModel.name.ilike(f"%{query}%"),
-                    CertificationModel.description.ilike(f"%{query}%")
+                    CertificationModel.description.ilike(f"%{query}%"),
+                    CertificationModel.level.ilike(f"%{query}%"),
+                    CertificationModel.category.has(
+                        CategoryModel.name.ilike(f"%{query}%")
+                    )
                 )
                 stmt = stmt.where(search_filter)
 
@@ -114,8 +122,21 @@ class CertificationService:
             result = await db.execute(stmt)
             certifications = result.scalars().all()
 
-            return [
-                {
+            # Format the results to match frontend expectations
+            results = []
+            for cert in certifications:
+                category_data = None
+                if cert.category:
+                    category_data = {
+                        "id": cert.category.id,
+                        "name": cert.category.name,
+                        "description": cert.category.description,
+                        "slug": cert.category.slug,
+                        "icon": cert.category.icon,
+                        "color": cert.category.color,
+                    }
+
+                results.append({
                     "id": cert.id,
                     "name": cert.name,
                     "slug": cert.slug,
@@ -125,9 +146,14 @@ class CertificationService:
                     "questions_count": cert.questions_count,
                     "is_active": cert.is_active,
                     "category_id": cert.category_id,
-                }
-                for cert in certifications
-            ]
+                    "category": category_data,
+                })
+
+            return {
+                "results": results,
+                "total": len(results),
+                "query": query or ""
+            }
 
         except Exception:
             raise HTTPException(
