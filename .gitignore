@@ -90,10 +90,56 @@ docker-compose.override.yml
 *.trace
 get-pip.py
 
-# Python compiled files
+# Python compiled files and cache
 **/__pycache__/
 **/*.pyc
 **/*.pyo
+**/*.pyd
+*.py[cod]
+*$py.class
+
+# Python distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Python virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Python unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
 
 # Webpack and build caches
 **/cache/
