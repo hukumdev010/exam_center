@@ -1,8 +1,5 @@
-import os
-from typing import Any, Dict, Optional
-from uuid import uuid4
+from typing import Optional
 
-import httpx
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel
@@ -11,7 +8,6 @@ from sqlalchemy import select
 from database import get_db
 from models import User as UserModel
 from sessions import get_user_session
-from settings import get_settings
 
 security = HTTPBearer()
 
@@ -80,7 +76,7 @@ async def get_current_user(
                 name=user.name,
                 image=user.image))
 
-    except Exception as e:
+    except Exception:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",

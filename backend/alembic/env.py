@@ -3,12 +3,11 @@ import os
 import sys
 from logging.config import fileConfig
 
-from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import create_async_engine
 
 from alembic import context
 from models import Base
-from settings import get_settings, get_settings_sync
+from settings.loader import get_settings, get_settings_sync
 
 # Add the parent directory to the path to import our models
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -47,7 +46,10 @@ def get_url():
         return settings.database_url
     except Exception as e:
         print(f"Warning: Error getting database URL from settings: {e}")
-        return "postgresql+asyncpg://postgres:postgres@localhost:5432/exam_center"
+        return (
+            "postgresql+asyncpg://postgres:postgres@localhost:5432/"
+            "exam_center"
+        )
 
 
 async def get_url_async():

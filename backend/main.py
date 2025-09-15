@@ -12,7 +12,7 @@ from routers.categories import router as categories_router
 from routers.certifications import router as certifications_router
 from routers.progress import router as progress_router
 from routers.quiz_attempts import router as quiz_attempts_router
-from settings import get_settings
+from settings.loader import get_settings
 
 # Load environment variables
 load_dotenv()

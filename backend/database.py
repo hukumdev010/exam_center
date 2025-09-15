@@ -1,11 +1,9 @@
-import os
 from typing import AsyncGenerator
 
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-
-from models import Base
-from settings import get_settings, get_settings_sync
+from settings.loader import get_settings, get_settings_sync
+from models import Base  # Import Base from your models module
 
 # For synchronous contexts, use basic settings
 _sync_settings = get_settings_sync()
@@ -41,7 +39,7 @@ async def init_db():
         await engine.dispose()
         engine = create_async_engine(
             settings.database_url, echo=settings.debug)
-        print(f"Database engine updated with URL from settings")
+        print("Database engine updated with URL from settings")
 
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)

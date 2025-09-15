@@ -1,11 +1,10 @@
-import os
 from typing import List, Optional
 
 import google.generativeai as genai
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-from settings import get_settings
+from settings.loader import get_settings
 
 router = APIRouter()
 
@@ -39,7 +38,10 @@ async def chat_with_ai(request: ChatRequest):
 
         if not gemini_api_key:
             return ChatResponse(
-                response="I'm sorry, but the AI assistant is currently unavailable. Please try again later.",
+                response=(
+                    "I'm sorry, but the AI assistant is currently "
+                    "unavailable. Please try again later."
+                ),
                 error="Gemini API key not configured",
             )
 
@@ -51,16 +53,20 @@ async def chat_with_ai(request: ChatRequest):
         model = genai.GenerativeModel("gemini-2.0-flash")
 
         # Build the prompt with context
-        system_prompt = """You are a helpful AI study assistant. I'm taking an exam and need help understanding concepts. Please help me learn and understand the material without directly giving me the answers to exam questions.
-
-Please provide:
-- Clear explanations of concepts
-- Study tips and learning strategies
-- Memory techniques
-- Related examples
-- Practice suggestions
-
-Be conversational, encouraging, and educational in your responses."""
+        system_prompt = (
+            "You are a helpful AI study assistant. I'm taking an exam and "
+            "need help understanding concepts. Please help me learn and "
+            "understand the material without directly giving me the answers "
+            "to exam questions.\n\n"
+            "Please provide:\n"
+            "- Clear explanations of concepts\n"
+            "- Study tips and learning strategies\n"
+            "- Memory techniques\n"
+            "- Related examples\n"
+            "- Practice suggestions\n\n"
+            "Be conversational, encouraging, and educational in your "
+            "responses."
+        )
 
         # Add context information
         context_info = ""
@@ -69,9 +75,15 @@ Be conversational, encouraging, and educational in your responses."""
 
         if request.current_question:
             context_info += (
-                f"\nHere's the question I'm working on: {request.current_question}"
+                (
+                    f"\nHere's the question I'm working on: "
+                    f"{request.current_question}"
+                )
             )
-            context_info += "\nCan you help me understand the concepts being tested without giving me the direct answer?"
+            context_info += (
+                "\nCan you help me understand the concepts being tested "
+                "without giving me the direct answer?"
+            )
 
         # Build conversation history
         conversation = ""
@@ -84,7 +96,11 @@ Be conversational, encouraging, and educational in your responses."""
 
         # Complete prompt - more natural like copy-pasting to Gemini
         full_prompt = (
-            f"{system_prompt}{context_info}{conversation}\n\nMe: {request.message}"
+            f"{system_prompt}"
+            f"{context_info}"
+            f"{conversation}"
+            "\n\nMe: "
+            f"{request.message}"
         )
 
         # Generate response
@@ -94,7 +110,10 @@ Be conversational, encouraging, and educational in your responses."""
             return ChatResponse(response=response.text)
         else:
             return ChatResponse(
-                response="I'm sorry, I couldn't generate a response. Please try rephrasing your question.",
+                response=(
+                    "I'm sorry, I couldn't generate a response. "
+                    "Please try rephrasing your question."
+                ),
                 error="No response generated",
             )
 
@@ -110,10 +129,14 @@ async def ai_health():
     """
     Check if AI service is available
     """
+    settings = await get_settings()
+    gemini_api_key = settings.gemini_api_key
     return {
         "status": "healthy",
-        "gemini_configured": bool(GEMINI_API_KEY),
-        "api_key_prefix": GEMINI_API_KEY[:10] + "..." if GEMINI_API_KEY else None,
+        "gemini_configured": bool(gemini_api_key),
+        "api_key_prefix": (
+            gemini_api_key[:10] + "..." if gemini_api_key else None
+        ),
     }
 
 
@@ -123,11 +146,14 @@ async def list_models():
     List available Gemini models
     """
     try:
-        if not GEMINI_API_KEY:
+        settings = await get_settings()
+        gemini_api_key = settings.gemini_api_key
+        if not gemini_api_key:
             raise HTTPException(
                 status_code=500,
                 detail="Gemini API key not configured")
 
+        genai.configure(api_key=gemini_api_key)
         models = genai.list_models()
         model_info = []
         for model in models:
@@ -155,14 +181,37 @@ async def generate_study_prompt(
     Generate pre-written prompts for different study needs
     """
     prompts = {
-        "explain": f"Help me understand the key concepts related to {context or 'this topic'} without giving direct answers to exam questions.",
-        "study_tips": f"What are the most effective study strategies for {context or 'this certification'}? Give me tips to improve my learning and retention.",
-        "practice": f"Create practice questions similar to professional certification exams for {context or 'this topic'} to test my understanding.",
-        "memory": f"What memory techniques and mnemonics can help me remember important information about {context or 'this subject'}?",
+        "explain": (
+            "Help me understand the key concepts related to "
+            f"{context or 'this topic'} "
+            "without giving direct answers to exam questions."
+        ),
+        "study_tips": (
+            "What are the most effective study strategies for "
+            f"{context or 'this certification'}? "
+            "Give me tips to improve my learning and retention."
+        ),
+        "practice": (
+            (
+                "Create practice questions similar to professional "
+                "certification exams for "
+                f"{context or 'this topic'} "
+                "to test my understanding."
+            )
+        ),
+        "memory": (
+            "What memory techniques and mnemonics can help me remember "
+            "important information about "
+            f"{context or 'this subject'}?"
+        ),
         "clarify": (
-            f"Help me understand what concepts are being tested in this question without giving the answer: {current_question}"
+            f"Help me understand what concepts are being tested in this "
+            f"question without giving the answer: {current_question}"
             if current_question
-            else f"Help me clarify complex concepts in {context or 'my current study material'}."
+            else (
+                "Help me clarify complex concepts in "
+                f"{context or 'my current study material'}."
+            )
         ),
     }
 

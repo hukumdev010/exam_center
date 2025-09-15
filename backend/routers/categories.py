@@ -1,17 +1,14 @@
-from typing import List, Optional
+from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException, Query
-from pydantic import BaseModel
-from sqlalchemy import func, select
-from sqlalchemy.orm import selectinload
+from fastapi import APIRouter, Depends, Query
 
+from controllers.category_controller import CategoryController
 from database import get_db
-from models import Answer as AnswerModel
-from models import Category as CategoryModel
-from models import Certification as CertificationModel
-from models import Question as QuestionModel
+from pydantic import BaseModel
+
 
 router = APIRouter()
+category_controller = CategoryController()
 
 
 class Answer(BaseModel):
@@ -79,28 +76,7 @@ class PaginatedCertifications(BaseModel):
 @router.get("/", response_model=List[Category])
 async def get_categories(db=Depends(get_db)):
     """Get all categories with their active certifications"""
-    try:
-        stmt = (
-            select(CategoryModel)
-            .options(selectinload(CategoryModel.certifications))
-            .order_by(CategoryModel.name)
-        )
-
-        result = await db.execute(stmt)
-        categories = result.scalars().all()
-
-        # Filter active certifications after loading
-        for category in categories:
-            category.certifications = [
-                cert for cert in category.certifications if cert.is_active
-            ]
-
-        return categories
-    except Exception as e:
-        print(f"Categories API Error: {e}")  # Add logging
-        raise HTTPException(
-            status_code=500, detail=f"Failed to fetch categories: {str(e)}"
-        )
+    return await category_controller.get_categories(db)
 
 
 @router.get("/{category_slug}/certifications",
@@ -112,53 +88,6 @@ async def get_category_certifications(
     db=Depends(get_db),
 ):
     """Get paginated certifications for a specific category"""
-    try:
-        # First, get the category
-        category_stmt = select(CategoryModel).where(
-            CategoryModel.slug == category_slug)
-        category_result = await db.execute(category_stmt)
-        category = category_result.scalar_one_or_none()
-
-        if not category:
-            raise HTTPException(status_code=404, detail="Category not found")
-
-        # Count total certifications
-        count_stmt = select(
-            func.count(
-                CertificationModel.id)).where(
-            CertificationModel.category_id == category.id,
-            CertificationModel.is_active)
-        count_result = await db.execute(count_stmt)
-        total = count_result.scalar()
-
-        # Get paginated certifications
-        offset = (page - 1) * per_page
-        stmt = (
-            select(CertificationModel)
-            .where(
-                CertificationModel.category_id == category.id,
-                CertificationModel.is_active,
-            )
-            .order_by(CertificationModel.name)
-            .offset(offset)
-            .limit(per_page)
-        )
-
-        result = await db.execute(stmt)
-        certifications = result.scalars().all()
-
-        return PaginatedCertifications(
-            certifications=certifications,
-            total=total,
-            page=page,
-            per_page=per_page,
-            has_next=page * per_page < total,
-            has_prev=page > 1,
-        )
-    except HTTPException:
-        raise
-    except Exception as e:
-        print(f"Category certifications API Error: {e}")
-        raise HTTPException(
-            status_code=500, detail=f"Failed to fetch certifications: {str(e)}"
-        )
+    return await category_controller.get_category_certifications(
+        category_slug, page, per_page, db
+    )

@@ -3,9 +3,13 @@ Base application settings using Pydantic BaseSettings
 """
 
 from typing import Optional
+from dotenv import load_dotenv
 
 from pydantic import Field, validator
 from pydantic_settings import BaseSettings
+
+# Load the .env file explicitly using python-dotenv
+load_dotenv()
 
 
 class Settings(BaseSettings):
@@ -16,7 +20,10 @@ class Settings(BaseSettings):
     debug: bool = Field(default=True, env="DEBUG")
     # Database settings
     database_url: str = Field(
-        default="postgresql+asyncpg://postgres:postgres@localhost:5432/exam_center",
+        default=(
+            "postgresql+asyncpg://postgres:postgres@localhost:5432/"
+            "exam_center"
+        ),
         env="DATABASE_URL",
     )
     # JWT settings
@@ -63,6 +70,16 @@ class Settings(BaseSettings):
             raise ValueError(f"Environment must be one of {allowed}")
         return v
 
+    @validator("gemini_api_key", pre=True)
+    def validate_gemini_api_key(cls, v):
+        import os
+        # If Pydantic didn't pick up the environment variable, try manually
+        if not v or v == "":
+            env_value = os.environ.get("GEMINI_API", "")
+            if env_value:
+                return env_value
+        return v
+
     @validator("use_secrets_manager", pre=True)
     def validate_use_secrets_manager(cls, v):
         if isinstance(v, str):
@@ -73,4 +90,5 @@ class Settings(BaseSettings):
         env_file = ".env"
         env_file_encoding = "utf-8"
         case_sensitive = False
-        extra = "ignore"  # Ignore extra fields instead of raising validation error
+        # Ignore extra fields instead of raising validation error
+        extra = "ignore"
