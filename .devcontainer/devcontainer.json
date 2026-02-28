@@ -1,0 +1,75 @@
+{
+  "name": "exam_center_monorepo",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/exam_center",
+  "forwardPorts": [
+    3000,
+    10000,
+    5432
+  ],
+  "onCreateCommand": "sudo mkdir -p /workspaces/exam_center/frontend/.yarn/cache /workspaces/exam_center/frontend/node_modules && sudo chown -R node:node /workspaces/exam_center/frontend/.yarn /workspaces/exam_center/frontend/node_modules 2>/dev/null || true; echo 'enableTelemetry: false' > /home/node/.yarnrc.yml 2>/dev/null || true",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "mounts": [
+    "source=${localEnv:USERPROFILE}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
+  ],
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "${localEnv:SSH_AUTH_SOCK}",
+    "YARN_ENABLE_GLOBAL_CACHE": "false",
+    "YARN_ENABLE_TELEMETRY": "0",
+    "TURBOPACK_ALLOW_UNSAFE_FS_READS": "1",
+    "TURBOPACK_LOG_LEVEL": "info",
+    "NEXT_TELEMETRY_DISABLED": "1",
+    "CHOKIDAR_USEPOLLING": "true",
+    "CHOKIDAR_INTERVAL": "1000",
+    "WATCHPACK_POLLING": "true"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "typescript.preferences.includePackageJsonAutoImports": "auto",
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.flake8Enabled": true,
+        "python.linting.ignorePatterns": [
+          "**/scripts/seed_data/**"
+        ],
+        "search.exclude": {
+          "**/node_modules": true,
+          "**/.yarn": true,
+          "**/.pnp.*": true,
+          "**/.next": true,
+          "**/dist": true,
+          "**/build": true,
+          "**/scripts/seed_data": true
+        },
+        "files.watcherExclude": {
+          "**/.yarn": true,
+          "**/.pnp.*": true,
+          "**/.next": true,
+          "**/node_modules": true,
+          "**/dist": true,
+          "**/build": true,
+          "**/scripts/seed_data": true
+        },
+        "typescript.preferences.watcherExclude": {
+          "**/.yarn": true,
+          "**/.pnp.*": true,
+          "**/.next": true,
+          "**/node_modules": true
+        },
+        "files.associations": {
+          "*.env*": "properties"
+        }
+      },
+      "extensions": [
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss",
+        "ms-python.python",
+        "ms-python.flake8"
+      ]
+    }
+  },
+  "remoteUser": "node"
+}
