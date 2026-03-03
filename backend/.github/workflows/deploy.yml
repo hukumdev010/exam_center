@@ -1,0 +1,123 @@
+name: Deploy Exam Center to EC2
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+env:
+  EC2_HOST: 13.219.66.17
+  EC2_USER: ubuntu
+  APP_DIR: /var/www/backend_exam_center
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          
+          # Validate SSH key
+          if ! ssh-keygen -y -f ~/.ssh/id_rsa > /dev/null 2>&1; then
+            echo "Fixing SSH key format..."
+            sed -i 's/\r$//' ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            if ! ssh-keygen -y -f ~/.ssh/id_rsa > /dev/null 2>&1; then
+              echo "ERROR: Invalid SSH key"
+              exit 1
+            fi
+          fi
+          
+          # Add EC2 to known hosts
+          ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
+
+      - name: Deploy Application
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST "
+            set -e
+            echo '🚀 Starting Exam Center deployment...'
+            
+            # Navigate to application directory
+            cd $APP_DIR
+            
+            # Pull latest changes
+            echo '📥 Pulling latest code from GitHub...'
+            git fetch origin
+            git reset --hard origin/master
+            
+            # Activate virtual environment
+            echo '🐍 Setting up Python environment...'
+            source venv/bin/activate
+            
+            # Install/update dependencies
+            echo '📦 Installing dependencies...'
+            pip install --upgrade pip
+            pip install -r requirements.txt
+            
+            # Run database migrations
+            echo '🗃️ Running database migrations...'
+            PYTHONPATH=$APP_DIR alembic upgrade head
+            
+            # Check if seeding is needed
+            echo '🌱 Checking if seeding is needed...'
+            SEED_CHECK=\$(PYTHONPATH=$APP_DIR python -c \"
+            import asyncio
+            from database import AsyncSessionLocal
+            from sqlalchemy import text
+            
+            async def check_data():
+                async with AsyncSessionLocal() as session:
+                    result = await session.execute(text('SELECT COUNT(*) FROM categories'))
+                    count = result.scalar()
+                    return count > 0
+            
+            try:
+                has_data = asyncio.run(check_data())
+                print('true' if has_data else 'false')
+            except Exception:
+                print('false')
+            \" 2>/dev/null || echo 'false')
+            
+            if [ \"\$SEED_CHECK\" = \"false\" ]; then
+                echo '🌱 Running seed script...'
+                cd scripts && PYTHONPATH=$APP_DIR python seed.py && cd ..
+            else
+                echo '✅ Database already has data, skipping seeding'
+            fi
+            
+            # Restart application service
+            echo '🔄 Restarting application service...'
+            sudo systemctl restart exam-center.service
+            
+            # Wait for application to start
+            sleep 5
+            
+            # Reload Nginx
+            echo '🌐 Reloading Nginx...'
+            sudo systemctl reload nginx
+            
+            # Verify services are running
+            echo '✅ Checking service status...'
+            if ! sudo systemctl is-active --quiet exam-center.service; then
+                echo '❌ Application service failed to start'
+                sudo systemctl status exam-center.service --no-pager
+                exit 1
+            fi
+            
+            if ! sudo systemctl is-active --quiet nginx; then
+                echo '❌ Nginx failed to start'
+                sudo systemctl status nginx --no-pager
+                exit 1
+            fi
+            
+            echo '🎉 Deployment completed successfully!'
+          "
+

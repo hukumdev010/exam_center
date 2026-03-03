@@ -1,0 +1,17 @@
+[flake8]
+max-line-length = 90
+extend-ignore = 
+    # W503: line break before binary operator (conflicts with W504)
+    W503,
+    # E203: whitespace before ':' (conflicts with black)
+    E203
+exclude = 
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    .env,
+    env,
+    migrations,
+    alembic/versions
+max-complexity = 10
