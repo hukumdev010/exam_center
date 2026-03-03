@@ -3,11 +3,6 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspaces/exam_center",
-  "forwardPorts": [
-    3000,
-    10000,
-    5432
-  ],
   "onCreateCommand": "sudo mkdir -p /workspaces/exam_center/frontend/.yarn/cache /workspaces/exam_center/frontend/node_modules && sudo chown -R node:node /workspaces/exam_center/frontend/.yarn /workspaces/exam_center/frontend/node_modules 2>/dev/null || true; echo 'enableTelemetry: false' > /home/node/.yarnrc.yml 2>/dev/null || true",
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "mounts": [

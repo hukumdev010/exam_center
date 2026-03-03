@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const cdk = require("aws-cdk-lib");
+const exam_center_stack_1 = require("../lib/exam-center-stack");
+const app = new cdk.App();
+new exam_center_stack_1.ExamCenterEc2Stack(app, 'ExamCenterEc2Stack', {
+    description: 'Deploy frontend + backend (backend in Docker) on one EC2 micro instance',
+});
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZXhhbS1jZW50ZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJleGFtLWNlbnRlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFDQSxtQ0FBbUM7QUFDbkMsZ0VBQThEO0FBRTlELE1BQU0sR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLEdBQUcsRUFBRSxDQUFDO0FBRTFCLElBQUksc0NBQWtCLENBQUMsR0FBRyxFQUFFLG9CQUFvQixFQUFFO0lBQ2hELFdBQVcsRUFBRSx5RUFBeUU7Q0FDdkYsQ0FBQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiIyEvdXNyL2Jpbi9lbnYgbm9kZVxuaW1wb3J0ICogYXMgY2RrIGZyb20gJ2F3cy1jZGstbGliJztcbmltcG9ydCB7IEV4YW1DZW50ZXJFYzJTdGFjayB9IGZyb20gJy4uL2xpYi9leGFtLWNlbnRlci1zdGFjayc7XG5cbmNvbnN0IGFwcCA9IG5ldyBjZGsuQXBwKCk7XG5cbm5ldyBFeGFtQ2VudGVyRWMyU3RhY2soYXBwLCAnRXhhbUNlbnRlckVjMlN0YWNrJywge1xuICBkZXNjcmlwdGlvbjogJ0RlcGxveSBmcm9udGVuZCArIGJhY2tlbmQgKGJhY2tlbmQgaW4gRG9ja2VyKSBvbiBvbmUgRUMyIG1pY3JvIGluc3RhbmNlJyxcbn0pO1xuIl19
