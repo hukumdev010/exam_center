@@ -3,6 +3,7 @@
 import React, { memo } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/lib/useAuth";
 import { RotateCcw, Trophy, GraduationCap, MessageSquare } from "lucide-react";
 
 interface QuizCompletionScreenProps {
@@ -24,6 +25,7 @@ const QuizCompletionScreen = memo(function QuizCompletionScreen({
 }: QuizCompletionScreenProps) {
     console.log('🔄 QuizCompletionScreen component rendering');
     const router = useRouter();
+    const { isAuthenticated } = useAuth();
 
     const getScoreColor = () => {
         const percentage = (correctAnswers / totalQuestions) * 100;
@@ -33,7 +35,7 @@ const QuizCompletionScreen = memo(function QuizCompletionScreen({
     };
 
     const handleBackHome = () => {
-        router.push('/');
+        router.push(isAuthenticated ? '/dashboard' : '/');
     };
 
     return (

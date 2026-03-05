@@ -19,6 +19,7 @@ from .javascript_professional import (
 )
 from .typescript_developer import CERTIFICATION as TYPESCRIPT_CERT
 from .advanced_typescript import CERTIFICATION as ADVANCED_TS_CERT
+from .nestjs_developer import CERTIFICATION as NESTJS_CERT
 from .nodejs_developer import CERTIFICATION as NODEJS_CERT
 from .react_developer import CERTIFICATION as REACT_CERT
 from .csharp_programming import CERTIFICATION as CSHARP_CERT
@@ -43,6 +44,7 @@ CERTIFICATIONS = [
     TYPESCRIPT_CERT,
     ADVANCED_TS_CERT,
     NODEJS_CERT,
+    NESTJS_CERT,
     REACT_CERT,
     JAVA_PROG_1_CERT,
     JAVA_PROG_2_CERT,

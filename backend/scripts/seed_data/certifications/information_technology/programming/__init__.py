@@ -3,8 +3,10 @@
 from . import (
     advanced_typescript,
     csharp_programming,
+    fastapi_developer,
     go_programming,
     javascript_developer,
+    nestjs_developer,
     nodejs_developer,
     oracle_java_se11_programmer_1,
     oracle_java_se11_programmer_2,
@@ -13,7 +15,6 @@ from . import (
     react_developer,
     rust_programming,
     sql_fundamentals,
-    fastapi_developer,
     typescript_developer,
 )
 
@@ -30,6 +31,7 @@ modules = [
     javascript_developer,
     react_developer,
     nodejs_developer,
+    nestjs_developer,
     csharp_programming,
     go_programming,
     rust_programming,

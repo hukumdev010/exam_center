@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Award, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 
 interface FooterProps {
@@ -14,12 +15,18 @@ const shouldShowFooter = (pathname?: string): boolean => {
     // Don't show footer for syllabus pages
     const isSyllabusPage = pathname.startsWith('/syllabus/');
 
-    return !isSyllabusPage;
-};
+    const isDashboardPage = pathname === '/dashboard' || pathname.startsWith('/dashboard/');
 
+
+    // Don't show footer for syllabus and dashboard pages
+    return !isSyllabusPage && !isDashboardPage;
+};
 const Footer: React.FC<FooterProps> = ({ pathname }) => {
+    const currentPathname = usePathname();
+    const pathToCheck = pathname ?? currentPathname;
+
     // Check if footer should be shown based on pathname
-    if (!shouldShowFooter(pathname)) {
+    if (!shouldShowFooter(pathToCheck)) {
         return null;
     }
 
